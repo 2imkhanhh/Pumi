@@ -1,0 +1,78 @@
+#panel-testimonials-home{
+    background-image: url("../../images/testimonials.html");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+swiper-slide .desc{
+    max-height: 150px;
+    color: #111;
+    font-style: italic;
+    background-color: rgba(255,255,255,.5);
+    padding: 25px;
+    border-radius: 10px;
+    display: block;
+    width: 90%;
+    margin: 0 auto;
+    margin-bottom: 10px;
+}
+
+swiper-slide img {
+    display: block;
+    height: 100%;
+    object-fit: cover;
+    border: 2px solid #fff;
+}
+
+swiper-slide.swiper-slide-thumb-active img {
+    width: 120px;
+    height: 120px;
+    border-color: #157efb;
+    -webkit-transition: all .3s ease-in-out;
+}
+
+swiper-container {
+    width: 100%;
+    height: 300px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 40px 0 20px;
+    position: relative;
+    color: #000;
+
+}
+
+swiper-slide {
+    background-size: cover;
+    background-position: center;
+}
+
+.mySwiper {
+    height: 320px;
+    width: 100%;
+}
+
+.mySwiper2 {
+    height: 120px;
+    box-sizing: border-box;
+    padding: 10px 0;
+}
+
+.mySwiper2 swiper-slide {
+    width: 14.2%;
+    height: 100%;
+    opacity: 0.4;
+}
+
+.mySwiper2 .swiper-slide-thumb-active {
+    opacity: 1;
+}
