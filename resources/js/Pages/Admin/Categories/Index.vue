@@ -87,7 +87,7 @@ const deleteCategory = (id) => {
             <table class="table">
                 <thead>
                     <tr>
-                        <th width="80">ID</th>
+                        <th width="80">STT</th>
                         <th>Tên danh mục</th>
                         <th>Đường dẫn (Slug)</th>
                         <th>Trạng thái</th>
@@ -95,8 +95,8 @@ const deleteCategory = (id) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="category in categories.data" :key="category.id">
-                        <td>#{{ category.id }}</td>
+                    <tr v-for="(category, index) in categories.data" :key="category.id">
+                        <td>{{ (categories.current_page - 1) * categories.per_page + index + 1 }}</td>
                         <td class="font-medium text-dark">{{ category.name }}</td>
                         <td><span class="badge">{{ category.slug }}</span></td>
                         <td>

@@ -21,6 +21,12 @@ const form = useForm({
     id: null,
     title: '',
     slug: '',
+    slug: '',
+    type: 'news',
+    job_type: '',
+    location: '',
+    salary: '',
+    deadline: '',
     excerpt: '',
     content: '',
     published_at: '',
@@ -96,6 +102,11 @@ const openEditModal = (post) => {
     form.id = post.id;
     form.title = post.title;
     form.slug = post.slug;
+    form.type = post.type || 'news';
+    form.job_type = post.job_type || '';
+    form.location = post.location || '';
+    form.salary = post.salary || '';
+    form.deadline = post.deadline || '';
     form.excerpt = post.excerpt;
     form.content = post.content;
     form.published_at = post.published_at ? post.published_at.split(' ')[0] : '';
@@ -198,16 +209,17 @@ watch(searchKeyword, (value) => {
             <table class="table">
                 <thead>
                     <tr>
-                        <th width="60">ID</th>
+                        <th width="60">STT</th>
                         <th width="80">Ảnh</th>
                         <th>Tiêu đề</th>
+                        <th>Loại</th>
                         <th>Ngày đăng</th>
                         <th width="120" class="text-right">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="post in posts.data" :key="post.id">
-                        <td>#{{ post.id }}</td>
+                    <tr v-for="(post, index) in posts.data" :key="post.id">
+                        <td>{{ (posts.current_page - 1) * posts.per_page + index + 1 }}</td>
                         <td>
                             <div class="thumb">
                                 <img v-if="post.image" :src="'/' + post.image" alt="Post" />
@@ -215,6 +227,11 @@ watch(searchKeyword, (value) => {
                             </div>
                         </td>
                         <td class="font-medium text-dark">{{ post.title }}</td>
+                        <td>
+                            <span class="badge" :class="post.type === 'recruitment' ? 'bg-indigo' : 'bg-blue'">
+                                {{ post.type === 'recruitment' ? 'Tuyển dụng' : 'Tin tức' }}
+                            </span>
+                        </td>
                         <td>
                             <span class="badge">{{ post.published_at ? post.published_at.split(' ')[0] : '' }}</span>
                         </td>
@@ -270,10 +287,42 @@ watch(searchKeyword, (value) => {
         </div>
         <div class="modal-body">
             <form @submit.prevent="submit">
-                <div class="form-group">
-                    <label>Tiêu đề bài viết <span class="required">*</span></label>
-                    <input type="text" v-model="form.title" class="form-control" required />
-                    <span class="error" v-if="form.errors.title">{{ form.errors.title }}</span>
+                <div class="form-row">
+                    <div class="form-group flex-1">
+                        <label>Tiêu đề bài viết <span class="required">*</span></label>
+                        <input type="text" v-model="form.title" class="form-control" required />
+                        <span class="error" v-if="form.errors.title">{{ form.errors.title }}</span>
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>Loại bài viết</label>
+                        <select v-model="form.type" class="form-control">
+                            <option value="news">Tin tức</option>
+                            <option value="recruitment">Tuyển dụng</option>
+                        </select>
+                        <span class="error" v-if="form.errors.type">{{ form.errors.type }}</span>
+                    </div>
+                </div>
+
+                <div class="form-row" v-if="form.type === 'recruitment'">
+                    <div class="form-group flex-1">
+                        <label>Loại công việc</label>
+                        <input type="text" v-model="form.job_type" placeholder="VD: Toàn thời gian" class="form-control" />
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>Địa điểm</label>
+                        <input type="text" v-model="form.location" placeholder="VD: Thành phố Sơn La" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-row" v-if="form.type === 'recruitment'">
+                    <div class="form-group flex-1">
+                        <label>Mức lương</label>
+                        <input type="text" v-model="form.salary" placeholder="VD: Thỏa thuận + thưởng" class="form-control" />
+                    </div>
+                    <div class="form-group flex-1">
+                        <label>Hạn nộp hồ sơ</label>
+                        <input type="date" v-model="form.deadline" class="form-control" />
+                    </div>
                 </div>
 
                 <div class="form-row">
@@ -503,6 +552,23 @@ watch(searchKeyword, (value) => {
     font-size: 0.6rem;
     color: #94a3b8;
     font-weight: bold;
+}
+
+.bg-blue {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.bg-indigo {
+    background: #e0e7ff;
+    color: #4f46e5;
+}
+
+.bg-green {
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
 }
 
 .badge {

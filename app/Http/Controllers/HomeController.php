@@ -14,7 +14,7 @@ class HomeController extends Controller
     {
         $products = Product::limit(4)->get();
         $partners = Partner::limit(10)->get();
-        $posts = Post::latest('published_at')->limit(4)->get();
+        $posts = Post::where('type', 'news')->latest('published_at')->limit(4)->get();
 
         return view('client.pages.home', compact('products', 'partners', 'posts'));
     }
@@ -37,13 +37,21 @@ class HomeController extends Controller
 
     public function posts()
     {
-        $posts = \App\Models\Post::latest('published_at')->paginate(12);
+        $posts = \App\Models\Post::where('type', 'news')->latest('published_at')->paginate(12);
         return view('client.pages.posts', compact('posts'));
     }
 
     public function recruitment()
     {
-        return view('client.pages.recruitment');
+        $recruitments = \App\Models\Post::where('type', 'recruitment')->latest('published_at')->paginate(12);
+        return view('client.pages.recruitment', compact('recruitments'));
+    }
+
+    public function recruitmentDetail($slug)
+    {
+        $post = \App\Models\Post::where('slug', $slug)->where('type', 'recruitment')->firstOrFail();
+        $relatedPosts = \App\Models\Post::where('type', 'recruitment')->where('id', '!=', $post->id)->latest('published_at')->limit(5)->get();
+        return view('client.pages.recruitment_detail', compact('post', 'relatedPosts'));
     }
 
     public function contact()
@@ -59,7 +67,7 @@ class HomeController extends Controller
 
     public function postDetail($slug)
     {
-        $post = \App\Models\Post::where('slug', $slug)->firstOrFail();
+        $post = \App\Models\Post::where('slug', $slug)->where('type', 'news')->firstOrFail();
         return view('client.pages.post_detail', compact('post'));
     }
 

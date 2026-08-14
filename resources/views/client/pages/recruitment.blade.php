@@ -1,4 +1,4 @@
-﻿@extends('client.layouts.master')
+@extends('client.layouts.master')
 @section('title', 'recruiment.html')
 @section('content')
 <main id="main">
@@ -9,59 +9,32 @@
             </div>
        </section><section id="news" class="news">
        <div class="container"><div id="news-list" class="news-list row gy-4 mt-4">
-            <div class="col-xl-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="100">
-             <a href="recruiment/lorem-ipsum-dolor-sit-amet-consectetuer-ipsum-46.html">
-                   <div class="inner">
-                       <article>
-                           <div class="imgbox"><img src="{{ asset('assets/') }}/images/upload/post/img_68da9a546ef34.jpg" alt="Tuyển Nhân viên Kinh doanh - Phát triển kênh Đại lý/Nhà thuốc"/></div>
-                           <div class="date">Pumi  |   29.09.25</div>
-                           <h2 class="title">Tuyển Nhân viên Kinh doanh - Phát triển kênh Đại lý/Nhà thuốc</h2>
-                           <div class="desc">Pumi Việt Nam tuyển Nhân viên kinh doanh phát triển hệ thống đại lý, nhà thuốc, cửa hàng mẹ và bé...</div>
-                       </article>
-                   </div>
-                   </a>
-               </div><!-- End item -->
-               
-            <div class="col-xl-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="100">
-             <a href="recruiment/lorem-ipsum-dolor-sit-amet-consectetuer-ipsum-47.html">
-                   <div class="inner">
-                       <article>
-                           <div class="imgbox"><img src="{{ asset('assets/') }}/images/upload/post/img_68da9a546ef34.jpg" alt="Tuyển Nhân viên Marketing Online"/></div>
-                           <div class="date">Pumi  |   29.09.25</div>
-                           <h2 class="title">Tuyển Nhân viên Marketing Online</h2>
-                           <div class="desc">Xây dựng và triển khai nội dung, chiến dịch quảng cáo cho thương hiệu thảo mộc Pumi trên các nền tảng số...</div>
-                       </article>
-                   </div>
-                   </a>
-               </div><!-- End item -->
-               
-            <div class="col-xl-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="100">
-             <a href="recruiment/lorem-ipsum-dolor-sit-amet-consectetuer-ipsum-48.html">
-                   <div class="inner">
-                       <article>
-                           <div class="imgbox"><img src="{{ asset('assets/') }}/images/upload/post/img_68da9a546ef34.jpg" alt="Tuyển Nhân viên Vận hành Kho - Đóng gói Sản phẩm"/></div>
-                           <div class="date">Pumi  |   29.09.25</div>
-                           <h2 class="title">Tuyển Nhân viên Vận hành Kho - Đóng gói Sản phẩm</h2>
-                           <div class="desc">Đảm bảo hàng hóa xuất nhập kho chính xác, đóng gói sản phẩm thảo dược Pumi đúng quy trình chất lượng...</div>
-                       </article>
-                   </div>
-                   </a>
-               </div><!-- End item -->
-               
-            <div class="col-xl-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="100">
-             <a href="recruiment/lorem-ipsum-dolor-sit-amet-consectetuer-ipsum-49.html">
-                   <div class="inner">
-                       <article>
-                           <div class="imgbox"><img src="{{ asset('assets/') }}/images/upload/post/img_68da9a546ef34.jpg" alt="Tuyển Nhân viên Chăm sóc Khách hàng"/></div>
-                           <div class="date">Pumi  |   29.09.25</div>
-                           <h2 class="title">Tuyển Nhân viên Chăm sóc Khách hàng</h2>
-                           <div class="desc">Tiếp nhận và tư vấn cho khách hàng về sản phẩm thảo dược Pumi qua điện thoại, mạng xã hội và website...</div>
-                       </article>
-                   </div>
-                   </a>
-               </div><!-- End item -->
-               </div>
-        </div>
+            @forelse($recruitments as $post)
+             <div class="col-xl-3 col-md-6 col-12" data-aos="fade-up" data-aos-delay="100">
+              <a href="{{ route('recruitment.detail', $post->slug) }}">
+                    <div class="inner">
+                        <article>
+                            <div class="imgbox">
+                                <img src="{{ $post->image ? asset($post->image) : asset('assets/images/no-image.jpg') }}" alt="{{ $post->title }}"/>
+                            </div>
+                            <div class="date">Pumi  |   {{ $post->published_at ? \Carbon\Carbon::parse($post->published_at)->format('d.m.y') : '' }}</div>
+                            <h2 class="title">{{ $post->title }}</h2>
+                            <div class="desc">{{ Str::limit($post->excerpt ?? strip_tags($post->content), 120) }}</div>
+                        </article>
+                    </div>
+                    </a>
+                </div><!-- End item -->
+            @empty
+                <div class="col-12 text-center py-4">
+                    <p>Hiện chưa có thông tin tuyển dụng nào.</p>
+                </div>
+            @endforelse
+            </div>
+            
+            <div class="mt-4">
+                {{ $recruitments->links('pagination::bootstrap-5') }}
+            </div>
+         </div>
     </section><section id="contact">
             <div class="container">
             <div class="row">

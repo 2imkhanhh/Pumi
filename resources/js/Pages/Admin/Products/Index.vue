@@ -102,7 +102,7 @@ const formatPrice = (price) => {
             <table class="table">
                 <thead>
                     <tr>
-                        <th width="60">ID</th>
+                        <th width="60">STT</th>
                         <th width="80">Ảnh</th>
                         <th>Tên sản phẩm</th>
                         <th>Danh mục</th>
@@ -112,8 +112,8 @@ const formatPrice = (price) => {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="product in products.data" :key="product.id">
-                        <td>#{{ product.id }}</td>
+                    <tr v-for="(product, index) in products.data" :key="product.id">
+                        <td>{{ (products.current_page - 1) * products.per_page + index + 1 }}</td>
                         <td>
                             <div class="thumb">
                                 <img v-if="product.image" :src="'/' + product.image" alt="Product" />

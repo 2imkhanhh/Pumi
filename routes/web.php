@@ -13,6 +13,7 @@ Route::get('/san-pham/{slug}', [HomeController::class, 'productDetail'])->name('
 Route::get('/tin-tuc', [HomeController::class, 'posts'])->name('posts');
 Route::get('/tin-tuc/{slug}', [HomeController::class, 'postDetail'])->name('post.detail');
 Route::get('/tuyen-dung', [HomeController::class, 'recruitment'])->name('recruitment');
+Route::get('/tuyen-dung/{slug}', [HomeController::class, 'recruitmentDetail'])->name('recruitment.detail');
 Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
 Route::get('/tim-kiem', [HomeController::class, 'search'])->name('search');
 

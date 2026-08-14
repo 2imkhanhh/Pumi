@@ -19,7 +19,7 @@ class PostController extends Controller
             $query->where('title', 'like', "%{$search}%");
         }
         
-        $posts = $query->orderBy('published_at', 'desc')->paginate(10)->withQueryString();
+        $posts = $query->orderBy('published_at', 'asc')->paginate(10)->withQueryString();
         
         return Inertia::render('Admin/Posts/Index', [
             'posts' => $posts,
@@ -35,6 +35,11 @@ class PostController extends Controller
             'excerpt' => 'nullable|string',
             'content' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'type' => 'required|in:news,recruitment',
+            'job_type' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'salary' => 'nullable|string|max:255',
+            'deadline' => 'nullable|date',
             'published_at' => 'nullable|date',
         ]);
 
@@ -64,6 +69,11 @@ class PostController extends Controller
             'excerpt' => 'nullable|string',
             'content' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
+            'type' => 'required|in:news,recruitment',
+            'job_type' => 'nullable|string|max:255',
+            'location' => 'nullable|string|max:255',
+            'salary' => 'nullable|string|max:255',
+            'deadline' => 'nullable|date',
             'published_at' => 'nullable|date',
         ]);
 
