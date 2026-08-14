@@ -1,0 +1,181 @@
+@extends('client.layouts.master')
+
+@section('content')
+<div id="carouselBanner" class="carousel slide" data-bs-ride="carousel">
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="0" class="active" aria-current="true" aria-label="banner 2"></button>
+    <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="1" aria-current="true" aria-label="banner 1"></button>
+  </div>
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+        <div class="ci-inner">
+            <div class="img">
+                <a href="#"><img src="{{ asset('assets/images/upload/banner/img_68dcb2fd1d474.jpg') }}" class="d-block w-100" alt="banner 2"></a>
+            </div>
+        </div>
+    </div>
+    <div class="carousel-item">
+        <div class="ci-inner">
+            <div class="img">
+                <img src="{{ asset('assets/images/upload/banner/img_68ddf4eb12021.jpg') }}" class="d-block w-100" alt="banner 1">
+            </div>
+        </div>
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselBanner" data-bs-slide="prev">
+    <img src="{{ asset('assets/images/left-banner.png') }}" alt=""/>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselBanner" data-bs-slide="next">
+    <img src="{{ asset('assets/images/right-banner.png') }}" alt=""/>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+
+<section id="about-us">
+    <div class="container">
+        <div class="row d-flex align-items-center justify-content-center">
+            <div class="col-md-5 ">
+                 <h2 class="title">{{ $settings['home_about_title'] ?? 'Pumi Việt Nam' }}</h2>
+                 <div class="desc">Xin Chào!</div>
+            </div>
+            <div class="col-md-6 offset-lg-1">
+                <div data-aos="fade-right">
+                    <div class="content"><p>{!! $settings['home_about_content'] ?? 'Pumi Việt Nam thực sự vinh hạnh và trân quý bởi sự tin tưởng lựa chọn sản phẩm, dịch vụ của quý khách hàng!<br><br>Website này là toàn bộ thông tin chi tiết về Pumi, về sứ mệnh cũng như tâm huyết công hiến của đội ngũ nhân sự chúng mình. Hy vọng bạn sẽ đón nhận chúng mình một cách thoải mái và cởi mở nhất nhé!<br><br>Pumi luôn lắng nghe và cố gắng nỗ lực cải thiện mỗi ngày để đem lại sự hài lòng cho bạn!' !!}</p></div>
+                </div>
+           </div>
+        </div>
+    </div>
+</section>
+
+<section id="video-home">
+    <iframe src="{{ $settings['home_video'] ?? 'https://drive.google.com/file/d/1ygio8NpLpmg3oKUo3ct_8PebKu096Y-m/preview?autoplay=1&mute=1' }}" width="100%" height="680" allow="autoplay; encrypted-media"></iframe>
+</section>
+
+<section id="about-us-home" class="about-us-home">
+   <div class="warp">
+      <div class="about-us-text">
+            <h2 class="title">{{ $settings['home_about_title'] ?? 'PUMI VIỆT NAM' }}</h2>
+           <h3 class="desc">{{ $settings['home_about_subtitle'] ?? 'TỰ HÀO TINH HOA THẢO MỘC VIỆT' }}</h3>
+           <div class="content"><p>{!! $settings['home_about_content'] ?? 'Mang trong mình sứ mệnh tạo ra những sản phẩm chất lượng từ những nguồn nguyên liệu dược liệu quý của Việt Nam.<br>Cam kết sự phát triển nông nghiệp dược liệu bền vững đối với người nông dân địa phương.' !!}</p></div>
+           <div class="mt-5"><a href="{{ url('/ve-pumi') }}" class="btn-themes">Xem thêm <img src="{{ asset('assets/images/right-arrow.svg') }}" /></a></div>
+       </div>
+   </div>
+</section>
+
+<section class="banner-pro-home" >
+  <a href="{{ url('/san-pham') }}"><img src="{{ asset($settings['home_middle_banner'] ?? 'assets/images/upload/banner/img_68da94b145c2f.png') }}" alt="" class="w-100"/></a>
+</section> 
+
+<section id="products-home" class="">
+     <div id="top-products-home"></div>
+    <div class="warp">
+        <div class="container">
+            @foreach($products as $index => $product)
+            <div class="box-products-home">
+                <div class="row d-flex justify-content-between align-items-center">
+                    <div class="col-md-5 {{ $index % 2 != 0 ? 'order-last mt-5 mt-lg-0' : '' }}">
+                        <div class="img"><img src="{{ asset($product->image) }}" alt="{{ $product->name }}"/></div>
+                    </div>
+                    <div class="col-md-6 offset-lg-1 {{ $index % 2 != 0 ? 'order-first mt-3 mt-lg-0' : '' }}">
+                        <div class="info">
+                            <h3 class="title">{{ $product->name }}</h3>
+                            <div class="desc">{{ $product->short_description }}</div>
+                            <div class="content">{{ $product->description }}</div>
+                            <div class="more"><a class="btn-themes" href="{{ url('/san-pham/' . $product->slug) }}">Xem thêm <img src="{{ asset('assets/images/right-arrow.svg') }}" alt=""/></a></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            @endforeach
+            <div class="mt-5 text-center view-all"><a href="{{ url('/san-pham') }}" class="btn-themes">Xem thêm <img src="{{ asset('assets/images/right-arrow-blue.svg') }}" /></a></div>  
+        </div>
+    </div>
+</section>  
+
+<section id="partner" class="partner">
+    <div id="box_partner" class=" ">
+        <header class="section-header text-center" data-aos="fade-top">
+            <h2>Đối tác của chúng tôi</h2>
+            <p>Pumi tự hào đồng hành cùng các nhà thuốc, cửa hàng mẹ và bé, hệ thống phân phối trên toàn quốc để đưa sản phẩm thảo mộc Việt đến gần hơn với mọi gia đình.</p>
+        </header>
+        <div class="swiper featureSwiper">
+            <div class="swiper-wrapper"> 
+                @foreach($partners as $partner)
+                <div class="swiper-slide d-flex align-items-center justify-content-center">
+                    <div class="box-item d-flex align-items-center justify-content-center">
+                        <img src="{{ asset($partner->image) }}" alt="{{ $partner->name ?? 'Partner' }}" class="img-fluid"/>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+            <div class="swiper-button-next-01"><i class="fa-regular fa-chevron-right"></i></div>
+            <div class="swiper-button-prev-01"><i class="fa-regular fa-chevron-left"></i></div>
+        </div>
+    </div>
+</section>
+
+<section id="news-home" class="news-home mb-5">
+    <div class="container">
+        <header class="section-header d-flex align-items-center justify-content-between" data-aos="fade-top">
+            <h2>Tin tức</h2>
+            <div><a href="{{ url('/tin-tuc') }}" class="btn-themes">Tất cả bài viết <img src="{{ asset('assets/images/right-arrow.svg') }}" /></a></div>
+        </header>
+        <div class="row gy-4">
+            @foreach($posts as $post)
+            <div class="col-xl-3 col-md-6 col-6" data-aos="fade-up" data-aos-delay="100">
+                <article>
+                <a href="{{ url('/tin-tuc/' . $post->slug) }}">
+                    <div class="img"><img src="{{ asset($post->image) }}" alt="{{ $post->title }}"/></div>
+                    <div class="description">
+                        <p class="post-date">
+                            <time>Pumi   |   {{ $post->published_at ? \Carbon\Carbon::parse($post->published_at)->format('d.m.y') : now()->format('d.m.y') }}</time>
+                        </p>
+                        <h2 class="title">{{ $post->title }}</h2>
+                        <div class="desc">{{ $post->excerpt }}</div>
+                    </div>
+                </a>
+                </article>
+            </div>
+            @endforeach
+        </div>
+    </div>
+</section>
+
+<section id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-7">
+                <div id="panel_contact">
+                    <form class="form-horizontal ajaxform" action="{{ url('/lien-he') }}" name="frmContact" id="frmContact" method="post">
+                        @csrf
+                        <div class="form-group required mt-2">
+                            <input type="text" name="fullname" value="" placeholder="Họ và tên" maxlength="256" required />
+                        </div>
+                        <div class="form-group required mt-2">
+                            <input type="email" name="email" value="" placeholder="Email"  maxlength="256" required />
+                        </div>
+                        <div class="form-group required mt-2">
+                            <input type="text" name="content" value="" placeholder="Chúng tôi có thể giúp gì cho bạn?" maxlength="256" required />
+                        </div>
+                        <div class="mt-2 text-center">
+                            <button type="submit" id="btnContact" name="btnContact" >Gửi</button>
+                        </div>
+                    </form>
+                    <div id="follow_on">
+                        <a href="#"><img src="{{ asset('assets/images/facebook.svg') }}" alt=""></a>
+                        <a href="#"><img src="{{ asset('assets/images/tiktok.svg') }}" alt=""></a>
+                        <a href="#"><img src="{{ asset('assets/images/instagram.svg') }}" alt=""></a>
+                        <a href="#"><img src="{{ asset('assets/images/web.svg') }}" alt=""></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5"><img src="{{ asset('assets/images/right-contact.png') }}" class="img-fluid" alt="Contact"/></div>
+        </div>
+    </div>
+</section>
+@endsection
+
+@push('scripts')
+<script type="text/javascript" src="{{ asset('assets/js/pages/home.js?v=1.1') }}"></script>
+@endpush

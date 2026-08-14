@@ -1,0 +1,80 @@
+@extends('client.layouts.master')
+@section('title', 'Chi tiết tin tức')
+@section('content')
+<main id="main">
+
+        <section id="banner" class="banner-blog d-flex align-items-end" style="background-image: url('{{ asset($post->image) }}')"><div class="container"><nav class="breadcrumb-pu"><a href="{{ route('home') }}">Trang chủ</a><span class="sep">/</span><a href="{{ route('posts') }}">Tin tức</a><span class="sep">/</span><span class="current">{{ Str::limit($post->title, 50) }}</span></nav></div></section><section id="detail-post" class="mt-5"><div class="container"><div class="row">
+        <div class="col-lg-8">
+            <article class="post-article">
+                <span class="post-tag">Tin tức</span>
+                <h1 class="pd-title">{{ $post->title }}</h1>
+                <div class="post-meta">
+                    <span><i class="fa-regular fa-calendar"></i> {{ \Carbon\Carbon::parse($post->published_at)->format('d.m.y') }}</span>
+                    <span><i class="fa-regular fa-user"></i> Pumi Việt Nam</span>
+                </div>
+                <div class="post-detail">{!! $post->content !!}</div>
+                <div class="post-share">
+                    <span>Chia sẻ:</span>
+                    <a href="https://www.facebook.com/sharer/sharer.php" target="_blank" rel="noopener" aria-label="Chia sẻ Facebook"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Sao chép liên kết" onclick="navigator.clipboard&&navigator.clipboard.writeText(window.location.href);return false;"><i class="fa-solid fa-link"></i></a>
+                </div>
+            </article>
+        </div>
+        <div class="col-lg-4">
+            <aside class="post-sidebar">
+                <div class="sidebar-box">
+                    <h4>Tìm kiếm sản phẩm</h4>
+                    <form class="sidebar-search" action="{{ route('search') }}" method="get">
+                        <input type="text" name="q" placeholder="Tìm sản phẩm Pumi...">
+                        <button type="submit" aria-label="Tìm kiếm"><i class="fa-solid fa-magnifying-glass"></i></button>
+                    </form>
+                </div>
+                <div class="sidebar-box">
+                    <h4>Bài viết liên quan</h4>
+                    <ul class="related-list">
+                        @foreach(\App\Models\Post::where('id', '!=', $post->id)->latest('published_at')->limit(3)->get() as $related)
+                        <li><a href="{{ route('post.detail', $related->slug) }}"><div class="thumb"><img src="{{ asset($related->image) }}" alt="{{ $related->title }}"></div><div><span class="rl-title">{{ $related->title }}</span><span class="rl-date">{{ \Carbon\Carbon::parse($related->published_at)->format('d.m.y') }}</span></div></a></li>
+                        @endforeach
+                    </ul>
+                </div>
+                <div class="sidebar-box sidebar-cta">
+                    <h4>Cần tư vấn sản phẩm?</h4>
+                    <p>Đội ngũ Pumi luôn sẵn sàng hỗ trợ mẹ chọn sản phẩm phù hợp cho bé.</p>
+                    <a class="btn-themes" href="tel:0986.127.635">Gọi 0986.127.635</a>
+                </div>
+            </aside>
+        </div>
+    </div></div></section><section id="contact">
+            <div class="container">
+            <div class="row">
+	<div class="col-md-7">
+	            <div id="panel_contact">
+                    <form class="form-horizontal ajaxform" action="https://pumi.vn/blog/send-contact.html" name="frmContact" id="frmContact" method="post">
+                        <div class="form-group required mt-2">
+                            <input type="text" name="fullname" value="" placeholder="Họ và tên" maxlength="256" required />
+                        </div>
+                        <div class="form-group required mt-2">
+                            <input type="text" name="email" value="" placeholder="Email"  maxlength="256" required />
+                        </div>
+                        <div class="form-group required mt-2">
+                            <input type="text" name="content" value="" placeholder="Chúng tôi có thể giúp gì cho bạn?" maxlength="256" required />
+                        </div>
+                        <div class="mt-2 text-center">
+                            <button type="submit" id="btnContact" name="btnContact" >Gửi</button>
+                        </div>
+                    </form>
+                    <div id="follow_on">
+                        <a href="#"><img src="{{ asset('assets/') }}/images/facebook.svg" alt=""></a>
+                        <a href="#"><img src="{{ asset('assets/') }}/images/tiktok.svg" alt=""></a>
+                        <a href="#"><img src="{{ asset('assets/') }}/images/instagram.svg" alt=""></a>
+                        <a href="#"><img src="{{ asset('assets/') }}/images/web.svg" alt=""></a>
+                    </div>
+                </div>
+</div>
+	<div class="col-md-5"><img src="{{ asset('assets/') }}/images/right-contact.png" class="img-fluid" alt="Contact"/></div>
+</div>
+                
+            </div></section>
+    
+</main>
+@endsection
