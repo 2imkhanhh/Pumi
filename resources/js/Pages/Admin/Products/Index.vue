@@ -1,7 +1,7 @@
 <script setup>
 import { Head, useForm, router, Link } from '@inertiajs/vue3';
 import AdminLayout from '../Layouts/AdminLayout.vue';
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 defineOptions({ layout: AdminLayout });
 
@@ -75,6 +75,27 @@ const formatPrice = (price) => {
     if (!price) return 'Liên hệ';
     return new Intl.NumberFormat('vi-VN', { style: 'currency', currency: 'VND' }).format(price);
 };
+
+const generateSlug = (str) => {
+    if (!str) return '';
+    str = str.replace(/^\s+|\s+$/g, '');
+    str = str.toLowerCase();
+    const from = "àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ·/_,:;";
+    const to   = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyd------";
+    for (let i = 0, l = from.length; i < l; i++) {
+        str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
+    }
+    str = str.replace(/[^a-z0-9 -]/g, '')
+             .replace(/\s+/g, '-')
+             .replace(/-+/g, '-');
+    return str;
+};
+
+watch(() => form.name, (newName) => {
+    if (!isEditing.value) {
+        form.slug = generateSlug(newName);
+    }
+});
 </script>
 
 <template>
@@ -197,8 +218,8 @@ const formatPrice = (price) => {
                 </div>
 
                 <div class="form-group">
-                    <label>Đường dẫn tĩnh (Slug)</label>
-                    <input type="text" v-model="form.slug" class="form-control" placeholder="De-trong-se-tu-tao" />
+                    <label>Đường dẫn tĩnh</label>
+                    <input type="text" v-model="form.slug" class="form-control" />
                     <span class="error" v-if="form.errors.slug">{{ form.errors.slug }}</span>
                 </div>
 
