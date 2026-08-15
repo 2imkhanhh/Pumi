@@ -2,25 +2,31 @@
 
 @section('content')
 <div id="carouselBanner" class="carousel slide" data-bs-ride="carousel">
+  @php
+    $banners = [];
+    if (!empty($settings['home_banner_1'])) $banners[] = ['img' => $settings['home_banner_1'], 'link' => $settings['home_banner_1_link'] ?? '#'];
+    if (!empty($settings['home_banner_2'])) $banners[] = ['img' => $settings['home_banner_2'], 'link' => $settings['home_banner_2_link'] ?? '#'];
+    if (!empty($settings['home_banner_3'])) $banners[] = ['img' => $settings['home_banner_3'], 'link' => $settings['home_banner_3_link'] ?? '#'];
+    if (empty($banners)) {
+        $banners[] = ['img' => 'assets/images/upload/banner/img_68dcb2fd1d474.jpg', 'link' => '#'];
+        $banners[] = ['img' => 'assets/images/upload/banner/img_68ddf4eb12021.jpg', 'link' => '#'];
+    }
+  @endphp
   <div class="carousel-indicators">
-    <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="0" class="active" aria-current="true" aria-label="banner 2"></button>
-    <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="1" aria-current="true" aria-label="banner 1"></button>
+    @foreach($banners as $index => $banner)
+      <button type="button" data-bs-target="#carouselBanner" data-bs-slide-to="{{ $index }}" class="{{ $index == 0 ? 'active' : '' }}" aria-current="{{ $index == 0 ? 'true' : 'false' }}" aria-label="banner {{ $index + 1 }}"></button>
+    @endforeach
   </div>
   <div class="carousel-inner">
-    <div class="carousel-item active">
+    @foreach($banners as $index => $banner)
+    <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
         <div class="ci-inner">
             <div class="img">
-                <a href="#"><img src="{{ asset('assets/images/upload/banner/img_68dcb2fd1d474.jpg') }}" class="d-block w-100" alt="banner 2"></a>
+                <a href="{{ $banner['link'] }}"><img src="{{ asset($banner['img']) }}" class="d-block w-100" alt="banner {{ $index + 1 }}"></a>
             </div>
         </div>
     </div>
-    <div class="carousel-item">
-        <div class="ci-inner">
-            <div class="img">
-                <img src="{{ asset('assets/images/upload/banner/img_68ddf4eb12021.jpg') }}" class="d-block w-100" alt="banner 1">
-            </div>
-        </div>
-    </div>
+    @endforeach
   </div>
   <button class="carousel-control-prev" type="button" data-bs-target="#carouselBanner" data-bs-slide="prev">
     <img src="{{ asset('assets/images/left-banner.png') }}" alt=""/>
@@ -36,12 +42,14 @@
     <div class="container">
         <div class="row d-flex align-items-center justify-content-center">
             <div class="col-md-5 ">
-                 <h2 class="title">{{ $settings['home_about_title'] ?? 'Pumi Việt Nam' }}</h2>
-                 <div class="desc">Xin Chào!</div>
+                 <h2 class="title">{{ $settings['home_welcome_title'] ?? 'Pumi Việt Nam' }}</h2>
+                 <div class="desc">{{ $settings['home_welcome_subtitle'] ?? 'Xin Chào!' }}</div>
             </div>
             <div class="col-md-6 offset-lg-1">
                 <div data-aos="fade-right">
-                    <div class="content"><p>{!! $settings['home_about_content'] ?? 'Pumi Việt Nam thực sự vinh hạnh và trân quý bởi sự tin tưởng lựa chọn sản phẩm, dịch vụ của quý khách hàng!<br><br>Website này là toàn bộ thông tin chi tiết về Pumi, về sứ mệnh cũng như tâm huyết công hiến của đội ngũ nhân sự chúng mình. Hy vọng bạn sẽ đón nhận chúng mình một cách thoải mái và cởi mở nhất nhé!<br><br>Pumi luôn lắng nghe và cố gắng nỗ lực cải thiện mỗi ngày để đem lại sự hài lòng cho bạn!' !!}</p></div>
+                    <div class="content">
+                        {!! $settings['home_welcome_content'] ?? '<p>Pumi Việt Nam thực sự vinh hạnh và trân quý bởi sự tin tưởng lựa chọn sản phẩm, dịch vụ của quý khách hàng!<br><br>Website này là toàn bộ thông tin chi tiết về Pumi, về sứ mệnh cũng như tâm huyết công hiến của đội ngũ nhân sự chúng mình. Hy vọng bạn sẽ đón nhận chúng mình một cách thoải mái và cởi mở nhất nhé!<br><br>Pumi luôn lắng nghe và cố gắng nỗ lực cải thiện mỗi ngày để đem lại sự hài lòng cho bạn!</p>' !!}
+                    </div>
                 </div>
            </div>
         </div>
@@ -96,8 +104,8 @@
 <section id="partner" class="partner">
     <div id="box_partner" class=" ">
         <header class="section-header text-center" data-aos="fade-top">
-            <h2>Đối tác của chúng tôi</h2>
-            <p>Pumi tự hào đồng hành cùng các nhà thuốc, cửa hàng mẹ và bé, hệ thống phân phối trên toàn quốc để đưa sản phẩm thảo mộc Việt đến gần hơn với mọi gia đình.</p>
+            <h2>{{ $settings['home_partner_title'] ?? 'Đối tác của chúng tôi' }}</h2>
+            <p>{{ $settings['home_partner_subtitle'] ?? 'Pumi tự hào đồng hành cùng các nhà thuốc, cửa hàng mẹ và bé, hệ thống phân phối trên toàn quốc để đưa sản phẩm thảo mộc Việt đến gần hơn với mọi gia đình.' }}</p>
         </header>
         <div class="swiper featureSwiper">
             <div class="swiper-wrapper"> 

@@ -1,4 +1,4 @@
-﻿@extends('client.layouts.master')
+@extends('client.layouts.master')
 @section('title', 'contact.html')
 @section('content')
 <main id="main">
@@ -41,8 +41,14 @@
             <div class="container">
             <div class="row">
 	<div class="col-md-7">
-	            <div id="panel_contact">
-                    <form class="form-horizontal ajaxform" action="https://pumi.vn/send-contact.html" name="frmContact" id="frmContact" method="post">
+                <div id="panel_contact">
+                    @if(session('success'))
+                        <div class="alert alert-success" style="padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: 4px; color: #3c763d; background-color: #dff0d8; border-color: #d6e9c6;">
+                            {{ session('success') }}
+                        </div>
+                    @endif
+                    <form class="form-horizontal" action="{{ route('contact.submit') }}" name="frmContact" id="frmContact" method="post">
+                        @csrf
                         <div class="form-group required mt-2">
                             <input type="text" name="fullname" value="" placeholder="Họ và tên" maxlength="256" required />
                         </div>
@@ -57,10 +63,10 @@
                         </div>
                     </form>
                     <div id="follow_on">
-                        <a href="#"><img src="{{ asset('assets/') }}/images/facebook.svg" alt=""></a>
-                        <a href="#"><img src="{{ asset('assets/') }}/images/tiktok.svg" alt=""></a>
-                        <a href="#"><img src="{{ asset('assets/') }}/images/instagram.svg" alt=""></a>
-                        <a href="#"><img src="{{ asset('assets/') }}/images/web.svg" alt=""></a>
+                        <a href="{{ $settings['facebook'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/') }}/images/facebook.svg" alt=""></a>
+                        <a href="{{ $settings['tiktok'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/') }}/images/tiktok.svg" alt=""></a>
+                        <a href="{{ $settings['instagram'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/') }}/images/instagram.svg" alt=""></a>
+                        <a href="{{ $settings['website'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/') }}/images/web.svg" alt=""></a>
                     </div>
                 </div>
 </div>

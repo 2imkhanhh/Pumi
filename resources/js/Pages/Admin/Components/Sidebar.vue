@@ -49,13 +49,6 @@ const isActive = (routePattern) => {
                 Cấu hình chung
             </Link>
         </nav>
-        
-        <div class="sidebar-footer">
-            <Link href="/" class="back-link">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M19 12H5"></path><polyline points="12 19 5 12 12 5"></polyline></svg>
-                Về trang chủ
-            </Link>
-        </div>
     </aside>
 </template>
 

@@ -15,6 +15,7 @@ Route::get('/tin-tuc/{slug}', [HomeController::class, 'postDetail'])->name('post
 Route::get('/tuyen-dung', [HomeController::class, 'recruitment'])->name('recruitment');
 Route::get('/tuyen-dung/{slug}', [HomeController::class, 'recruitmentDetail'])->name('recruitment.detail');
 Route::get('/lien-he', [HomeController::class, 'contact'])->name('contact');
+Route::post('/lien-he', [HomeController::class, 'submitContact'])->name('contact.submit');
 Route::get('/tim-kiem', [HomeController::class, 'search'])->name('search');
 
 // Dọn dẹp routes cũ của Breeze nếu muốn, nhưng hiện tại cứ ghi đè route '/'
@@ -25,6 +26,10 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     
     // Quản lý Sản phẩm và Danh mục
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)->except(['create', 'edit', 'show']);
+    Route::resource('partners', \App\Http\Controllers\Admin\PartnerController::class)->except(['create', 'edit', 'show']);
+    Route::resource('contacts', \App\Http\Controllers\Admin\ContactController::class)->only(['index', 'update', 'destroy']);
+    Route::get('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
+    Route::post('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'store'])->name('settings.store');
     Route::resource('categories', \App\Http\Controllers\Admin\CategoryController::class)->except(['create', 'edit', 'show']);
     
     // Quản lý Tin tức

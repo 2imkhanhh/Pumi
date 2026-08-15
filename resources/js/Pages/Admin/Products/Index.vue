@@ -21,6 +21,7 @@ const form = useForm({
     price: '',
     summary: '',
     is_active: 1,
+    is_featured: 0,
     image: null,
     _method: 'POST'
 });
@@ -30,6 +31,7 @@ const openCreateModal = () => {
     form.reset();
     form.clearErrors();
     form._method = 'POST';
+    form.is_featured = 0;
     if(props.categories.length > 0) form.category_id = props.categories[0].id;
     isModalOpen.value = true;
 };
@@ -44,6 +46,7 @@ const openEditModal = (product) => {
     form.price = product.price;
     form.summary = product.summary;
     form.is_active = product.is_active;
+    form.is_featured = product.is_featured;
     form.image = null;
     form._method = 'PUT'; // Use PUT for updating with form data spoofing
     isModalOpen.value = true;
@@ -129,6 +132,7 @@ watch(() => form.name, (newName) => {
                         <th>Danh mục</th>
                         <th>Giá</th>
                         <th>Trạng thái</th>
+                        <th>Nổi bật</th>
                         <th width="120" class="text-right">Thao tác</th>
                     </tr>
                 </thead>
@@ -150,6 +154,10 @@ watch(() => form.name, (newName) => {
                             <span :class="['status-dot', product.is_active ? 'active' : 'inactive']"></span>
                             {{ product.is_active ? 'Hiển thị' : 'Ẩn' }}
                         </td>
+                        <td>
+                            <span :class="['status-dot', product.is_featured ? 'active' : 'inactive']"></span>
+                            {{ product.is_featured ? 'Nổi bật' : 'Thường' }}
+                        </td>
                         <td class="text-right">
                             <div class="actions">
                                 <button @click="openEditModal(product)" class="btn-icon text-blue" title="Sửa">
@@ -162,7 +170,7 @@ watch(() => form.name, (newName) => {
                         </td>
                     </tr>
                     <tr v-if="products.data.length === 0">
-                        <td colspan="7" class="text-center py-4 text-gray">Không có sản phẩm nào.</td>
+                        <td colspan="8" class="text-center py-4 text-gray">Không có sản phẩm nào.</td>
                     </tr>
                 </tbody>
             </table>
@@ -241,6 +249,14 @@ watch(() => form.name, (newName) => {
                         <span class="slider round"></span>
                     </label>
                     <span class="switch-label">Hiển thị trên website</span>
+                </div>
+
+                <div class="form-group switch-group">
+                    <label class="switch">
+                        <input type="checkbox" v-model="form.is_featured" :true-value="1" :false-value="0" />
+                        <span class="slider round"></span>
+                    </label>
+                    <span class="switch-label">Nổi bật trên trang chủ</span>
                 </div>
 
                 <div class="modal-footer">

@@ -1,6 +1,15 @@
 <script setup>
 import Sidebar from '../Components/Sidebar.vue';
 import Topnav from '../Components/Topnav.vue';
+import { onMounted, onUnmounted } from 'vue';
+
+onMounted(() => {
+    document.body.classList.add('admin-mode');
+});
+
+onUnmounted(() => {
+    document.body.classList.remove('admin-mode');
+});
 </script>
 
 <template>
@@ -16,9 +25,6 @@ import Topnav from '../Components/Topnav.vue';
 </template>
 
 <style>
-/* Global resets for admin */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
 body.admin-mode {
     background-color: #f8fafc;
     margin: 0;

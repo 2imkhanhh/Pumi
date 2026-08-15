@@ -12,7 +12,10 @@ class HomeController extends Controller
 {
     public function index()
     {
-        $products = Product::limit(4)->get();
+        $products = Product::where('is_active', true)->where('is_featured', true)->latest()->get();
+        if ($products->isEmpty()) {
+            $products = Product::where('is_active', true)->latest()->limit(4)->get();
+        }
         $partners = Partner::limit(10)->get();
         $posts = Post::where('type', 'news')->latest('published_at')->limit(4)->get();
 
@@ -26,7 +29,8 @@ class HomeController extends Controller
 
     public function partners()
     {
-        return view('client.pages.partners');
+        $partners = Partner::all();
+        return view('client.pages.partners', compact('partners'));
     }
 
     public function products()
@@ -57,6 +61,24 @@ class HomeController extends Controller
     public function contact()
     {
         return view('client.pages.contact');
+    }
+
+    public function submitContact(\Illuminate\Http\Request $request)
+    {
+        $request->validate([
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'content' => 'required|string|max:1000'
+        ]);
+
+        \App\Models\Contact::create([
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'content' => $request->content,
+            'status' => 'pending'
+        ]);
+
+        return redirect()->back()->with('success', 'Cảm ơn bạn đã liên hệ, chúng tôi sẽ phản hồi sớm nhất!');
     }
 
     public function productDetail($slug)

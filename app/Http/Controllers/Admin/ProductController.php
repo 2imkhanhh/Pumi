@@ -34,6 +34,7 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:2048',
             'price' => 'nullable|numeric|min:0',
             'is_active' => 'boolean',
+            'is_featured' => 'boolean',
         ]);
 
         if (empty($validated['slug'])) {
@@ -61,6 +62,7 @@ class ProductController extends Controller
             'image' => 'nullable|image|max:2048',
             'price' => 'nullable|numeric|min:0',
             'is_active' => 'boolean',
+            'is_featured' => 'boolean',
         ]);
 
         if ($request->hasFile('image')) {

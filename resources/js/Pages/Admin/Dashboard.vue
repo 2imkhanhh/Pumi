@@ -1,7 +1,6 @@
 <script setup>
-import { Head } from '@inertiajs/vue3';
+import { Head, Link } from '@inertiajs/vue3';
 import AdminLayout from './Layouts/AdminLayout.vue';
-import { onMounted } from 'vue';
 
 // Define layout so Inertia automatically wraps this page
 defineOptions({ layout: AdminLayout });
@@ -15,11 +14,11 @@ defineProps({
             contacts: 0,
             partners: 0
         })
+    },
+    recentContacts: {
+        type: Array,
+        default: () => []
     }
-});
-
-onMounted(() => {
-    document.body.classList.add('admin-mode');
 });
 </script>
 
@@ -46,10 +45,6 @@ onMounted(() => {
                 <h3>Sản phẩm</h3>
                 <p class="value">{{ stats.products }}</p>
             </div>
-            <div class="stat-trend positive">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                +12%
-            </div>
         </div>
 
         <div class="stat-card">
@@ -59,10 +54,6 @@ onMounted(() => {
             <div class="stat-info">
                 <h3>Bài viết</h3>
                 <p class="value">{{ stats.posts }}</p>
-            </div>
-            <div class="stat-trend positive">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
-                +5%
             </div>
         </div>
 
@@ -74,23 +65,15 @@ onMounted(() => {
                 <h3>Liên hệ mới</h3>
                 <p class="value">{{ stats.contacts }}</p>
             </div>
-            <div class="stat-trend negative">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"></polyline><polyline points="17 18 23 18 23 12"></polyline></svg>
-                -2%
-            </div>
         </div>
 
         <div class="stat-card">
             <div class="stat-icon bg-orange-light">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2"><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             </div>
             <div class="stat-info">
                 <h3>Đối tác</h3>
                 <p class="value">{{ stats.partners }}</p>
-            </div>
-            <div class="stat-trend neutral">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line></svg>
-                0%
             </div>
         </div>
     </div>
@@ -99,9 +82,31 @@ onMounted(() => {
         <div class="card">
             <div class="card-header">
                 <h2>Liên hệ gần đây</h2>
-                <button class="btn-link">Xem tất cả</button>
+                <Link :href="route('admin.contacts.index')" class="btn-link">Xem tất cả</Link>
             </div>
-            <div class="card-body empty-state">
+            <div class="card-body" v-if="recentContacts && recentContacts.length > 0">
+                <div class="table-responsive">
+                    <table class="table-dashboard">
+                        <thead>
+                            <tr>
+                                <th>Họ & tên</th>
+                                <th>Email</th>
+                                <th>Nội dung</th>
+                                <th>Thời gian</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr v-for="contact in recentContacts" :key="contact.id">
+                                <td class="font-medium">{{ contact.fullname }}</td>
+                                <td>{{ contact.email }}</td>
+                                <td class="text-truncate" :title="contact.content">{{ contact.content }}</td>
+                                <td>{{ new Date(contact.created_at).toLocaleDateString('vi-VN') }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-body empty-state" v-else>
                 <img src="https://illustrations.popsy.co/amber/freelancer.svg" alt="Empty" class="empty-img" />
                 <p>Chưa có liên hệ mới nào trong hôm nay.</p>
             </div>
@@ -283,5 +288,52 @@ onMounted(() => {
     width: 200px;
     opacity: 0.7;
     margin-bottom: 1.5rem;
+}
+
+.card-body {
+    padding: 1.5rem;
+}
+
+.table-responsive {
+    overflow-x: auto;
+}
+
+.table-dashboard {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.table-dashboard th {
+    padding: 0.75rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #64748b;
+    text-transform: uppercase;
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.table-dashboard td {
+    padding: 1rem;
+    font-size: 0.9rem;
+    color: #475569;
+    border-bottom: 1px solid #f1f5f9;
+    vertical-align: middle;
+}
+
+.table-dashboard tr:last-child td {
+    border-bottom: none;
+}
+
+.font-medium {
+    font-weight: 500;
+    color: #0f172a;
+}
+
+.text-truncate {
+    max-width: 250px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 </style>

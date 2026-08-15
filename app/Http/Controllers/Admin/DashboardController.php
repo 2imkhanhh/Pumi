@@ -21,8 +21,11 @@ class DashboardController extends Controller
             'partners' => Partner::count(),
         ];
 
+        $recentContacts = Contact::orderBy('id', 'desc')->take(5)->get();
+
         return Inertia::render('Admin/Dashboard', [
-            'stats' => $stats
+            'stats' => $stats,
+            'recentContacts' => $recentContacts
         ]);
     }
 }

@@ -17,11 +17,6 @@ const logout = () => {
         </div>
 
         <div class="user-actions">
-            <button class="notification-btn">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
-                <span class="badge">3</span>
-            </button>
-
             <div class="profile-dropdown">
                 <button class="profile-btn" @click="isDropdownOpen = !isDropdownOpen">
                     <img src="https://ui-avatars.com/api/?name=Admin&background=eff6ff&color=3b82f6" alt="Avatar" class="avatar" />
@@ -30,10 +25,6 @@ const logout = () => {
                 </button>
 
                 <div v-if="isDropdownOpen" class="dropdown-menu">
-                    <div class="dropdown-header">
-                        <p class="name">{{ $page.props.auth.user.name }}</p>
-                        <p class="email">{{ $page.props.auth.user.email }}</p>
-                    </div>
                     <Link :href="route('profile.edit')" class="dropdown-item">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
                         Tài khoản
