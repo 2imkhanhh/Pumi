@@ -12,20 +12,22 @@
    1. Biến — lấy đúng các mã màu đang dùng trong theme.css
    -------------------------------------------------------------------------- */
 :root {
-    --pu-cyan:       #37BEC9;   /* xanh ngọc thương hiệu */
-    --pu-navy:       #1B3F94;   /* xanh đậm tiêu đề */
-    --pu-blue:       #2E5FD0;
-    --pu-sky:        #E8F6FB;
-    --pu-ink:        #333333;
-    --pu-muted:      #6b7280;
-    --pu-line:       rgba(55, 190, 201, .18);
+    --pu-cyan: #37BEC9;
+    /* xanh ngọc thương hiệu */
+    --pu-navy: #1B3F94;
+    /* xanh đậm tiêu đề */
+    --pu-blue: #2E5FD0;
+    --pu-sky: #E8F6FB;
+    --pu-ink: #333333;
+    --pu-muted: #6b7280;
+    --pu-line: rgba(55, 190, 201, .18);
 
-    --pu-radius:     14px;
-    --pu-radius-sm:  8px;
-    --pu-shadow:     0 10px 30px rgba(27, 63, 148, .10);
-    --pu-shadow-lg:  0 22px 56px rgba(27, 63, 148, .16);
-    --pu-ease:       cubic-bezier(.22, .61, .36, 1);
-    --pu-ease-out:   cubic-bezier(.16, 1, .3, 1);
+    --pu-radius: 14px;
+    --pu-radius-sm: 8px;
+    --pu-shadow: 0 10px 30px rgba(27, 63, 148, .10);
+    --pu-shadow-lg: 0 22px 56px rgba(27, 63, 148, .16);
+    --pu-ease: cubic-bezier(.22, .61, .36, 1);
+    --pu-ease-out: cubic-bezier(.16, 1, .3, 1);
 }
 
 /* --------------------------------------------------------------------------
@@ -53,7 +55,12 @@ body {
     max-width: 100%;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     text-wrap: balance;
     line-height: 1.2;
 }
@@ -81,8 +88,13 @@ textarea:focus-visible {
 }
 
 @media (prefers-reduced-motion: reduce) {
-    html { scroll-behavior: auto; }
-    *, *::before, *::after {
+    html {
+        scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
         animation-duration: .01ms !important;
         animation-iteration-count: 1 !important;
         transition-duration: .01ms !important;
@@ -121,23 +133,27 @@ textarea:focus-visible {
    -------------------------------------------------------------------------- */
 .section-header h2,
 #title-page h2 {
-    font-size: clamp(1.65rem, 1.05rem + 1.625vw, 3rem);      /* tối đa 48px */
+    font-size: clamp(1.65rem, 1.05rem + 1.625vw, 3rem);
+    /* tối đa 48px */
     line-height: 1.16;
     letter-spacing: -.015em;
 }
 
 .section-header h3 {
-    font-size: clamp(1.15rem, 0.98rem + 0.85vw, 2rem);        /* tối đa 32px */
+    font-size: clamp(1.15rem, 0.98rem + 0.85vw, 2rem);
+    /* tối đa 32px */
     line-height: 1.3;
 }
 
 .banner-bg .section-header h2 {
-    font-size: clamp(1.75rem, 1rem + 2.5vw, 4rem);          /* tối đa 64px */
+    font-size: clamp(1.75rem, 1rem + 2.5vw, 4rem);
+    /* tối đa 64px */
     line-height: 1.12;
 }
 
 .banner-bgs h2 {
-    font-size: clamp(1.7rem, 1rem + 2.292vw, 3.75rem);          /* tối đa 60px */
+    font-size: clamp(1.7rem, 1rem + 2.292vw, 3.75rem);
+    /* tối đa 60px */
     line-height: 1.14;
 }
 
@@ -153,33 +169,39 @@ textarea:focus-visible {
 
 /* Khối "XIN CHÀO" trang chủ — cỡ 70px cố định làm vỡ nhịp trên điện thoại */
 #about-us .desc {
-    font-size: clamp(2rem, 1.1rem + 2.729vw, 4.375rem);       /* tối đa 70px */
+    font-size: clamp(2rem, 1.1rem + 2.729vw, 4.375rem);
+    /* tối đa 70px */
     line-height: 1.06;
     letter-spacing: -.02em;
 }
 
 #about-us .about-us-text h2 {
-    font-size: clamp(1.75rem, 1.05rem + 2.458vw, 4rem);       /* tối đa 64px */
+    font-size: clamp(1.75rem, 1.05rem + 2.458vw, 4rem);
+    /* tối đa 64px */
     line-height: 1.12;
 }
 
 #about-us .about-us-text h3 {
-    font-size: clamp(1.25rem, 1rem + 1.25vw, 2.5rem);        /* tối đa 40px */
+    font-size: clamp(1.25rem, 1rem + 1.25vw, 2.5rem);
+    /* tối đa 40px */
     line-height: 1.3;
 }
 
 #about-us-home .about-us-text h2.title {
-    font-size: clamp(1.6rem, 1rem + 2.031vw, 3.438rem);      /* tối đa 55px */
+    font-size: clamp(1.6rem, 1rem + 2.031vw, 3.438rem);
+    /* tối đa 55px */
     line-height: 1.14;
 }
 
 #about-us-home .about-us-text h3.desc {
-    font-size: clamp(1.1rem, 0.95rem + 0.875vw, 2rem);          /* tối đa 32px */
+    font-size: clamp(1.1rem, 0.95rem + 0.875vw, 2rem);
+    /* tối đa 32px */
     line-height: 1.35;
 }
 
 #about-us-page #box-about-us .desc {
-    font-size: clamp(1.9rem, 1.1rem + 2.469vw, 4.062rem);      /* tối đa 65px */
+    font-size: clamp(1.9rem, 1.1rem + 2.469vw, 4.062rem);
+    /* tối đa 65px */
     line-height: 1.1;
 }
 
@@ -201,18 +223,21 @@ textarea:focus-visible {
 #aboutus-company .culture .content,
 .about-us-mission h4,
 #about-us-history .history_year span {
-    font-size: clamp(1.2rem, 1rem + 0.833vw, 2rem);           /* tối đa 32px */
+    font-size: clamp(1.2rem, 1rem + 0.833vw, 2rem);
+    /* tối đa 32px */
     line-height: 1.3;
 }
 
 .news-title {
-    font-size: clamp(1.3rem, 1rem + 1.146vw, 2.375rem);      /* tối đa 38px */
+    font-size: clamp(1.3rem, 1rem + 1.146vw, 2.375rem);
+    /* tối đa 38px */
     line-height: 1.25;
 }
 
 .about-us-logo h2,
 #contact-map .description h2 {
-    font-size: clamp(1.3rem, 1.05rem + 1.208vw, 2.5rem);      /* tối đa 40px */
+    font-size: clamp(1.3rem, 1.05rem + 1.208vw, 2.5rem);
+    /* tối đa 40px */
     line-height: 1.25;
 }
 
@@ -294,7 +319,7 @@ textarea:focus-visible {
 .viewmore a,
 .readmore {
     transition: background-color .3s var(--pu-ease), color .3s var(--pu-ease),
-                transform .3s var(--pu-ease), box-shadow .3s var(--pu-ease);
+        transform .3s var(--pu-ease), box-shadow .3s var(--pu-ease);
 }
 
 .btn-themes:hover,
@@ -314,12 +339,12 @@ textarea:focus-visible {
    8. Menu điều hướng
    -------------------------------------------------------------------------- */
 @media (min-width: 1200px) {
-    .navmenu > ul > li > a {
+    .navmenu>ul>li>a {
         transition: color .28s var(--pu-ease);
     }
 
-    .navmenu > ul > li:hover > a,
-    .navmenu > ul > li > a.active {
+    .navmenu>ul>li:hover>a,
+    .navmenu>ul>li>a.active {
         color: var(--pu-cyan);
     }
 
@@ -340,6 +365,7 @@ textarea:focus-visible {
 }
 
 @media (max-width: 1199px) {
+
     /* Vùng chạm tối thiểu 44px theo chuẩn Apple/Google */
     .mobile-nav-toggle {
         display: inline-flex;
@@ -354,7 +380,7 @@ textarea:focus-visible {
         font-size: 30px;
     }
 
-    .mobile-nav-active .navmenu > ul > li > a {
+    .mobile-nav-active .navmenu>ul>li>a {
         padding: 13px 22px;
         font-size: 17px;
     }
@@ -384,30 +410,37 @@ textarea:focus-visible {
     }
 
     @keyframes pu-mnu-in {
-        from { opacity: 0; transform: translateY(-6px); }
-        to   { opacity: 1; transform: translateY(0); }
+        from {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
     }
 
-    .mobile-nav-active .navmenu > ul > li {
+    .mobile-nav-active .navmenu>ul>li {
         border-bottom: 1px solid rgba(255, 255, 255, .12);
     }
 
-    .mobile-nav-active .navmenu > ul > li:last-child {
+    .mobile-nav-active .navmenu>ul>li:last-child {
         border-bottom: none;
     }
 
-    .mobile-nav-active .navmenu > ul > li > a {
+    .mobile-nav-active .navmenu>ul>li>a {
         color: rgba(255, 255, 255, .92);
     }
 
-    .mobile-nav-active .navmenu > ul > li > a:hover,
-    .mobile-nav-active .navmenu > ul > li > a.active,
-    .mobile-nav-active .navmenu > ul > li > a:focus {
+    .mobile-nav-active .navmenu>ul>li>a:hover,
+    .mobile-nav-active .navmenu>ul>li>a.active,
+    .mobile-nav-active .navmenu>ul>li>a:focus {
         color: var(--pu-cyan);
     }
 
-    .mobile-nav-active .navmenu > ul > li > a i,
-    .mobile-nav-active .navmenu > ul > li > a:focus i {
+    .mobile-nav-active .navmenu>ul>li>a i,
+    .mobile-nav-active .navmenu>ul>li>a:focus i {
         background-color: rgba(255, 255, 255, .12);
         color: rgba(255, 255, 255, .85);
     }
@@ -433,7 +466,7 @@ textarea:focus-visible {
 
     .mobile-nav-active .navmenu .dropdown ul a:hover,
     .mobile-nav-active .navmenu .dropdown ul .active:hover,
-    .mobile-nav-active .navmenu .dropdown ul li:hover > a {
+    .mobile-nav-active .navmenu .dropdown ul li:hover>a {
         background: var(--pu-sky);
         color: var(--pu-navy);
     }
@@ -472,6 +505,7 @@ textarea:focus-visible {
    bố cục desktop với cỡ chữ desktop. Siết lại phần đệm ngang cho vừa.
    -------------------------------------------------------------------------- */
 @media (min-width: 769px) and (max-width: 1199.98px) {
+
     .banner-bgs .content,
     .banner-bg .section-header {
         padding-left: 24px;
@@ -490,7 +524,8 @@ textarea:focus-visible {
    -------------------------------------------------------------------------- */
 .form-control,
 .form-select {
-    font-size: 16px;   /* dưới 16px iOS tự phóng to trang khi gõ */
+    font-size: 16px;
+    /* dưới 16px iOS tự phóng to trang khi gõ */
     transition: border-color .28s var(--pu-ease), box-shadow .28s var(--pu-ease);
 }
 
@@ -563,41 +598,31 @@ textarea:focus-visible {
     opacity: .82;
 }
 
-/* Cân lại 3 cột chân trang.
-   HTML gốc dùng col-md-6 / col-6 col-md-4 / col-6 col-md-2 — cột đầu chiếm
-   nửa trang, hai cột còn lại bị bóp lệch hẳn sang phải. Đổi thành 3 cột đều
-   nhau trên desktop, xếp chồng đều nhau trên mobile (thay vì 1 cột full-width
-   rồi 2 cột 50/50 lệch tông với tiêu đề "text-end"). */
-@media (min-width: 768px) {
-    #footer_text .row {
-        flex-wrap: nowrap;
-    }
-    #footer_text .row > div.col-md-6,
-    #footer_text .row > div.col-md-4,
-    #footer_text .row > div.col-md-2 {
-        flex: 1 1 0;
-        max-width: none;
-        width: auto;
-    }
-}
-
-@media (max-width: 767.98px) {
-    #footer_text .row > div.col-6 {
-        flex: 0 0 100%;
-        max-width: 100%;
-    }
-    #footer .title.text-end {
-        text-align: left !important;
-    }
+#footer #blogo a,
+#footer #blogo a:hover {
+    opacity: 1 !important;
+    transition: none !important;
+    background: none !important;
 }
 
 /* --------------------------------------------------------------------------
    13. In ấn
    -------------------------------------------------------------------------- */
 @media print {
-    #header, #video-home, .swiper-button-next-01, .swiper-button-prev-01,
-    .mobile-nav-toggle { display: none !important; }
-    body { background: #fff; color: #000; font-size: 12pt; }
+
+    #header,
+    #video-home,
+    .swiper-button-next-01,
+    .swiper-button-prev-01,
+    .mobile-nav-toggle {
+        display: none !important;
+    }
+
+    body {
+        background: #fff;
+        color: #000;
+        font-size: 12pt;
+    }
 }
 
 
@@ -607,6 +632,7 @@ textarea:focus-visible {
    Bootstrap để gutter 12px mỗi bên, cộng viền của một vài khối là đủ tràn.
    -------------------------------------------------------------------------- */
 @media (max-width: 359.98px) {
+
     .container,
     .container-fluid {
         padding-left: 12px;
@@ -618,7 +644,7 @@ textarea:focus-visible {
         margin-right: -8px;
     }
 
-    .row > * {
+    .row>* {
         padding-left: 8px;
         padding-right: 8px;
     }
@@ -665,8 +691,9 @@ textarea:focus-visible {
    9. Trang tìm kiếm sản phẩm (tim-kiem.html)
    -------------------------------------------------------------------------- */
 #search-hero {
-    background: var(--pu-sky);
-    padding: 40px 0 28px;
+    background: linear-gradient(180deg, #eff6ff 0%, #dbeafe 100%);
+    padding: 50px 0 35px;
+    border-bottom: 1px solid #e2e8f0;
 }
 
 .search-form-big {
@@ -677,8 +704,16 @@ textarea:focus-visible {
     align-items: center;
     background: #fff;
     border-radius: 999px;
-    box-shadow: var(--pu-shadow);
+    box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.05);
     padding: 6px 8px 6px 24px;
+    border: 2px solid transparent;
+    transition: all 0.3s var(--pu-ease);
+}
+
+.search-form-big:focus-within {
+    border-color: var(--pu-cyan);
+    box-shadow: 0 15px 30px -5px rgba(59, 130, 246, 0.15), 0 0 0 4px rgba(55, 190, 201, 0.15);
+    transform: translateY(-1px);
 }
 
 .search-form-big i.fa-magnifying-glass {
@@ -703,8 +738,8 @@ textarea:focus-visible {
 
 .search-clear {
     border: none;
-    background: var(--pu-sky);
-    color: var(--pu-navy);
+    background: #f1f5f9;
+    color: #475569;
     width: 38px;
     height: 38px;
     border-radius: 50%;
@@ -722,7 +757,7 @@ textarea:focus-visible {
 
 .search-tags {
     max-width: 720px;
-    margin: 18px auto 0;
+    margin: 22px auto 0;
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
@@ -730,31 +765,35 @@ textarea:focus-visible {
 }
 
 .tag-chip {
-    border: 1.5px solid var(--pu-line);
+    border: 1px solid #cbd5e1;
     background: #fff;
-    color: var(--pu-navy);
-    font-size: 14px;
+    color: #475569;
+    font-size: 13.5px;
     font-weight: 600;
-    padding: 8px 18px;
+    padding: 8px 20px;
     border-radius: 999px;
-    transition: all .2s var(--pu-ease);
+    cursor: pointer;
+    transition: all .25s var(--pu-ease);
 }
 
 .tag-chip:hover {
     border-color: var(--pu-cyan);
     color: var(--pu-cyan);
+    transform: translateY(-1px);
 }
 
 .tag-chip.active {
     background: var(--pu-cyan);
     border-color: var(--pu-cyan);
     color: #fff;
+    box-shadow: 0 4px 12px rgba(55, 190, 201, 0.35);
 }
 
 .search-status {
     color: var(--pu-muted);
     font-size: 15px;
     margin: 24px 4px 16px;
+    font-weight: 500;
 }
 
 .search-empty {
@@ -784,6 +823,7 @@ textarea:focus-visible {
     .search-form-big {
         padding: 4px 6px 4px 16px;
     }
+
     .search-form-big input {
         font-size: 15px;
     }
@@ -1035,7 +1075,7 @@ textarea:focus-visible {
     padding: 0;
 }
 
-.related-list li + li {
+.related-list li+li {
     margin-top: 16px;
     padding-top: 16px;
     border-top: 1px solid var(--pu-line);
@@ -1106,37 +1146,59 @@ textarea:focus-visible {
     body {
         font-size: 16px;
     }
+
     .banner-bg {
         height: 400px !important;
     }
+
     .banner-bgs {
         height: 550px !important;
     }
-    .banner-bgs h2, .banner-bgs .content h3 {
+
+    .banner-bgs h2,
+    .banner-bgs .content h3 {
         font-size: 2.2rem !important;
     }
-    #about-us, #about-us-home, #products-home, #partner, #news-home, #contact, #core-values, #about-us-team, #about-us-history {
+
+    #about-us,
+    #about-us-home,
+    #products-home,
+    #partner,
+    #news-home,
+    #contact,
+    #core-values,
+    #about-us-team,
+    #about-us-history {
         padding-top: 40px !important;
         padding-bottom: 40px !important;
     }
+
     .section-header {
         padding-bottom: 15px !important;
     }
+
     #video-home iframe {
         max-height: 550px !important;
     }
-    .section-header h2, #title-page h2 {
+
+    .section-header h2,
+    #title-page h2 {
         font-size: 2rem !important;
     }
+
     .section-header h3 {
         font-size: 1.4rem !important;
     }
+
     .banner-bg .section-header h2 {
         font-size: 2.5rem !important;
     }
-    #about-us .desc, #about-us-page #box-about-us .desc {
+
+    #about-us .desc,
+    #about-us-page #box-about-us .desc {
         font-size: 2.5rem !important;
     }
+
     #carouselBanner .carousel-item img {
         max-height: 75vh;
         object-fit: cover;
@@ -1144,19 +1206,229 @@ textarea:focus-visible {
 }
 
 /* Pagination Premium for Client */
-.pagination { display: flex; justify-content: center; gap: 0.5rem; margin-top: 2rem; }
-.page-item .page-link { width: 40px; height: 40px; display: flex; align-items: center; justify-content: center; border-radius: 50% !important; border: 1px solid var(--pu-line); color: var(--pu-navy); font-weight: 600; font-size: 15px; transition: all 0.3s ease; background: #fff; }
-.page-item .page-link:hover { background: var(--pu-sky); color: var(--pu-cyan); border-color: var(--pu-cyan); transform: translateY(-2px); }
-.page-item.active .page-link { background: var(--pu-cyan); color: #fff; border-color: var(--pu-cyan); box-shadow: 0 4px 10px rgba(0,184,217,0.3); }
-.page-item.disabled .page-link { opacity: 0.5; pointer-events: none; background: #f8fafc; }
+.pagination {
+    display: flex;
+    justify-content: center;
+    gap: 0.5rem;
+    margin-top: 2rem;
+}
+
+.page-item .page-link {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50% !important;
+    border: 1px solid var(--pu-line);
+    color: var(--pu-navy);
+    font-weight: 600;
+    font-size: 15px;
+    transition: all 0.3s ease;
+    background: #fff;
+}
+
+.page-item .page-link:hover {
+    background: var(--pu-sky);
+    color: var(--pu-cyan);
+    border-color: var(--pu-cyan);
+    transform: translateY(-2px);
+}
+
+.page-item.active .page-link {
+    background: var(--pu-cyan);
+    color: #fff;
+    border-color: var(--pu-cyan);
+    box-shadow: 0 4px 10px rgba(0, 184, 217, 0.3);
+}
+
+.page-item.disabled .page-link {
+    opacity: 0.5;
+    pointer-events: none;
+    background: #f8fafc;
+}
 
 
 /* Unified Pagination */
-.pagination-wrap { padding: 1.5rem; display: flex; justify-content: center; }
-.pagination-wrap .pagination { display: inline-flex; align-items: center; gap: 0.5rem; margin: 0; }
-.pagination-wrap .page-item .page-link { display: flex; align-items: center; justify-content: center; min-width: 42px; height: 42px; border-radius: 50% !important; background: transparent; border: none; color: #27397C; text-decoration: none; font-size: 1.05rem; font-weight: 700; transition: all 0.25s ease; cursor: pointer; padding: 0; }
-.pagination-wrap .page-item:not(.disabled) .page-link:hover { background: #E6F4FD; color: #14B6C3; transform: translateY(-2px); }
-.pagination-wrap .page-item.active .page-link { background: #14B6C3; color: #ffffff; box-shadow: 0 4px 12px rgba(20, 182, 195, 0.4); }
-.pagination-wrap .page-item.disabled .page-link { opacity: 0.4; cursor: not-allowed; background: transparent; }
-.pagination-wrap .page-link svg { width: 22px; height: 22px; }
+.pagination-wrap {
+    padding: 1.5rem;
+    display: flex;
+    justify-content: center;
+}
 
+.pagination-wrap .pagination {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.pagination-wrap .page-item .page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 42px;
+    height: 42px;
+    border-radius: 50% !important;
+    background: transparent;
+    border: none;
+    color: #27397C;
+    text-decoration: none;
+    font-size: 1.05rem;
+    font-weight: 700;
+    transition: all 0.25s ease;
+    cursor: pointer;
+    padding: 0;
+}
+
+.pagination-wrap .page-item:not(.disabled) .page-link:hover {
+    background: #E6F4FD;
+    color: #14B6C3;
+    transform: translateY(-2px);
+}
+
+.pagination-wrap .page-item.active .page-link {
+    background: #14B6C3;
+    color: #ffffff;
+    box-shadow: 0 4px 12px rgba(20, 182, 195, 0.4);
+}
+
+.pagination-wrap .page-item.disabled .page-link {
+    opacity: 0.4;
+    cursor: not-allowed;
+    background: transparent;
+}
+
+.pagination-wrap .page-link svg {
+    width: 22px;
+    height: 22px;
+}
+
+/* Beautiful modern cards for search results */
+#searchGrid .box-item {
+    background: #fff;
+    border: 1px solid #e2e8f0;
+    border-radius: 16px;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.03);
+    margin-bottom: 24px;
+    height: calc(100% - 24px);
+}
+
+#searchGrid .box-item:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 10px 10px -5px rgba(0, 0, 0, 0.03);
+    border-color: var(--pu-cyan);
+}
+
+#searchGrid .box-item a {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    text-decoration: none !important;
+}
+
+#searchGrid .box-item .img {
+    position: relative;
+    overflow: hidden;
+    padding-top: 100%;
+    /* 1:1 Aspect Ratio */
+    background: #ffffff;
+}
+
+#searchGrid .box-item .img img {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+    transition: transform 0.5s ease;
+}
+
+#searchGrid .box-item:hover .img img {
+    transform: scale(1.08);
+}
+
+#searchGrid .box-item .info {
+    padding: 1.25rem;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+#searchGrid .box-item .title {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--pu-navy);
+    margin-bottom: 0.5rem;
+    line-height: 1.4;
+    transition: color 0.2s ease;
+    display: -webkit-box;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 2.8em;
+    /* Fixed height for 2 lines of text */
+}
+
+#searchGrid .box-item:hover .title {
+    color: var(--pu-cyan);
+}
+
+#searchGrid .box-item .desc {
+    font-size: 0.875rem;
+    color: #64748b;
+    margin-bottom: 1.25rem;
+    line-height: 1.6;
+    flex: 1;
+    /* Automatically stretches to push the button down */
+    display: -webkit-box;
+    line-clamp: 3;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    height: 4.8em;
+    /* Fixed height for 3 lines of description */
+}
+
+#searchGrid .box-item .btn-themes {
+    margin-top: auto;
+    font-size: 0.85rem;
+    font-weight: 600;
+    padding: 10px 16px;
+    border-radius: 8px;
+    background: #eff6ff;
+    color: #3b82f6;
+    border: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    text-transform: none;
+    width: 100%;
+}
+
+#searchGrid .box-item .btn-themes img {
+    margin-left: 0 !important;
+    width: 0;
+    height: auto;
+    opacity: 0;
+    overflow: hidden;
+    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+    filter: brightness(0) invert(1) !important;
+}
+
+#searchGrid .box-item:hover .btn-themes {
+    background: var(--pu-cyan);
+    color: #fff;
+    transform: none;
+    box-shadow: none;
+}
+
+#searchGrid .box-item:hover .btn-themes img {
+    margin-left: 8px !important;
+    width: 18px;
+    opacity: 1;
+}

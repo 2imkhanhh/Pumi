@@ -40,4 +40,7 @@
 <script>
     window.PRODUCTS_DATA = @json($products);
 </script>
+@push('scripts')
+    <script type="text/javascript" src="{{ asset('assets/js/pages/search.js?v=1.0') }}"></script>
+@endpush
 @endsection

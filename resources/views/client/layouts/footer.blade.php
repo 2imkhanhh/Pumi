@@ -3,7 +3,7 @@
         <div id="footer_text">
             <div class="row">
                 <div class="col-md-6">
-                    <div id="blogo"><img src="{{ asset($settings['footer_logo'] ?? 'assets/images/blogo.png') }}" alt=""/></div>
+                    <div id="blogo"><a href="{{ url('/') }}"><img src="{{ asset($settings['footer_logo'] ?? 'assets/images/blogo.png') }}" alt=""/></a></div>
                     <h4 id="company">{{ $settings['company_name'] ?? 'PUMI VIỆT NAM - TỰ HÀO TINH HOA THẢO MỘC VIỆT' }}</h4>
                     <div id="address">{{ $settings['address'] ?? '309a Lê Duẩn, Tổ 1, Phường Chiềng Sinh, Thành phố Sơn La.' }}</div>
                 </div>

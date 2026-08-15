@@ -37,13 +37,13 @@
     function cardHtml(p) {
         return (
             '<div class="col-md-3 col-6">' +
-            '<div class="box-item" data-aos="fade-left">' +
+            '<div class="box-item">' +
             '<a href="' + p.href + '">' +
             '<div class="img"><img src="' + p.img + '" alt="' + escapeHtml(p.name) + '"/></div>' +
             '<div class="info">' +
             '<h4 class="title text-truncate">' + escapeHtml(p.name) + '</h4>' +
             '<div class="desc"><p>' + escapeHtml(p.desc) + '</p></div>' +
-            '<div class="btn-themes">Xem thêm <img src="assets/images/right-arrow.svg" alt=""/></div>' +
+            '<div class="btn-themes">Xem thêm <img src="/assets/images/right-arrow.svg" alt=""/></div>' +
             '</div></a></div></div>'
         );
     }
@@ -63,6 +63,9 @@
         empty.classList.add("d-none");
         grid.innerHTML = list.map(cardHtml).join("");
         status.textContent = "Tìm thấy " + list.length + " sản phẩm";
+        if (window.AOS) {
+            window.AOS.refresh();
+        }
     }
 
     function filter(keyword, cat) {
