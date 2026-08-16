@@ -84,7 +84,12 @@ class HomeController extends Controller
     public function productDetail($slug)
     {
         $product = \App\Models\Product::where('slug', $slug)->firstOrFail();
-        return view('client.pages.product_detail', compact('product'));
+        $relatedProducts = \App\Models\Product::where('category_id', $product->category_id)
+                                              ->where('id', '!=', $product->id)
+                                              ->latest()
+                                              ->limit(10)
+                                              ->get();
+        return view('client.pages.product_detail', compact('product', 'relatedProducts'));
     }
 
     public function postDetail($slug)

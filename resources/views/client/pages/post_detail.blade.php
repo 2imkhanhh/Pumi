@@ -1,5 +1,5 @@
 @extends('client.layouts.master')
-@section('title', 'Chi tiết tin tức')
+@section('title', $post->title)
 @section('content')
 <main id="main">
 

@@ -1,85 +1,118 @@
 @extends('client.layouts.master')
-@section('title', 'Chi tiết')
+@section('title', $product->name)
+
+@push('styles')
+<link rel="stylesheet" href="{{ asset('assets/css/detail.css?v=1.0') }}" />
+@endpush
+
 @section('content')
 <main id="main">
 
-        <section id="banner" class="banner-bgs d-flex align-items-end" style="background-image: url('assets/images/bg-banner-in.png')">
+        <section id="banner" class="banner-bgs d-flex align-items-end" style="background-image: url('{{ asset('assets/images/bg-banner-in.png') }}')">
             <div class="container">
-                <div class="content">
-                     <h3>Nước tắm</h3><h2>Thảo mộc</h2>
+                <div class="content" style="right: 10%;">
+                     <h3>{{ $product->category ? $product->category->name : 'Sản phẩm' }}</h3><h2>{{ $product->name }}</h2>
                 </div>
             </div>
        </section>
                 <section id="panel-products-details" class="detail mt-5">
 				<div class="container">
 				<div class="row mt-5">
-                <div class="col-md-6">  <div class="slider-products">
-                        <div style="--swiper-navigation-color: #fff; --swiper-pagination-color: #fff" class="swiper mySwiper2">
-                            <div class="swiper-wrapper">
-                                 <div class="swiper-slide"><img src="{{ asset('assets/') }}/images/upload/product/img_68db4f7810eb3.png" alt="Dung dịch vệ sinh cho bé"/> </div> <div class="swiper-slide"><img src="{{ asset('assets/') }}/images/upload/product/subs/img_68ddfe2e7143f.png" alt="Dung dịch vệ sinh cho bé"/>
-  </div> <div class="swiper-slide"><img src="{{ asset('assets/') }}/images/upload/product/subs/img_68ddfe2e8f5ef.png" alt="Dung dịch vệ sinh cho bé"/>
-  </div> <div class="swiper-slide"><img src="{{ asset('assets/') }}/images/upload/product/subs/img_68ddfe2ea9e56.png" alt="Dung dịch vệ sinh cho bé"/>
-  </div> <div class="swiper-slide"><img src="{{ asset('assets/') }}/images/upload/product/subs/img_68ddfe2ec392d.png" alt="Dung dịch vệ sinh cho bé"/>
-  </div>
-                            </div>
-                            <div class="swiper-button-next"></div>
-                            <div class="swiper-button-prev"></div>
-                        </div>
-                        <div thumbsSlider="" class="swiper mySwiper">
-                            <div class="swiper-wrapper">
-                                 <div class="swiper-slide"><img src="{{ asset('assets/') }}/images/upload/product/img_68db4f7810eb3.png" alt="Dung dịch vệ sinh cho bé"/></div> <div class="swiper-slide"><img src="{{ asset('assets/') }}/images/upload/product/subs/thumbs/img_68ddfe2e7143f.png" alt="Dung dịch vệ sinh cho bé"/>
-  </div> <div class="swiper-slide"><img src="{{ asset('assets/') }}/images/upload/product/subs/thumbs/img_68ddfe2e8f5ef.png" alt="Dung dịch vệ sinh cho bé"/>
-  </div> <div class="swiper-slide"><img src="{{ asset('assets/') }}/images/upload/product/subs/thumbs/img_68ddfe2ea9e56.png" alt="Dung dịch vệ sinh cho bé"/>
-  </div> <div class="swiper-slide"><img src="{{ asset('assets/') }}/images/upload/product/subs/thumbs/img_68ddfe2ec392d.png" alt="Dung dịch vệ sinh cho bé"/>
-  </div>
-                            </div>
-                        </div>
-                    </div>  </div>
+                <div class="col-md-6">
+                    <div id="imgdt">
+                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="img-fluid" style="max-width: 55%; height: auto; margin: 0 auto; display: block;"/>
+                    </div>
+                </div>
                 <div class="col-md-6 mt-3 mt-lg-0">
-                    <h2 class="title">Dung dịch vệ sinh cho bé</h2>
-                    <div class="desc"><p><strong>Giúp làm sạch dịu nhẹ, cải thiện tình trạng:</strong></p><figure class="image"><img src="data:image/png;base64,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"></figure><h4>Thành phần</h4><p>Nước tinh khiết (Purified water), Water (and) Wedelia Calendulacea extract (Chiết xuất Sài Đất) (and) Momordica Charantia extract (Chiết xuất Khổ Qua) (and) Camellia Sinensis extract (Chiết xuất Trà Xanh) (and) Eleusine Indica extract (Chiết xuất Cỏ Mần Trầu) (and) Centella Asiatica extract (Chiết xuất Rau Má) (and) Perilla Frutescens Extract (Chiết xuất Tĩa tô) (and) Piper Betle Leaf Extract (Chiết xuất Trầu không), Propylene Glycol, Polysorbate 20, Glycerin, Ocimum Gratissimum (Holy Basil) essential oil (Tinh dầu Hương Nhu), Eucalyptus Citriodora essential oil (Tinh dầu Bạch Đàn Chanh), Zingiber Officinale Oil (Dầu Gừng), Aloe Barbadensis Leaf Juice (Nước ép lã Lô Hội) (and) Potassium Sorbate (and) Sodium Benzoate, Water (and) Avena Sativa (Oat) Kernel Extract (Chiết xuất Yến Mạch) (and) Butylene Glycol (and) 1,2-Hexanediol, Cocos Nucifera Oil (Dầu dừa), Xanthan gum, Sodium Carboxymethyl Cellulose, Tocopheryl acetate (Vitamin E), Sodium Laureth Sulfate, Citric Acid, Sodium Benzoat, Potassium Sorbate, Phenoxyethanol.</p><h4>Đối tượng sử dụng</h4><p>Trẻ sơ sinh và trẻ nhỏ. Đặc biệt dùng cho trẻ bị rôm sảy, mẩn ngứa, mụn nhọt, hăm da, lông măng, viêm da, chăm sữa...</p></div></div>
-            </div></div></section>  <section id="pro-uses" class="mt-5">
+                    <h2 class="title">{{ $product->name }}</h2>
+                    <div class="desc">{!! $product->description !!}</div></div>
+            </div></div></section>
+
+            @if($product->use_1 || $product->use_2 || $product->use_3)
+            <section id="pro-uses" class="mt-5">
             <div class="container">
                <h2 class="title-header">Công dụng</h2>
-                <div class="row d-flex align-items-center justify-content-center mt-5"><div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="fade-down">
-                    <div class="box-uses">
-                        <div class="img"><img src="{{ asset('assets/') }}/images/usage-1.png" alt=""/></div>
-                        <div class="content">Dùng để tắm, gội hàng ngày cho bé. Giúp làm sạch dịu nhẹ, chăm sóc và bảo vệ da bé.</div>
+                <div class="row d-flex align-items-center justify-content-center mt-5">
+                    @if($product->use_1)
+                    <div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="fade-down">
+                        <div class="box-uses">
+                            <div class="img"><img src="{{ asset('assets/') }}/images/usage-1.png" alt=""/></div>
+                            <div class="content">{{ $product->use_1 }}</div>
+                        </div>
                     </div>
-                </div><div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="fade-down">
-                    <div class="box-uses">
-                        <div class="img"><img src="{{ asset('assets/') }}/images/usage-2.png" alt=""/></div>
-                        <div class="content">Góp phần làm dịu mát da, giúp cải thiện tình trạng: rôm sảy, mẩn ngứa, mụn nhọt, hăm da, viêm da.</div>
+                    @endif
+                    @if($product->use_2)
+                    <div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="fade-down">
+                        <div class="box-uses">
+                            <div class="img"><img src="{{ asset('assets/') }}/images/usage-2.png" alt=""/></div>
+                            <div class="content">{{ $product->use_2 }}</div>
+                        </div>
                     </div>
-                </div><div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="fade-down">
-                    <div class="box-uses">
-                        <div class="img"><img src="{{ asset('assets/') }}/images/usage-3.png" alt=""/></div>
-                        <div class="content">Giúp duy trì độ ẩm tự nhiên, cho làn da bé mềm mại, mịn màng, thơm mát.</div>
+                    @endif
+                    @if($product->use_3)
+                    <div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="fade-down">
+                        <div class="box-uses">
+                            <div class="img"><img src="{{ asset('assets/') }}/images/usage-3.png" alt=""/></div>
+                            <div class="content">{{ $product->use_3 }}</div>
+                        </div>
                     </div>
-                </div></div>
+                    @endif
+                </div>
             </div>
-        </section><section id="pro-guide" class="mt-5 mb-5"><div class="container"><div class="row d-flex align-items-center justify-content-center">
-                    <div class="col-md-6">
-                        <div class="info">
-                            <h2 class="title">Hướng dẫn sử dụng</h2>
-                            <div class="content"><p><strong>Chuẩn bị nước tắm:</strong> Lượng nước tắm sử dụng phụ thuộc vào mỗi trẻ<br>Pha dung dịch Nước tắm gội thảo dược cho bé vào nước ẩm theo tỷ lệ:<br>10-15ml nước tắm hòa trong 5l nước ấm.<br><br><strong>Cách tắm:</strong> Dung dịch đã pha để tắm gội toàn thân cho bé. Rửa mặt, gội đầu, ngâm người bé trong nước tắm. Trong trường hợp bị rõm sảy, mụn nhọt, hăm nẻ: thấm ướt toàn thân cho bé, pha loãng Nước tắm gội thảo dược bé theo tỷ lệ 5ml thành 500ml rồi thoa trực tiếp lên vùng da bị rôm sảy, mụn nhọt, hăm nẻ khoảng 1 - 2 phút, sau đó tắm bé trong nước tắm đã pha theo đúng tỷ lệ. Tắm, gội xong lau khô người; không cần tráng lại bằng nước. Nên sử dụng hàng ngày để đạt hiệu quả tốt nhất cho</p></div>
+            </section>
+            @endif
+
+            @if($product->usage_guide)
+            <section id="pro-guide" class="mt-5 mb-5">
+                <div class="container">
+                    <div class="row d-flex align-items-center justify-content-center">
+                        <div class="col-md-6">
+                            <div class="info">
+                                <h2 class="title">Hướng dẫn sử dụng</h2>
+                                <div class="content">
+                                    <p>{!! nl2br(e($product->usage_guide)) !!}</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="img"><img src="{{ asset('assets/') }}/images/upload/post/img_68de0603897c6.jpg" alt="Hướng dẫn sử dụng" class="img-fluid"/></div>
                         </div>
                     </div>
-                    <div class="col-md-6">
-                        <div class="img"><img src="{{ asset('assets/') }}/images/upload/post/img_68de0603897c6.jpg" alt="Hướng dẫn sử dụng" class="img-fluid"/></div>
-                    </div>
-                </div></div></section><div id="panel-pro-cus"><section id="pro-notice" class="mt-5"><div class="container"><div class="row d-flex align-items-center justify-content-center">
-                    <div class="col-md-6">
-                        <div class="img"><img src="{{ asset('assets/') }}/images/upload/post/img_68de064c1b7a5.jpg" alt="Lưu ý" class="img-fluid"/></div>
-                    </div>
-                    <div class="col-md-6">
-                        <div class="info">
-                            <div class="content"><h4>Lưu ý</h4><p>Sản phẩm không làm cay mắt bé. Nếu bị dính vào mắt, rửa lại bằng nước sạch. Sản phẩm có nguồn gốc từ thảo dược, có thể gặp lắng cặn trong quá trình bảo quản; không ảnh hưởng đến chất lượng sản phẩm. Lắc kỹ trước khi sử dụng. Ngưng sử dụng nếu có kích ứng: Nếu da bé bị mẩn đỏ, ngứa hoặc khô rát, ngưng sử dụng và tham khảo ý kiến bác sĩ. Để xa tầm tay trẻ em. Đọc kỹ hướng dẫn trước khi sử dụng.</p><h4>Bảo quản</h4><p>Bảo quản nơi khô ráo, thoáng mát, tránh ánh nắng mặt trời, ở nhiệt độ dưới 30°C.</p></div>
+                </div>
+            </section>
+            @endif
+
+            <div id="panel-pro-cus">
+                @if($product->notice || $product->preservation)
+                <section id="pro-notice" class="mt-5">
+                    <div class="container">
+                        <div class="row d-flex align-items-center justify-content-center">
+                            <div class="col-md-6">
+                                <div class="img"><img src="{{ asset('assets/') }}/images/upload/post/img_68de064c1b7a5.jpg" alt="Lưu ý" class="img-fluid"/></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="info">
+                                    <div class="content">
+                                        @if($product->notice)
+                                            <h4>Lưu ý</h4>
+                                            <p>{!! nl2br(e($product->notice)) !!}</p>
+                                        @endif
+                                        @if($product->preservation)
+                                            <h4>Bảo quản</h4>
+                                            <p>{!! nl2br(e($product->preservation)) !!}</p>
+                                        @endif
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div></div></section><section id="pro-rate" class="mt-5"><div class="container"><h2 class="title-section">ĐÁNH GIÁ</h2><div id="list-rate">Chưa có đánh giá nào</div><form class="ajaxform" action="https://pumi.vn/send-reservations.html" name="frmrate" id="frmrate" method="post">
- <input type="hidden" name="product_id" value="14" />
-<div class="title">Hãy là người đầu tiên nhận xét “Dung dịch vệ sinh cho bé”</div>
+                </section>
+                @endif
+            </div>
+
+            <section id="pro-rate" class="mt-5"><div class="container"><h2 class="title-section">ĐÁNH GIÁ</h2><div id="list-rate">Chưa có đánh giá nào</div><form class="ajaxform" action="https://pumi.vn/send-reservations.html" name="frmrate" id="frmrate" method="post">
+ <input type="hidden" name="product_id" value="{{ $product->id }}" />
+<div class="title">Hãy là người đầu tiên nhận xét “{{ $product->name }}”</div>
 
     <div class="form-group required">
     <label class="label">Đánh giá của bạn *</label>
@@ -136,151 +169,33 @@
             <div class="container" data-aos="fade-up">
                <header class="section-header d-flex align-items-center justify-content-between" data-aos="fade-top">
                     <h2>Sản phẩm khác</h2>
-                    <div><a href="san-pham.html" class="btn-themes">Tất cả sản phẩm <img src="{{ asset('assets/') }}/images/right-arrow.svg" /></a></div>
+                    <div><a href="{{ route('products') }}" class="btn-themes">Tất cả sản phẩm <img src="{{ asset('assets/') }}/images/right-arrow.svg" /></a></div>
                 </header>
 
                 <div class="swiper homeproSwiper mt-5">
-                    <div class="swiper-wrapper"><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="dung-dich-ve-sinh-cho-be-pro14.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68db4f7810eb3.png" alt="Dung dịch vệ sinh cho bé" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Dung dịch vệ sinh cho bé</h4>
-                    <div class="desc"><p>Giúp làm sạch nhẹ nhàng, khử mùi hôi, làm dịu da bé khi bị: rôm sảy, hăm da, mẩn ngứa.</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="dung-dich-ve-sinh-cho-be-pro13.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68ddda7c9a06e.png" alt="Dung dịch vệ sinh cho bé" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Dung dịch vệ sinh cho bé</h4>
-                    <div class="desc"><p>Giúp làm sạch nhẹ nhàng, khử mùi hôi, làm dịu da bé khi bị: rôm sảy, hăm da, mẩn ngứa.</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="dung-dich-ve-sinh-cho-be-pro12.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68db4f93f32fc.png" alt="Dung dịch vệ sinh cho bé" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Dung dịch vệ sinh cho bé</h4>
-                    <div class="desc"><p>Hương mùa xuân &amp; Vương Quốc Hạnh Phúc</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="nuoc-tam-thao-duoc-pro11.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68da996a88715.png" alt="Nước tắm thảo dược" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Nước tắm thảo dược</h4>
-                    <div class="desc"><p>Giúp làm sạch dịu nhẹ, cải thiện tình trạng: rôm sảy, hăm da, mẩn ngứa.&nbsp;</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="nuoc-tam-thao-duoc-pro10.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68da996a88715.png" alt="Nước tắm thảo dược" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Nước tắm thảo dược</h4>
-                    <div class="desc"><p>Giúp làm sạch dịu nhẹ, cải thiện tình trạng: rôm sảy, hăm da, mẩn ngứa.&nbsp;</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="dung-dich-ve-sinh-cho-be-pro9.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68ddda7c9a06e.png" alt="Dung dịch vệ sinh cho bé" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Dung dịch vệ sinh cho bé</h4>
-                    <div class="desc"><p>Giúp làm sạch nhẹ nhàng, khử mùi hôi, làm dịu da bé khi bị: rôm sảy, hăm da, mẩn ngứa.</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="dung-dich-ve-sinh-cho-be-pro8.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68ddda7c9a06e.png" alt="Dung dịch vệ sinh cho bé" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Dung dịch vệ sinh cho bé</h4>
-                    <div class="desc"><p>Giúp làm sạch nhẹ nhàng, khử mùi hôi, làm dịu da bé khi bị: rôm sảy, hăm da, mẩn ngứa.</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="dung-dich-ve-sinh-cho-be-pro7.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68ddda7c9a06e.png" alt="Dung dịch vệ sinh cho bé" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Dung dịch vệ sinh cho bé</h4>
-                    <div class="desc"><p>Giúp làm sạch nhẹ nhàng, khử mùi hôi, làm dịu da bé khi bị: rôm sảy, hăm da, mẩn ngứa.</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="dung-dich-ve-sinh-cho-be-pro6.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68db4f93f32fc.png" alt="Dung dịch vệ sinh cho bé" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Dung dịch vệ sinh cho bé</h4>
-                    <div class="desc"><p><strong>Hương mùa xuân &amp; Vương Quốc Hạnh Phúc</strong></p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="dung-dich-ve-sinh-cho-be-pro5.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68db4f7810eb3.png" alt="Dung dịch vệ sinh cho bé" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Dung dịch vệ sinh cho bé</h4>
-                    <div class="desc"><p><strong>Hương mùa xuân &amp; Vương Quốc Hạnh Phúc</strong></p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="nuoc-giat-thao-moc-pro4.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68ddda8e43e4c.png" alt="Nước giặt thảo mộc" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Nước giặt thảo mộc</h4>
-                    <div class="desc"><p>Hương mùa xuân &amp; vương quốc Hạnh Phúc</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="nuoc-giat-thao-moc-pro3.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68ddda9c1c982.png" alt="Nước giặt thảo mộc" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Nước giặt thảo mộc</h4>
-                    <div class="desc"><p>Hương mùa xuân &amp; vương quốc Hạnh Phúc</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="nuoc-tam-thao-duoc-pro2.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68da996a88715.png" alt="Nước tắm thảo dược" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Nước tắm thảo dược</h4>
-                    <div class="desc"><p>Giúp làm sạch dịu nhẹ, cải thiện tình trạng: rôm sảy, hăm da, mẩn ngứa.&nbsp;</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div><div class="swiper-slide">
-                            <div class="box-item" data-aos="fade-left">
-            <a href="dung-dich-ve-sinh-cho-be-pro1.html"><div class="img"><img src="{{ asset('assets/') }}/images/upload/product/thumbs/img_68ddda7c9a06e.png" alt="Dung dịch vệ sinh cho bé" class="img-fluid"/></div>
-                <div class="info">
-                    <h4 class="title text-truncate">Dung dịch vệ sinh cho bé</h4>
-                    <div class="desc"><p>Giúp làm sạch nhẹ nhàng, khử mùi hôi, làm dịu da bé khi bị: rôm sảy, hăm da, mẩn ngứa.</p></div>
-                    <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
-                </div>
-                </a>
-                </div>
-                        </div></div>
+                    <div class="swiper-wrapper">
+                        @if(isset($relatedProducts) && $relatedProducts->count() > 0)
+                            @foreach($relatedProducts as $related)
+                            <div class="swiper-slide">
+                                <div class="box-item" data-aos="fade-left">
+                                <a href="{{ route('product.detail', $related->slug) }}"><div class="img"><img src="{{ asset($related->image) }}" alt="{{ $related->name }}" class="img-fluid"/></div>
+                                    <div class="info">
+                                        <h4 class="title text-truncate">{{ $related->name }}</h4>
+                                        <div class="desc"><p>{{ $related->short_description }}</p></div>
+                                        <div class="btn-themes">Xem thêm <img src="{{ asset('assets/') }}/images/right-arrow.svg" alt=""/></div>
+                                    </div>
+                                </a>
+                                </div>
+                            </div>
+                            @endforeach
+                        @else
+                            <!-- Placeholder nếu không có sản phẩm liên quan từ DB -->
+                            <div class="swiper-slide">
+                                <p>Đang cập nhật...</p>
+                            </div>
+                        @endif
+                    </div>
+                    </div>
                     <div class="swiper-button-next-01"><i class="fa-regular fa-arrow-right"></i></div>
                     <div class="swiper-button-prev-01"><i class="fa-regular fa-arrow-left"></i></div>
                 </div>
@@ -318,4 +233,9 @@
             </div></section>
     
 </main>
+
+@push('scripts')
+<script type="text/javascript" src="{{ asset('assets/js/pages/products-detail.js?v=1.0') }}"></script>
+@endpush
+
 @endsection

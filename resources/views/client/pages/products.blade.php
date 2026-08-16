@@ -1,5 +1,5 @@
 @extends('client.layouts.master')
-@section('title', 'san-pham.html')
+@section('title', 'Sản phẩm')
 @section('content')
 <main id="main">
 

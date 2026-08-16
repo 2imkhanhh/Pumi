@@ -20,6 +20,13 @@ const form = useForm({
     slug: '',
     price: '',
     summary: '',
+    description: '',
+    use_1: '',
+    use_2: '',
+    use_3: '',
+    usage_guide: '',
+    notice: '',
+    preservation: '',
     is_active: 1,
     is_featured: 0,
     image: null,
@@ -45,6 +52,13 @@ const openEditModal = (product) => {
     form.slug = product.slug;
     form.price = product.price;
     form.summary = product.summary;
+    form.description = product.description || '';
+    form.use_1 = product.use_1 || '';
+    form.use_2 = product.use_2 || '';
+    form.use_3 = product.use_3 || '';
+    form.usage_guide = product.usage_guide || '';
+    form.notice = product.notice || '';
+    form.preservation = product.preservation || '';
     form.is_active = product.is_active;
     form.is_featured = product.is_featured;
     form.image = null;
@@ -232,9 +246,51 @@ watch(() => form.name, (newName) => {
                 </div>
 
                 <div class="form-group">
-                    <label>Mô tả ngắn</label>
-                    <textarea v-model="form.summary" class="form-control" rows="3"></textarea>
+                    <label>Mô tả ngắn (Hiển thị ở danh sách)</label>
+                    <textarea v-model="form.summary" class="form-control" rows="2"></textarea>
                     <span class="error" v-if="form.errors.summary">{{ form.errors.summary }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Mô tả chi tiết (Thành phần, đối tượng sử dụng...)</label>
+                    <textarea v-model="form.description" class="form-control" rows="4" placeholder="Nhập mô tả chi tiết của sản phẩm..."></textarea>
+                    <span class="error" v-if="form.errors.description">{{ form.errors.description }}</span>
+                </div>
+
+                <h3 class="form-section-title">Công dụng</h3>
+                <div class="form-group">
+                    <label>Công dụng 1</label>
+                    <input type="text" v-model="form.use_1" class="form-control" placeholder="Ví dụ: Dùng để tắm, gội hàng ngày cho bé..." />
+                    <span class="error" v-if="form.errors.use_1">{{ form.errors.use_1 }}</span>
+                </div>
+                <div class="form-group">
+                    <label>Công dụng 2</label>
+                    <input type="text" v-model="form.use_2" class="form-control" placeholder="Ví dụ: Góp phần làm dịu mát da..." />
+                    <span class="error" v-if="form.errors.use_2">{{ form.errors.use_2 }}</span>
+                </div>
+                <div class="form-group">
+                    <label>Công dụng 3</label>
+                    <input type="text" v-model="form.use_3" class="form-control" placeholder="Ví dụ: Giúp duy trì độ ẩm tự nhiên..." />
+                    <span class="error" v-if="form.errors.use_3">{{ form.errors.use_3 }}</span>
+                </div>
+
+                <h3 class="form-section-title">Hướng dẫn & Lưu ý</h3>
+                <div class="form-group">
+                    <label>Hướng dẫn sử dụng</label>
+                    <textarea v-model="form.usage_guide" class="form-control" rows="3" placeholder="Nhập hướng dẫn sử dụng..."></textarea>
+                    <span class="error" v-if="form.errors.usage_guide">{{ form.errors.usage_guide }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Lưu ý</label>
+                    <textarea v-model="form.notice" class="form-control" rows="2" placeholder="Nhập các lưu ý khi sử dụng..."></textarea>
+                    <span class="error" v-if="form.errors.notice">{{ form.errors.notice }}</span>
+                </div>
+
+                <div class="form-group">
+                    <label>Bảo quản</label>
+                    <textarea v-model="form.preservation" class="form-control" rows="2" placeholder="Nhập hướng dẫn bảo quản..."></textarea>
+                    <span class="error" v-if="form.errors.preservation">{{ form.errors.preservation }}</span>
                 </div>
 
                 <div class="form-group">
@@ -284,6 +340,15 @@ watch(() => form.name, (newName) => {
     font-weight: 700;
     color: #0f172a;
     margin: 0;
+}
+
+.form-section-title {
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: #1e293b;
+    margin: 1.5rem 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid #f1f5f9;
 }
 
 .subtitle {

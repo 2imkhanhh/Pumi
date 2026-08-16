@@ -35,6 +35,12 @@ class ProductController extends Controller
             'price' => 'nullable|numeric|min:0',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
+            'use_1' => 'nullable|string',
+            'use_2' => 'nullable|string',
+            'use_3' => 'nullable|string',
+            'usage_guide' => 'nullable|string',
+            'notice' => 'nullable|string',
+            'preservation' => 'nullable|string',
         ]);
 
         if (empty($validated['slug'])) {
@@ -63,6 +69,12 @@ class ProductController extends Controller
             'price' => 'nullable|numeric|min:0',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
+            'use_1' => 'nullable|string',
+            'use_2' => 'nullable|string',
+            'use_3' => 'nullable|string',
+            'usage_guide' => 'nullable|string',
+            'notice' => 'nullable|string',
+            'preservation' => 'nullable|string',
         ]);
 
         if ($request->hasFile('image')) {

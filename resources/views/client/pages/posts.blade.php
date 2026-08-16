@@ -1,5 +1,5 @@
 @extends('client.layouts.master')
-@section('title', 'blog.html')
+@section('title', 'Tin tức')
 @section('content')
     <main id="main">
 

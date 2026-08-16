@@ -1432,3 +1432,67 @@ textarea:focus-visible {
     width: 18px;
     opacity: 1;
 }
+
+/* Style related product swiper buttons */
+#related-pro .homeproSwiper {
+    position: relative;
+    padding: 0 10px;
+}
+
+#related-pro .homeproSwiper .swiper-button-next-01,
+#related-pro .homeproSwiper .swiper-button-prev-01 {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08) !important;
+    opacity: 0;
+    transition: all 0.3s ease !important;
+    width: 48px !important;
+    height: 48px !important;
+    border-radius: 50% !important;
+    top: 50% !important;
+    margin-top: -24px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+#related-pro .homeproSwiper .swiper-button-next-01 {
+    right: -10px !important;
+}
+
+#related-pro .homeproSwiper .swiper-button-prev-01 {
+    left: -10px !important;
+}
+
+#related-pro .homeproSwiper .swiper-button-next-01 i,
+#related-pro .homeproSwiper .swiper-button-prev-01 i {
+    color: var(--pu-navy) !important;
+    font-size: 16px !important;
+    font-weight: 900 !important;
+}
+
+#related-pro .homeproSwiper:hover .swiper-button-next-01,
+#related-pro .homeproSwiper:hover .swiper-button-prev-01 {
+    opacity: 1;
+}
+
+#related-pro .homeproSwiper:hover .swiper-button-next-01.swiper-button-lock,
+#related-pro .homeproSwiper:hover .swiper-button-prev-01.swiper-button-lock {
+    opacity: 0 !important;
+    display: none !important;
+}
+
+#related-pro .homeproSwiper .swiper-button-next-01:hover,
+#related-pro .homeproSwiper .swiper-button-prev-01:hover {
+    background: var(--pu-cyan) !important;
+    border-color: var(--pu-cyan) !important;
+}
+
+#related-pro .homeproSwiper .swiper-button-next-01:hover i,
+#related-pro .homeproSwiper .swiper-button-prev-01:hover i {
+    color: #ffffff !important;
+}
+
+.swiper-button-lock {
+    display: none !important;
+}

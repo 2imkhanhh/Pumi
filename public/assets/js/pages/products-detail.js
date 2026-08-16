@@ -19,7 +19,8 @@ var swiper2 = new Swiper(".mySwiper2", {
 
 new Swiper('.homeproSwiper', {
     speed: 600,
-    loop: true,
+    loop: false,
+    watchOverflow: true,
     autoplay: {
         delay: 5000,
         disableOnInteraction: false
