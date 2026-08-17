@@ -181,8 +181,9 @@
                     <div><a href="{{ route('products') }}" class="btn-themes">Tất cả sản phẩm <img src="{{ asset('assets/') }}/images/right-arrow.svg" /></a></div>
                 </header>
 
-                <div class="swiper homeproSwiper mt-5">
-                    <div class="swiper-wrapper">
+                <div class="position-relative mt-5">
+                    <div class="swiper homeproSwiper">
+                        <div class="swiper-wrapper">
                         @if(isset($relatedProducts) && $relatedProducts->count() > 0)
                             @foreach($relatedProducts as $related)
                             <div class="swiper-slide">
@@ -203,10 +204,10 @@
                                 <p>Đang cập nhật...</p>
                             </div>
                         @endif
+                        </div>
                     </div>
-                    </div>
-                    <div class="swiper-button-next-01"><i class="fa-regular fa-arrow-right"></i></div>
-                    <div class="swiper-button-prev-01"><i class="fa-regular fa-arrow-left"></i></div>
+                    <div class="swiper-button-next-01 shadow-sm"><i class="fa-regular fa-arrow-right"></i></div>
+                    <div class="swiper-button-prev-01 shadow-sm"><i class="fa-regular fa-arrow-left"></i></div>
                 </div>
             </div>
         </section><section id="contact">

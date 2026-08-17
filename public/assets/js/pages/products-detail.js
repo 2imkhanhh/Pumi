@@ -21,10 +21,7 @@ new Swiper('.homeproSwiper', {
     speed: 600,
     loop: false,
     watchOverflow: true,
-    autoplay: {
-        delay: 5000,
-        disableOnInteraction: false
-    },
+    autoplay: false,
     slidesPerView: 'auto',
     pagination: {
         el: '.swiper-pagination',
