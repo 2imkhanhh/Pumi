@@ -51,7 +51,7 @@ body {
    Đặt overflow-x trên CẢ html lẫn body — chỉ đặt ở body thì html vẫn cuộn. */
 html,
 body {
-    overflow-x: hidden;
+    overflow-x: clip;
     max-width: 100%;
 }
 
