@@ -11,6 +11,8 @@ const props = defineProps({
 
 const isModalOpen = ref(false);
 const isEditing = ref(false);
+const previewImages = ref([]);
+const fileInput = ref(null);
 
 const form = useForm({
     id: null,
@@ -27,7 +29,9 @@ const form = useForm({
     preservation: '',
     is_active: 1,
     is_featured: 0,
-    image: null,
+    images: [],
+    existing_gallery: [],
+    featured_image: '',
     _method: 'POST'
 });
 
@@ -37,6 +41,11 @@ const openCreateModal = () => {
     form.clearErrors();
     form._method = 'POST';
     form.is_featured = 0;
+    form.images = [];
+    form.existing_gallery = [];
+    form.featured_image = '';
+    previewImages.value = [];
+    if(fileInput.value) fileInput.value.value = '';
     isModalOpen.value = true;
 };
 
@@ -57,9 +66,48 @@ const openEditModal = (product) => {
     form.preservation = product.preservation || '';
     form.is_active = product.is_active;
     form.is_featured = product.is_featured;
-    form.image = null;
+    form.images = [];
+    let gal = Array.isArray(product.gallery) ? product.gallery : [];
+    if (gal.length === 0 && product.image) {
+        gal = [product.image];
+    }
+    form.existing_gallery = [...gal];
+    form.featured_image = product.image || '';
+    previewImages.value = [];
+    if(fileInput.value) fileInput.value.value = '';
     form._method = 'PUT'; // Use PUT for updating with form data spoofing
     isModalOpen.value = true;
+};
+
+const handleFileSelect = (event) => {
+    const files = Array.from(event.target.files);
+    form.images = [...form.images, ...files];
+    
+    files.forEach(file => {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            previewImages.value.push({ file: file, url: e.target.result });
+        };
+        reader.readAsDataURL(file);
+    });
+};
+
+const removeNewImage = (index) => {
+    form.images.splice(index, 1);
+    previewImages.value.splice(index, 1);
+};
+
+const removeExistingImage = (index) => {
+    const removedPath = form.existing_gallery[index];
+    form.existing_gallery.splice(index, 1);
+    // If the removed image was featured, un-feature it
+    if ('/' + removedPath === form.featured_image || removedPath === form.featured_image) {
+        form.featured_image = form.existing_gallery.length > 0 ? form.existing_gallery[0] : '';
+    }
+};
+
+const setFeaturedImage = (path, isNew = false) => {
+    form.featured_image = isNew ? path : path;
 };
 
 const submit = () => {
@@ -282,9 +330,38 @@ watch(() => form.name, (newName) => {
                 </div>
 
                 <div class="form-group">
-                    <label>Hình ảnh</label>
-                    <input type="file" @input="form.image = $event.target.files[0]" class="form-control file-input" accept="image/*" />
-                    <span class="error" v-if="form.errors.image">{{ form.errors.image }}</span>
+                    <label>Thư viện hình ảnh</label>
+                    <input type="file" ref="fileInput" @change="handleFileSelect" class="form-control file-input" accept="image/*" multiple />
+                    <span class="error" v-if="form.errors.images">{{ form.errors.images }}</span>
+                    
+                    <div class="gallery-preview">
+                        <!-- Existing Images -->
+                        <div v-for="(img, idx) in form.existing_gallery" :key="'ex-'+idx" class="gallery-item" :class="{ 'is-featured': form.featured_image === img || form.featured_image === '/' + img }">
+                            <img :src="'/' + img" alt="Preview" />
+                            <div class="gallery-actions">
+                                <button type="button" class="action-btn star-btn" @click="setFeaturedImage(img)" title="Đặt làm ảnh bìa">
+                                    <svg viewBox="0 0 24 24" :fill="form.featured_image === img || form.featured_image === '/' + img ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </button>
+                                <button type="button" class="action-btn trash-btn" @click="removeExistingImage(idx)" title="Xóa ảnh">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- New Images -->
+                        <div v-for="(preview, idx) in previewImages" :key="'new-'+idx" class="gallery-item" :class="{ 'is-featured': form.featured_image === preview.file.name }">
+                            <img :src="preview.url" alt="Preview" />
+                            <div class="gallery-actions">
+                                <button type="button" class="action-btn star-btn" @click="setFeaturedImage(preview.file.name, true)" title="Đặt làm ảnh bìa">
+                                    <svg viewBox="0 0 24 24" :fill="form.featured_image === preview.file.name ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                </button>
+                                <button type="button" class="action-btn trash-btn" @click="removeNewImage(idx)" title="Xóa ảnh">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
 
                 <div class="form-group switch-group">
@@ -607,4 +684,68 @@ input:focus + .slider { box-shadow: 0 0 1px #10b981; }
 input:checked + .slider:before { transform: translateX(20px); }
 .slider.round { border-radius: 24px; }
 .slider.round:before { border-radius: 50%; }
+
+/* Gallery Preview */
+.gallery-preview {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+    margin-top: 10px;
+}
+.gallery-item {
+    position: relative;
+    border-radius: 8px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    aspect-ratio: 1 / 1;
+    background: #f1f5f9;
+}
+.gallery-item.is-featured {
+    border-color: #3b82f6;
+}
+.gallery-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+.gallery-actions {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0,0,0,0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+.gallery-item:hover .gallery-actions {
+    opacity: 1;
+}
+.action-btn {
+    background: white;
+    border: none;
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+}
+.action-btn:hover {
+    transform: scale(1.1);
+}
+.action-btn svg {
+    width: 16px;
+    height: 16px;
+}
+.star-btn { color: #f59e0b; }
+.trash-btn { color: #ef4444; }
+.mt-1 { margin-top: 0.25rem; }
+.block { display: block; }
 </style>

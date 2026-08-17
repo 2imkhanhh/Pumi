@@ -20,8 +20,17 @@
 				<div class="row mt-5">
                 <div class="col-md-6">
                     <div id="imgdt">
-                        <img src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="img-fluid" style="max-width: 55%; height: auto; margin: 0 auto; display: block;"/>
+                        <img id="main-product-image" src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="img-fluid" style="max-width: 55%; height: auto; margin: 0 auto; display: block;"/>
                     </div>
+                    @if($product->gallery && count($product->gallery) > 0)
+                    <div class="product-gallery mt-3 d-flex justify-content-center" style="gap: 10px;">
+                        @foreach($product->gallery as $galleryImg)
+                            <div class="gallery-thumb" style="width: 60px; height: 60px; cursor: pointer; border: 2px solid #ddd; border-radius: 4px; overflow: hidden;" onmouseover="this.style.borderColor='#8b5cf6'" onmouseout="this.style.borderColor='#ddd'" onclick="document.getElementById('main-product-image').src = this.querySelector('img').src">
+                                <img src="{{ asset($galleryImg) }}" alt="Thumb" class="img-fluid w-100 h-100" style="object-fit: cover;" />
+                            </div>
+                        @endforeach
+                    </div>
+                    @endif
                 </div>
                 <div class="col-md-6 mt-3 mt-lg-0">
                     <h2 class="title">{{ $product->name }}</h2>

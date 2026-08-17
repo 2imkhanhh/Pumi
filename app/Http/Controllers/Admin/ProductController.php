@@ -27,7 +27,9 @@ class ProductController extends Controller
             'slug' => 'nullable|string|max:255|unique:products,slug',
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'images' => 'nullable|array',
+            'images.*' => 'image|max:2048',
+            'featured_image' => 'nullable|string',
             'price' => 'nullable|numeric|min:0',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
@@ -43,10 +45,18 @@ class ProductController extends Controller
             $validated['slug'] = Str::slug($validated['name']);
         }
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image'] = 'storage/' . $path;
+        $gallery = [];
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $path = $file->store('products', 'public');
+                $gallery[] = 'storage/' . $path;
+            }
         }
+        $validated['gallery'] = $gallery;
+        $validated['image'] = $request->input('featured_image', $gallery[0] ?? null);
+
+        unset($validated['images']);
+        unset($validated['featured_image']);
 
         Product::create($validated);
 
@@ -60,7 +70,10 @@ class ProductController extends Controller
             'slug' => 'required|string|max:255|unique:products,slug,' . $product->id,
             'short_description' => 'nullable|string',
             'description' => 'nullable|string',
-            'image' => 'nullable|image|max:2048',
+            'images' => 'nullable|array',
+            'images.*' => 'image|max:2048',
+            'existing_gallery' => 'nullable|array',
+            'featured_image' => 'nullable|string',
             'price' => 'nullable|numeric|min:0',
             'is_active' => 'boolean',
             'is_featured' => 'boolean',
@@ -72,12 +85,21 @@ class ProductController extends Controller
             'preservation' => 'nullable|string',
         ]);
 
-        if ($request->hasFile('image')) {
-            $path = $request->file('image')->store('products', 'public');
-            $validated['image'] = 'storage/' . $path;
-        } else {
-            unset($validated['image']);
+        $gallery = $request->input('existing_gallery', []);
+        
+        if ($request->hasFile('images')) {
+            foreach ($request->file('images') as $file) {
+                $path = $file->store('products', 'public');
+                $gallery[] = 'storage/' . $path;
+            }
         }
+        
+        $validated['gallery'] = $gallery;
+        $validated['image'] = $request->input('featured_image', $gallery[0] ?? null);
+
+        unset($validated['images']);
+        unset($validated['existing_gallery']);
+        unset($validated['featured_image']);
 
         $product->update($validated);
 
