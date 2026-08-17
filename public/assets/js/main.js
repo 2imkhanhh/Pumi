@@ -11,6 +11,7 @@ $(document).ready(function(){
     });
 
     $(document).on("submit","#frmContact", function (e){
+        e.preventDefault();
         var url = $(this).attr("action");
         var form_data = $(this).serialize();
 

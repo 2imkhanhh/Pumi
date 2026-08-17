@@ -78,6 +78,10 @@ class HomeController extends Controller
             'status' => 'pending'
         ]);
 
+        if ($request->ajax()) {
+            return response()->json(['type' => 'success', 'message' => 'Cảm ơn bạn đã liên hệ, chúng tôi sẽ phản hồi sớm nhất!']);
+        }
+
         return redirect()->back()->with('success', 'Cảm ơn bạn đã liên hệ, chúng tôi sẽ phản hồi sớm nhất!');
     }
 
