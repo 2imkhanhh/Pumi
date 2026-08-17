@@ -88,12 +88,15 @@ class HomeController extends Controller
     public function productDetail($slug)
     {
         $product = \App\Models\Product::where('slug', $slug)->firstOrFail();
+        $reviews = \App\Models\ProductReview::where('product_id', $product->id)
+                                            ->where('is_approved', true)
+                                            ->latest()
+                                            ->get();
         $relatedProducts = \App\Models\Product::where('id', '!=', $product->id)
-                                              ->where('id', '!=', $product->id)
                                               ->latest()
                                               ->limit(10)
                                               ->get();
-        return view('client.pages.product_detail', compact('product', 'relatedProducts'));
+        return view('client.pages.product_detail', compact('product', 'reviews', 'relatedProducts'));
     }
 
     public function postDetail($slug)
@@ -114,5 +117,31 @@ class HomeController extends Controller
             ];
         });
         return view('client.pages.search', compact('products'));
+    }
+
+    public function storeReview(\Illuminate\Http\Request $request)
+    {
+        $request->validate([
+            'product_id' => 'required|exists:products,id',
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'rating' => 'required|integer|min:1|max:5',
+            'note' => 'required|string|max:1000'
+        ]);
+
+        \App\Models\ProductReview::create([
+            'product_id' => $request->product_id,
+            'fullname' => $request->fullname,
+            'email' => $request->email,
+            'rating' => $request->rating,
+            'note' => $request->note,
+            'is_approved' => false
+        ]);
+
+        if ($request->ajax()) {
+            return response()->json(['type' => 'success', 'message' => 'Cảm ơn bạn đã đánh giá. Đánh giá của bạn đang chờ kiểm duyệt.']);
+        }
+
+        return redirect()->back()->with('success', 'Cảm ơn bạn đã đánh giá. Đánh giá của bạn đang chờ kiểm duyệt.');
     }
 }

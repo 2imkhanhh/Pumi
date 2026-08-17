@@ -103,17 +103,36 @@ $(document).ready(function() {
 
         let rating = $("input[name='rating']:checked").val();
 
-        if(rating && rating >1){
+        if(rating && rating >= 1){
             var formData = new FormData(this);
+            var url = $(this).attr("action");
 
             $.ajax({
-                url: base_url + '/components/send_rate.php',
+                url: url,
                 type: "POST",
                 data: formData,
                 contentType: false,
                 processData: false,
                 success: function (response) {
-                    location.reload();
+                    if (response.type === 'success') {
+                        // Lưu localStorage nếu tick chọn
+                        if ($('#saveReviewInfo').is(':checked')) {
+                            localStorage.setItem('pumi_review_name', $("input[name='fullname']").val());
+                            localStorage.setItem('pumi_review_email', $("input[name='email']").val());
+                            localStorage.setItem('pumi_review_save', 'true');
+                        } else {
+                            localStorage.removeItem('pumi_review_name');
+                            localStorage.removeItem('pumi_review_email');
+                            localStorage.removeItem('pumi_review_save');
+                        }
+
+                        Swal.fire({
+                            text: response.message,
+                            confirmButtonText: 'Đồng ý'
+                        }).then(() => {
+                            location.reload();
+                        });
+                    }
                 },
                 error: function () {
                     alert("Có lỗi xảy ra!");
@@ -146,6 +165,13 @@ $(document).ready(function() {
             $(".quantity").val(val);
         }
     });
+
+    // Điền dữ liệu từ localStorage
+    if (localStorage.getItem('pumi_review_save') === 'true') {
+        $("input[name='fullname']").val(localStorage.getItem('pumi_review_name'));
+        $("input[name='email']").val(localStorage.getItem('pumi_review_email'));
+        $('#saveReviewInfo').prop('checked', true);
+    }
 
 });
 

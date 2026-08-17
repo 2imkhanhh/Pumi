@@ -119,9 +119,66 @@
                 @endif
             </div>
 
-            <section id="pro-rate" class="mt-5"><div class="container"><h2 class="title-section">ĐÁNH GIÁ</h2><div id="list-rate">Chưa có đánh giá nào</div><form class="ajaxform" action="https://pumi.vn/send-reservations.html" name="frmrate" id="frmrate" method="post">
+            <style>
+                .rating input, 
+                .rating label, 
+                .rating i,
+                .rating input:focus,
+                .rating input:active,
+                .rating label:focus,
+                .rating label:active,
+                .form-check-input,
+                .form-check-input:focus {
+                    outline: none !important;
+                    box-shadow: none !important;
+                    -webkit-tap-highlight-color: transparent !important;
+                }
+            </style>
+            <section id="pro-rate" class="mt-5"><div class="container"><h2 class="title-section">ĐÁNH GIÁ</h2>
+            <div id="list-rate" class="mb-4">
+                @if(isset($reviews) && $reviews->count() > 0)
+                    <div class="reviews-list mt-3">
+                        @foreach($reviews as $review)
+                        <div class="review-item d-flex mb-4 pb-4" style="border-bottom: 1px solid #eee;">
+                            <div class="review-avatar mr-3" style="width: 50px; height: 50px; flex-shrink: 0;">
+                                <div style="width: 100%; height: 100%; background: #f0f2f5; color: #666; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 18px; font-weight: bold;">
+                                    {{ strtoupper(substr($review->fullname, 0, 1)) }}
+                                </div>
+                            </div>
+                            <div class="review-content" style="flex-grow: 1; padding-left: 15px;">
+                                <div class="d-flex justify-content-between align-items-center mb-1">
+                                    <h5 class="mb-0" style="font-size: 1.1rem; font-weight: 600;">{{ $review->fullname }}</h5>
+                                    <span class="text-muted" style="font-size: 0.85rem;">{{ $review->created_at->format('d/m/Y') }}</span>
+                                </div>
+                                <div class="mb-2 text-warning" style="font-size: 0.9rem;">
+                                    @for($i = 1; $i <= 5; $i++)
+                                        @if($i <= $review->rating)
+                                            <i class="fa fa-star" aria-hidden="true"></i>
+                                        @else
+                                            <i class="fa fa-star-o" aria-hidden="true" style="color: #ccc;"></i>
+                                        @endif
+                                    @endfor
+                                </div>
+                                <div class="review-text" style="color: #444; line-height: 1.6;">
+                                    {{ $review->note }}
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="alert alert-light text-center py-4" style="background: #f8f9fa; border: 1px dashed #ddd;">
+                        Chưa có đánh giá nào. Hãy là người đầu tiên đánh giá sản phẩm này!
+                    </div>
+                @endif
+            </div>
+            
+            <form class="ajaxform" action="{{ route('product.review.submit') }}" name="frmrate" id="frmrate" method="post">
+                @csrf
  <input type="hidden" name="product_id" value="{{ $product->id }}" />
+@if(!isset($reviews) || $reviews->count() == 0)
 <div class="title">Hãy là người đầu tiên nhận xét “{{ $product->name }}”</div>
+@endif
 
     <div class="form-group required">
     <label class="label">Đánh giá của bạn *</label>
@@ -164,9 +221,9 @@
 </div>
 </div>
 <div class="form-check mt-3">
-  <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-  <label class="label form-check-label" for="flexCheckDefault">
-   Lưu tên của tôi, email, và trang web trong trình duyệt này cho lần bình luận kế tiếp của tôi.
+  <input class="form-check-input" type="checkbox" value="1" id="saveReviewInfo" name="saveReviewInfo">
+  <label class="label form-check-label" for="saveReviewInfo">
+   Lưu tên của tôi và email trong trình duyệt này cho lần bình luận kế tiếp của tôi.
   </label>
 </div>
 
@@ -206,6 +263,20 @@
                         @endif
                         </div>
                     </div>
+                    <style>
+                        .position-relative .swiper-button-next-01,
+                        .position-relative .swiper-button-prev-01 {
+                            opacity: 0;
+                            visibility: hidden;
+                            transition: all 0.3s ease;
+                        }
+                        
+                        .position-relative:hover .swiper-button-next-01:not(.swiper-button-disabled),
+                        .position-relative:hover .swiper-button-prev-01:not(.swiper-button-disabled) {
+                            opacity: 1;
+                            visibility: visible;
+                        }
+                    </style>
                     <div class="swiper-button-next-01 shadow-sm"><i class="fa-regular fa-arrow-right"></i></div>
                     <div class="swiper-button-prev-01 shadow-sm"><i class="fa-regular fa-arrow-left"></i></div>
                 </div>
