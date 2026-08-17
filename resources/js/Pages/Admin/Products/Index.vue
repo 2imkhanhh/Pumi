@@ -7,7 +7,6 @@ defineOptions({ layout: AdminLayout });
 
 const props = defineProps({
     products: Object,
-    categories: Array,
 });
 
 const isModalOpen = ref(false);
@@ -15,7 +14,6 @@ const isEditing = ref(false);
 
 const form = useForm({
     id: null,
-    category_id: '',
     name: '',
     slug: '',
     price: '',
@@ -39,7 +37,6 @@ const openCreateModal = () => {
     form.clearErrors();
     form._method = 'POST';
     form.is_featured = 0;
-    if(props.categories.length > 0) form.category_id = props.categories[0].id;
     isModalOpen.value = true;
 };
 
@@ -47,7 +44,6 @@ const openEditModal = (product) => {
     isEditing.value = true;
     form.clearErrors();
     form.id = product.id;
-    form.category_id = product.category_id;
     form.name = product.name;
     form.slug = product.slug;
     form.price = product.price;
@@ -143,7 +139,7 @@ watch(() => form.name, (newName) => {
                         <th width="60">STT</th>
                         <th width="80">Ảnh</th>
                         <th>Tên sản phẩm</th>
-                        <th>Danh mục</th>
+
                         <th>Giá</th>
                         <th>Trạng thái</th>
                         <th>Nổi bật</th>
@@ -160,9 +156,7 @@ watch(() => form.name, (newName) => {
                             </div>
                         </td>
                         <td class="font-medium text-dark">{{ product.name }}</td>
-                        <td>
-                            <span class="badge">{{ product.category?.name || 'Không có' }}</span>
-                        </td>
+
                         <td>{{ formatPrice(product.price) }}</td>
                         <td>
                             <span :class="['status-dot', product.is_active ? 'active' : 'inactive']"></span>
@@ -225,13 +219,7 @@ watch(() => form.name, (newName) => {
                 </div>
 
                 <div class="form-row">
-                    <div class="form-group flex-1">
-                        <label>Danh mục <span class="required">*</span></label>
-                        <select v-model="form.category_id" class="form-control" required>
-                            <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
-                        </select>
-                        <span class="error" v-if="form.errors.category_id">{{ form.errors.category_id }}</span>
-                    </div>
+
                     <div class="form-group flex-1">
                         <label>Giá (VNĐ)</label>
                         <input type="number" v-model="form.price" class="form-control" />

@@ -11,7 +11,7 @@
         <section id="banner" class="banner-bgs d-flex align-items-end" style="background-image: url('{{ asset('assets/images/bg-banner-in.png') }}')">
             <div class="container">
                 <div class="content" style="right: 10%;">
-                     <h3>{{ $product->category ? $product->category->name : 'Sản phẩm' }}</h3><h2>{{ $product->name }}</h2>
+                     <h3>Sản phẩm</h3><h2>{{ $product->name }}</h2>
                 </div>
             </div>
        </section>

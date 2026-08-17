@@ -84,7 +84,7 @@ class HomeController extends Controller
     public function productDetail($slug)
     {
         $product = \App\Models\Product::where('slug', $slug)->firstOrFail();
-        $relatedProducts = \App\Models\Product::where('category_id', $product->category_id)
+        $relatedProducts = \App\Models\Product::where('id', '!=', $product->id)
                                               ->where('id', '!=', $product->id)
                                               ->latest()
                                               ->limit(10)
