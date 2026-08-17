@@ -23,6 +23,29 @@ class SettingController extends Controller
     {
         $data = $request->except(['_token', '_method']);
 
+        if (isset($data['home_banners'])) {
+            $homeBanners = [];
+            foreach ($data['home_banners'] as $banner) {
+                $bannerData = ['link' => $banner['link'] ?? '#'];
+                
+                if (isset($banner['image']) && $banner['image'] instanceof \Illuminate\Http\UploadedFile) {
+                    $file = $banner['image'];
+                    $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+                    $file->move(public_path('uploads/settings'), $filename);
+                    $bannerData['img'] = 'uploads/settings/' . $filename;
+                } elseif (isset($banner['old_image'])) {
+                    $bannerData['img'] = $banner['old_image'];
+                }
+
+                if (isset($bannerData['img'])) {
+                    $homeBanners[] = $bannerData;
+                }
+            }
+            
+            Setting::updateOrCreate(['key' => 'home_banners'], ['value' => json_encode($homeBanners), 'type' => 'json']);
+            unset($data['home_banners']);
+        }
+
         foreach ($data as $key => $value) {
             // Xử lý nếu là file upload (như logo, favicon)
             if ($request->hasFile($key)) {

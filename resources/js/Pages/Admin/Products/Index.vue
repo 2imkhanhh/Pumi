@@ -19,7 +19,7 @@ const form = useForm({
     name: '',
     slug: '',
     price: '',
-    summary: '',
+    short_description: '',
     description: '',
     use_1: '',
     use_2: '',
@@ -51,7 +51,7 @@ const openEditModal = (product) => {
     form.name = product.name;
     form.slug = product.slug;
     form.price = product.price;
-    form.summary = product.summary;
+    form.short_description = product.short_description;
     form.description = product.description || '';
     form.use_1 = product.use_1 || '';
     form.use_2 = product.use_2 || '';
@@ -247,8 +247,8 @@ watch(() => form.name, (newName) => {
 
                 <div class="form-group">
                     <label>Mô tả ngắn (Hiển thị ở danh sách)</label>
-                    <textarea v-model="form.summary" class="form-control" rows="2"></textarea>
-                    <span class="error" v-if="form.errors.summary">{{ form.errors.summary }}</span>
+                    <textarea v-model="form.short_description" class="form-control" rows="2"></textarea>
+                    <span class="error" v-if="form.errors.short_description">{{ form.errors.short_description }}</span>
                 </div>
 
                 <div class="form-group">

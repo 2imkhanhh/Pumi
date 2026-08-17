@@ -4,9 +4,13 @@
 <div id="carouselBanner" class="carousel slide" data-bs-ride="carousel">
   @php
     $banners = [];
-    if (!empty($settings['home_banner_1'])) $banners[] = ['img' => $settings['home_banner_1'], 'link' => $settings['home_banner_1_link'] ?? '#'];
-    if (!empty($settings['home_banner_2'])) $banners[] = ['img' => $settings['home_banner_2'], 'link' => $settings['home_banner_2_link'] ?? '#'];
-    if (!empty($settings['home_banner_3'])) $banners[] = ['img' => $settings['home_banner_3'], 'link' => $settings['home_banner_3_link'] ?? '#'];
+    if (!empty($settings['home_banners'])) {
+        $banners = json_decode($settings['home_banners'], true) ?? [];
+    } else {
+        if (!empty($settings['home_banner_1'])) $banners[] = ['img' => $settings['home_banner_1'], 'link' => $settings['home_banner_1_link'] ?? '#'];
+        if (!empty($settings['home_banner_2'])) $banners[] = ['img' => $settings['home_banner_2'], 'link' => $settings['home_banner_2_link'] ?? '#'];
+        if (!empty($settings['home_banner_3'])) $banners[] = ['img' => $settings['home_banner_3'], 'link' => $settings['home_banner_3_link'] ?? '#'];
+    }
     if (empty($banners)) {
         $banners[] = ['img' => 'assets/images/upload/banner/img_68dcb2fd1d474.jpg', 'link' => '#'];
         $banners[] = ['img' => 'assets/images/upload/banner/img_68ddf4eb12021.jpg', 'link' => '#'];
@@ -89,7 +93,7 @@
                         <div class="info">
                             <h3 class="title">{{ $product->name }}</h3>
                             <div class="desc">{{ $product->short_description }}</div>
-                            <div class="content">{{ $product->description }}</div>
+                            <div class="content">{!! $product->description !!}</div>
                             <div class="more"><a class="btn-themes" href="{{ url('/san-pham/' . $product->slug) }}">Xem thêm <img src="{{ asset('assets/images/right-arrow.svg') }}" alt=""/></a></div>
                         </div>
                     </div>

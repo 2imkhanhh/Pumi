@@ -26,9 +26,27 @@ const form = useForm({
     instagram: props.settings.instagram || '',
     
     // Homepage Content
-    home_banner_1_link: props.settings.home_banner_1_link || '',
-    home_banner_2_link: props.settings.home_banner_2_link || '',
-    home_banner_3_link: props.settings.home_banner_3_link || '',
+    home_banners: (() => {
+        let initialBanners = [];
+        if (props.settings.home_banners) {
+            try {
+                initialBanners = JSON.parse(props.settings.home_banners).map((b, i) => ({
+                    id: Date.now() + i,
+                    old_image: b.img,
+                    image: null,
+                    link: b.link
+                }));
+            } catch (e) {}
+        } else {
+            if (props.settings.home_banner_1) initialBanners.push({ id: 1, old_image: props.settings.home_banner_1, image: null, link: props.settings.home_banner_1_link || '' });
+            if (props.settings.home_banner_2) initialBanners.push({ id: 2, old_image: props.settings.home_banner_2, image: null, link: props.settings.home_banner_2_link || '' });
+            if (props.settings.home_banner_3) initialBanners.push({ id: 3, old_image: props.settings.home_banner_3, image: null, link: props.settings.home_banner_3_link || '' });
+        }
+        if (initialBanners.length === 0) {
+            initialBanners.push({ id: Date.now(), old_image: null, image: null, link: '' });
+        }
+        return initialBanners;
+    })(),
     home_welcome_title: props.settings.home_welcome_title || '',
     home_welcome_subtitle: props.settings.home_welcome_subtitle || '',
     home_welcome_content: props.settings.home_welcome_content || '',
@@ -89,9 +107,6 @@ const form = useForm({
     // Image inputs
     logo: null,
     footer_logo: null,
-    home_banner_1: null,
-    home_banner_2: null,
-    home_banner_3: null,
     home_middle_banner: null,
     about_banner: null,
     about_welcome_image: null,
@@ -113,6 +128,18 @@ const form = useForm({
 
 const handleFileChange = (e, key) => {
     form[key] = e.target.files[0];
+};
+
+const handleBannerFileChange = (e, index) => {
+    form.home_banners[index].image = e.target.files[0];
+};
+
+const addBanner = () => {
+    form.home_banners.push({ id: Date.now(), old_image: null, image: null, link: '' });
+};
+
+const removeBanner = (index) => {
+    form.home_banners.splice(index, 1);
 };
 
 const submit = () => {
@@ -175,7 +202,7 @@ const submit = () => {
         </button>
     </div>
 
-    <form @submit.prevent="submit" class="settings-form">
+    <form @submit.prevent="submit" class="settings-form" novalidate>
         <!-- Tab 1: Cấu hình chung -->
         <div v-show="activeTab === 'general'" class="card">
             <div class="card-body">
@@ -218,7 +245,7 @@ const submit = () => {
                     </div>
 
                     <div class="form-group">
-                        <label>Footer Logo (Logo chân trang)</label>
+                        <label>Logo chân trang</label>
                         <div class="flex items-center gap-3">
                             <img v-if="settings.footer_logo" :src="'/' + settings.footer_logo" class="thumb-img" alt="Footer Logo" />
                             <input type="file" @change="handleFileChange($event, 'footer_logo')" class="form-control" accept="image/*" />
@@ -260,60 +287,35 @@ const submit = () => {
         <!-- Tab 2: Nội dung Trang chủ -->
         <div v-show="activeTab === 'homepage'" class="card">
             <div class="card-body">
-                <h3 class="section-title">Banners Trang chủ (Carousel)</h3>
+                <h3 class="section-title">Banners Trang chủ</h3>
                 
-                <div class="banner-box p-3 mb-3 border rounded">
-                    <h4 class="font-medium mb-2">Banner 1</h4>
+                <div v-for="(banner, index) in form.home_banners" :key="banner.id" class="banner-box p-3 mb-3 border rounded relative">
+                    <button type="button" @click="removeBanner(index)" class="absolute top-2 right-2 text-red-500 hover:text-red-700" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ef4444; cursor: pointer;">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                    </button>
+                    <h4 class="font-medium mb-2">Banner {{ index + 1 }}</h4>
                     <div class="grid-2">
                         <div class="form-group">
-                            <label>Hình ảnh Banner 1</label>
+                            <label>Hình ảnh Banner</label>
                             <div class="flex items-center gap-3">
-                                <img v-if="settings.home_banner_1" :src="'/' + settings.home_banner_1" class="thumb-img" style="max-height: 80px;" alt="Banner 1" />
-                                <input type="file" @change="handleFileChange($event, 'home_banner_1')" class="form-control" accept="image/*" />
+                                <img v-if="banner.old_image && !banner.image" :src="'/' + banner.old_image" class="thumb-img" style="max-height: 80px;" alt="Banner" />
+                                <input type="file" @change="handleBannerFileChange($event, index)" class="form-control" accept="image/*" />
                             </div>
                         </div>
                         <div class="form-group">
-                            <label>Link liên kết Banner 1</label>
-                            <input type="text" v-model="form.home_banner_1_link" class="form-control" placeholder="#" />
+                            <label>Link liên kết Banner</label>
+                            <input type="text" v-model="banner.link" class="form-control" placeholder="#" />
                         </div>
                     </div>
                 </div>
 
-                <div class="banner-box p-3 mb-3 border rounded">
-                    <h4 class="font-medium mb-2">Banner 2</h4>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Hình ảnh Banner 2</label>
-                            <div class="flex items-center gap-3">
-                                <img v-if="settings.home_banner_2" :src="'/' + settings.home_banner_2" class="thumb-img" style="max-height: 80px;" alt="Banner 2" />
-                                <input type="file" @change="handleFileChange($event, 'home_banner_2')" class="form-control" accept="image/*" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Link liên kết Banner 2</label>
-                            <input type="text" v-model="form.home_banner_2_link" class="form-control" placeholder="#" />
-                        </div>
-                    </div>
+                <div class="text-center">
+                    <button type="button" @click="addBanner" class="btn-secondary" style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                        + Thêm Banner mới
+                    </button>
                 </div>
 
-                <div class="banner-box p-3 mb-3 border rounded">
-                    <h4 class="font-medium mb-2">Banner 3 (Tùy chọn thêm)</h4>
-                    <div class="grid-2">
-                        <div class="form-group">
-                            <label>Hình ảnh Banner 3</label>
-                            <div class="flex items-center gap-3">
-                                <img v-if="settings.home_banner_3" :src="'/' + settings.home_banner_3" class="thumb-img" style="max-height: 80px;" alt="Banner 3" />
-                                <input type="file" @change="handleFileChange($event, 'home_banner_3')" class="form-control" accept="image/*" />
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label>Link liên kết Banner 3</label>
-                            <input type="text" v-model="form.home_banner_3_link" class="form-control" placeholder="#" />
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="section-title mt-4">Phần Chào Mừng (Welcome Section)</h3>
+                <h3 class="section-title mt-4">Phần Chào Mừng</h3>
                 <div class="grid-2">
                     <div class="form-group">
                         <label>Tiêu đề chào mừng</label>
@@ -331,11 +333,11 @@ const submit = () => {
 
                 <h3 class="section-title mt-4">Phần Video giới thiệu</h3>
                 <div class="form-group">
-                    <label>Đường dẫn Video (Drive Embed / Youtube Embed)</label>
+                    <label>Đường dẫn Video</label>
                     <input type="url" v-model="form.home_video" class="form-control" placeholder="https://..." />
                 </div>
 
-                <h3 class="section-title mt-4">Khối giới thiệu thương hiệu (About Us Section)</h3>
+                <h3 class="section-title mt-4">Khối giới thiệu thương hiệu</h3>
                 <div class="grid-2">
                     <div class="form-group">
                         <label>Tiêu đề khối giới thiệu</label>
@@ -351,7 +353,7 @@ const submit = () => {
                     <QuillEditor v-model:content="form.home_about_content" contentType="html" theme="snow" />
                 </div>
 
-                <h3 class="section-title mt-4">Banner giữa trang (Middle Banner)</h3>
+                <h3 class="section-title mt-4">Banner giữa trang</h3>
                 <div class="form-group">
                     <label>Hình ảnh Banner giữa trang</label>
                     <div class="flex items-center gap-3">
@@ -360,7 +362,7 @@ const submit = () => {
                     </div>
                 </div>
 
-                <h3 class="section-title mt-4">Phần Đối tác (Homepage Partners Section)</h3>
+                <h3 class="section-title mt-4">Phần Đối tác</h3>
                 <div class="grid-2">
                     <div class="form-group">
                         <label>Tiêu đề phần đối tác</label>
@@ -386,7 +388,7 @@ const submit = () => {
                     </div>
                 </div>
 
-                <h3 class="section-title mt-4">Khối 1: Lời giới thiệu (Welcome)</h3>
+                <h3 class="section-title mt-4">Khối 1: Lời giới thiệu</h3>
                 <div class="grid-2">
                     <div class="form-group">
                         <label>Tiêu đề</label>
@@ -584,7 +586,7 @@ const submit = () => {
                     </div>
                 </div>
 
-                <h3 class="section-title mt-4">Khối 8: Ban Lãnh Đạo (Executive Board)</h3>
+                <h3 class="section-title mt-4">Khối 8: Ban Lãnh Đạo</h3>
                 <div class="p-3 mb-3 border rounded">
                     <h4 class="font-medium mb-2">Thành viên 1</h4>
                     <div class="form-group">
@@ -740,7 +742,7 @@ const submit = () => {
         <div class="form-actions-bar mt-4 pt-3 border-top text-right">
             <button type="submit" class="btn-primary ml-auto" :disabled="form.processing">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" v-if="!form.processing"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
-                {{ form.processing ? 'Đang lưu cấu hình...' : 'Lưu Cấu Hình Tất Cả' }}
+                {{ form.processing ? 'Đang lưu cấu hình...' : 'Lưu' }}
             </button>
         </div>
     </form>

@@ -1228,6 +1228,11 @@ textarea:focus-visible {
     background: #fff;
 }
 
+.page-item .page-link:focus {
+    box-shadow: none;
+    outline: none;
+}
+
 .page-item .page-link:hover {
     background: var(--pu-sky);
     color: var(--pu-cyan);
@@ -1279,6 +1284,11 @@ textarea:focus-visible {
     transition: all 0.25s ease;
     cursor: pointer;
     padding: 0;
+}
+
+.pagination-wrap .page-item .page-link:focus {
+    box-shadow: none;
+    outline: none;
 }
 
 .pagination-wrap .page-item:not(.disabled) .page-link:hover {

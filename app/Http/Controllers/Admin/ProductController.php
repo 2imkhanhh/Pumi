@@ -29,7 +29,7 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'slug' => 'nullable|string|max:255|unique:products,slug',
-            'summary' => 'nullable|string',
+            'short_description' => 'nullable|string',
             'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'price' => 'nullable|numeric|min:0',
@@ -63,7 +63,7 @@ class ProductController extends Controller
             'category_id' => 'required|exists:categories,id',
             'name' => 'required|string|max:255',
             'slug' => 'required|string|max:255|unique:products,slug,' . $product->id,
-            'summary' => 'nullable|string',
+            'short_description' => 'nullable|string',
             'description' => 'nullable|string',
             'image' => 'nullable|image|max:2048',
             'price' => 'nullable|numeric|min:0',
@@ -80,6 +80,8 @@ class ProductController extends Controller
         if ($request->hasFile('image')) {
             $path = $request->file('image')->store('products', 'public');
             $validated['image'] = 'storage/' . $path;
+        } else {
+            unset($validated['image']);
         }
 
         $product->update($validated);
