@@ -3,8 +3,8 @@
 @section('content')
 <main id="main">
 
-        <section id="banner" class="banner-blog d-flex align-items-end" style="background-image: url('{{ asset($post->image) }}')"><div class="container"><nav class="breadcrumb-pu"><a href="{{ route('home') }}">Trang chủ</a><span class="sep">/</span><a href="{{ route('posts') }}">Tin tức</a><span class="sep">/</span><span class="current">{{ Str::limit($post->title, 50) }}</span></nav></div></section><section id="detail-post" class="mt-5"><div class="container"><div class="row">
-        <div class="col-lg-8">
+        <section id="banner" class="banner-blog d-flex align-items-end" style="background-image: url('{{ asset($post->image) }}')" data-aos="super-zoom-in" data-aos-duration="1200"><div class="container"><nav class="breadcrumb-pu"><a href="{{ route('home') }}">Trang chủ</a><span class="sep">/</span><a href="{{ route('posts') }}">Tin tức</a><span class="sep">/</span><span class="current">{{ Str::limit($post->title, 50) }}</span></nav></div></section><section id="detail-post" class="mt-5"><div class="container"><div class="row">
+        <div class="col-lg-8" data-aos="super-slide-right">
             <article class="post-article">
                 <span class="post-tag">Tin tức</span>
                 <h1 class="pd-title">{{ $post->title }}</h1>
@@ -20,7 +20,7 @@
                 </div>
             </article>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4" data-aos="super-slide-left" data-aos-delay="200">
             <aside class="post-sidebar">
                 <div class="sidebar-box">
                     <h4>Tìm kiếm sản phẩm</h4>
@@ -46,15 +46,16 @@
         </div>
     </div></div></section><section id="contact">
             <div class="container">
-            <div class="row">
-	<div class="col-md-7">
-	            <div id="panel_contact">
-                    <form class="form-horizontal ajaxform" action="https://pumi.vn/blog/send-contact.html" name="frmContact" id="frmContact" method="post">
+        <div class="row gy-4">
+            <div class="col-md-7" data-aos="super-slide-right">
+                <div id="panel_contact">
+                    <form class="form-horizontal ajaxform" action="{{ route('contact.submit') }}" name="frmContact" id="frmContact" method="post">
+                        @csrf
                         <div class="form-group required mt-2">
                             <input type="text" name="fullname" value="" placeholder="Họ và tên" maxlength="256" required />
                         </div>
                         <div class="form-group required mt-2">
-                            <input type="text" name="email" value="" placeholder="Email"  maxlength="256" required />
+                            <input type="email" name="email" value="" placeholder="Email"  maxlength="256" required />
                         </div>
                         <div class="form-group required mt-2">
                             <input type="text" name="content" value="" placeholder="Chúng tôi có thể giúp gì cho bạn?" maxlength="256" required />
@@ -64,15 +65,15 @@
                         </div>
                     </form>
                     <div id="follow_on">
-                        <a href="#"><img src="{{ asset('assets/') }}/images/facebook.svg" alt=""></a>
-                        <a href="#"><img src="{{ asset('assets/') }}/images/tiktok.svg" alt=""></a>
-                        <a href="#"><img src="{{ asset('assets/') }}/images/instagram.svg" alt=""></a>
-                        <a href="#"><img src="{{ asset('assets/') }}/images/web.svg" alt=""></a>
+                        <a href="{{ $settings['facebook'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/images/facebook.svg') }}" alt=""></a>
+                        <a href="{{ $settings['tiktok'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/images/tiktok.svg') }}" alt=""></a>
+                        <a href="{{ $settings['instagram'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/images/instagram.svg') }}" alt=""></a>
+                        <a href="{{ $settings['website'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/images/web.svg') }}" alt=""></a>
                     </div>
                 </div>
-</div>
-	<div class="col-md-5"><img src="{{ asset('assets/') }}/images/right-contact.png" class="img-fluid" alt="Contact"/></div>
-</div>
+            </div>
+            <div class="col-md-5" data-aos="super-slide-left" data-aos-delay="200"><img src="{{ asset('assets/images/right-contact.png') }}" class="img-fluid" alt="Contact"/></div>
+        </div>
                 
             </div></section>
     

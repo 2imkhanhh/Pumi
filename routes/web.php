@@ -19,24 +19,16 @@ Route::post('/lien-he', [HomeController::class, 'submitContact'])->name('contact
 Route::post('/danh-gia', [HomeController::class, 'storeReview'])->name('product.review.submit');
 Route::get('/tim-kiem', [HomeController::class, 'search'])->name('search');
 
-// Dọn dẹp routes cũ của Breeze nếu muốn, nhưng hiện tại cứ ghi đè route '/'
-
-
 Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(function () {
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
-    
-    // Quản lý Sản phẩm và Danh mục
+
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)->except(['create', 'edit', 'show']);
     Route::resource('partners', \App\Http\Controllers\Admin\PartnerController::class)->except(['create', 'edit', 'show']);
     Route::resource('contacts', \App\Http\Controllers\Admin\ContactController::class)->only(['index', 'update', 'destroy']);
     Route::resource('reviews', \App\Http\Controllers\Admin\ReviewController::class)->only(['index', 'update', 'destroy']);
     Route::get('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'store'])->name('settings.store');
-
-    // Quản lý Tin tức
     Route::resource('posts', \App\Http\Controllers\Admin\PostController::class)->except(['create', 'edit', 'show']);
-    
-    // Upload ảnh từ Editor
     Route::post('upload-image', [\App\Http\Controllers\Admin\ImageUploadController::class, 'upload'])->name('upload.image');
 });
 
@@ -46,4 +38,4 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';

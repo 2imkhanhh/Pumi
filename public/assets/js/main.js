@@ -1,4 +1,9 @@
-AOS.init();
+AOS.init({
+    duration: 1000,
+    easing: 'ease-out-cubic',
+    once: true,
+    offset: 100,
+});
 window.addEventListener("load", function () {
     // Ảnh tải xong làm thay đổi chiều cao trang → offset AOS tính lúc init
     // (trước khi ảnh load) có thể bị lệch. Tính lại một lần sau khi trang

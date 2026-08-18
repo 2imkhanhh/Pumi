@@ -318,22 +318,77 @@ textarea:focus-visible {
 .btn-more,
 .viewmore a,
 .readmore {
-    transition: background-color .3s var(--pu-ease), color .3s var(--pu-ease),
-        transform .3s var(--pu-ease), box-shadow .3s var(--pu-ease);
+    position: relative;
+    overflow: hidden;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1) !important;
+    z-index: 1;
+}
+
+/* Hiệu ứng tia sáng quét ngang khi hover */
+.btn-themes::before,
+.btn-more::before,
+.viewmore a::before,
+.readmore::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -150%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255, 255, 255, 0) 0%,
+        rgba(255, 255, 255, 0.45) 50%,
+        rgba(255, 255, 255, 0) 100%
+    );
+    transform: skewX(-25deg);
+    transition: none;
+    z-index: -1;
+}
+
+.btn-themes:hover::before,
+.btn-more:hover::before,
+.viewmore a:hover::before,
+.readmore:hover::before {
+    left: 150%;
+    transition: left 0.85s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .btn-themes:hover,
 .btn-more:hover,
 .viewmore a:hover,
 .readmore:hover {
-    transform: translateY(-2px);
-    box-shadow: var(--pu-shadow);
+    transform: translateY(-4px) scale(1.02) !important;
+    box-shadow: 0 12px 24px rgba(20, 182, 195, 0.35) !important;
 }
 
-/* Giữ chữ trắng khi hover nút xanh (theme.css gốc đổi thành #27397C trông như tím) */
 .btn-themes:hover {
-    color: #fff;
+    color: #fff !important;
 }
+
+#products-home .view-all .btn-themes:hover {
+    color: #4DC5C9 !important;
+}
+
+
+/* Hiệu ứng dịch mũi tên trượt sang phải nhẹ khi hover */
+.btn-themes img,
+.btn-more img,
+.viewmore a img,
+.readmore img {
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.btn-themes:hover img,
+.btn-more:hover img,
+.viewmore a:hover img,
+.readmore:hover img {
+    transform: translateX(6px) !important;
+}
+
 
 /* --------------------------------------------------------------------------
    8. Menu điều hướng
@@ -1507,4 +1562,214 @@ textarea:focus-visible {
 
 .swiper-button-lock {
     display: none !important;
+}
+
+/* ==========================================================================
+   16. Các tinh chỉnh Responsive & Premium bổ sung cho Mobile & Tablet
+   ========================================================================== */
+
+/* Logo trên Header */
+#header .logo img {
+    max-height: clamp(42px, 5.5vw, 56px) !important;
+    width: auto !important;
+    object-fit: contain;
+}
+
+/* Chiều cao Banner các trang con (.banner-bgs) */
+@media (max-width: 767.98px) {
+    .banner-bgs {
+        height: 240px !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+    .banner-bgs .content,
+    .banner-bgs h2 {
+        right: unset !important;
+        left: 16px !important;
+        bottom: 20px !important;
+        text-align: left !important;
+        transform: none !important;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) {
+    .banner-bgs {
+        height: 380px !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+    .banner-bgs .content,
+    .banner-bgs h2 {
+        right: 8% !important;
+        bottom: 12% !important;
+    }
+}
+
+/* Banner chi tiết bài viết/tuyển dụng (.banner-blog) */
+.banner-blog {
+    min-height: clamp(180px, 25vw, 320px) !important;
+    background-size: cover !important;
+    background-position: center !important;
+    position: relative !important;
+    padding: clamp(20px, 4vw, 40px) 0 !important;
+}
+.banner-blog::before {
+    content: '' !important;
+    position: absolute !important;
+    top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    background: linear-gradient(180deg, rgba(27, 63, 148, 0.3) 0%, rgba(27, 63, 148, 0.75) 100%) !important;
+    z-index: 1 !important;
+}
+.banner-blog .container {
+    position: relative !important;
+    z-index: 2 !important;
+}
+
+/* Ảnh sản phẩm lưới tỉ lệ 1:1 vuông */
+@media (max-width: 1199.98px) {
+    #pro-list .row {
+        --bs-gutter-x: 1rem !important;
+        --bs-gutter-y: 1.5rem !important;
+    }
+    #pro-list .box-item .img {
+        height: auto !important;
+        padding-top: 100% !important;
+        position: relative !important;
+        padding-left: 0 !important;
+        padding-right: 0 !important;
+    }
+    #pro-list .box-item .img img {
+        position: absolute !important;
+        top: 50% !important;
+        left: 50% !important;
+        transform: translate(-50%, -50%) !important;
+        max-width: 85% !important;
+        max-height: 85% !important;
+        width: auto !important;
+        height: auto !important;
+    }
+    #pro-list .box-item .info {
+        padding: 1rem !important;
+    }
+    #pro-list .box-item .title {
+        font-size: 1rem !important;
+        height: 2.8em !important;
+        display: -webkit-box !important;
+        -webkit-line-clamp: 2 !important;
+        -webkit-box-orient: vertical !important;
+        overflow: hidden !important;
+    }
+    #pro-list .box-item .desc {
+        display: none !important;
+    }
+    #pro-list .box-item .btn-themes {
+        width: 100% !important;
+        font-size: 0.85rem !important;
+        padding: 8px 12px !important;
+        border-radius: 8px !important;
+        text-transform: none !important;
+    }
+    #pro-list .box-item .btn-themes img {
+        display: none !important;
+    }
+}
+
+/* Chi tiết sản phẩm - Tăng kích thước ảnh chính trên di động */
+@media (max-width: 767.98px) {
+    .detail #imgdt img#main-product-image {
+        max-width: 85% !important;
+    }
+}
+
+/* Giới thiệu - Reset margins cho khối thông tin xen kẽ */
+@media (max-width: 1199.98px) {
+    #about-1.aboutus-section .info,
+    #about-2.aboutus-section .info {
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        padding: clamp(20px, 4vw, 40px) 20px !important;
+    }
+    
+    #about-3 .info {
+        position: relative !important;
+        top: unset !important;
+        right: unset !important;
+        width: 100% !important;
+        margin-top: 20px !important;
+        padding: 0 15px !important;
+    }
+    #about-3 .title {
+        font-size: clamp(1.4rem, 1.2rem + 1vw, 2.2rem) !important;
+        text-align: center !important;
+    }
+    #about-3 .content {
+        text-align: justify !important;
+    }
+}
+
+/* Giới thiệu - Căn giữa ảnh ban điều hành */
+#aboutus-company .flex-shrink-0 img {
+    max-width: 150px;
+    border-radius: 50%;
+    box-shadow: var(--pu-shadow);
+}
+@media (max-width: 991.98px) {
+    #aboutus-company .col-md-6 {
+        margin-bottom: 40px;
+    }
+    #aboutus-company .col-md-6:last-child {
+        margin-bottom: 0;
+    }
+    #aboutus-company .d-lg-flex {
+        text-align: center;
+    }
+    #aboutus-company .flex-shrink-0 img {
+        margin: 0 auto 20px;
+        display: block;
+    }
+}
+
+/* Trang chủ - Căn giữa phần "Xin chào" trên mobile */
+@media (max-width: 767.98px) {
+    #about-us h2.title,
+    #about-us .desc {
+        text-align: center !important;
+    }
+    #about-us .content {
+        text-align: justify !important;
+        margin-top: 20px;
+    }
+}
+
+/* Đối tác - Lưới logo tối ưu trên mobile */
+@media (max-width: 767.98px) {
+    #panel_partner {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    #panel_partner .img {
+        width: 50% !important;
+        display: block !important;
+        float: none !important;
+    }
+    #panel_partner .inner {
+        padding: 8px 15px !important;
+    }
+}
+
+/* Liên hệ - Ảnh và khối nhập liệu */
+@media (max-width: 767.98px) {
+    #contact .col-md-5 {
+        text-align: center !important;
+        margin-top: 30px !important;
+    }
+    #contact .col-md-5 img {
+        max-width: 80% !important;
+    }
+}
+@media (max-width: 991.98px) {
+    #panel_contact {
+        padding: 20px !important;
+    }
 }

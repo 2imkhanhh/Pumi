@@ -3,7 +3,7 @@
 @section('content')
 <main id="main">
 
-        <section id="banner" class="banner-bgs d-flex align-items-end" style="background-image: url('{{ asset($settings['partners_banner'] ?? 'assets/images/upload/banner/img_68de36354dbd9.png') }}')">
+        <section id="banner" class="banner-bgs d-flex align-items-end" style="background-image: url('{{ asset($settings['partners_banner'] ?? 'assets/images/upload/banner/img_68de36354dbd9.png') }}')" data-aos="super-zoom-in" data-aos-duration="1200">
             <div class="container">
                 <h2>Đối tác</h2>
             </div>
@@ -18,7 +18,7 @@
                     </header>
                     
                     <div class="row mt-5 d-flex justify-content-center align-items-center">
-                        <div class="col-md-6 order-1 order-lg-1">
+                        <div class="col-md-6 order-1 order-lg-1" data-aos="super-slide-left" data-aos-delay="200">
                             <div class="w-100">
                                  <h2 class="title">{{ $settings['partners_ingredient_1_title'] ?? 'Đối tác ABC' }}</h2>
                                  <div class="text">
@@ -26,7 +26,7 @@
                                  </div>
                             </div>
                         </div>
-                        <div class="col-md-6 order-0 order-lg-0">
+                        <div class="col-md-6 order-0 order-lg-0" data-aos="super-slide-right">
                             <div class="img_st">
                                 <img src="{{ asset($settings['partners_ingredient_1_image'] ?? 'assets/images/upload/document/img_68de34175aa5b.jpg') }}" alt="{{ $settings['partners_ingredient_1_title'] ?? 'Đối tác ABC' }}" class="img-fluid"/>
                             </div>
@@ -34,7 +34,7 @@
                     </div>
 
                     <div class="row mt-5 d-flex justify-content-center align-items-center">
-                        <div class="col-md-6 order-1 order-lg-0">
+                        <div class="col-md-6 order-1 order-lg-0" data-aos="super-slide-right">
                             <div class="w-100">
                                  <h2 class="title">{{ $settings['partners_ingredient_2_title'] ?? 'Đối tác ABC' }}</h2>
                                  <div class="text">
@@ -42,7 +42,7 @@
                                  </div>
                             </div>
                         </div>
-                        <div class="col-md-6 order-0 order-lg-1">
+                        <div class="col-md-6 order-0 order-lg-1" data-aos="super-slide-left" data-aos-delay="200">
                             <div class="img_st">
                                 <img src="{{ asset($settings['partners_ingredient_2_image'] ?? 'assets/images/upload/document/img_68de342d7222d.jpg') }}" alt="{{ $settings['partners_ingredient_2_title'] ?? 'Đối tác ABC' }}" class="img-fluid"/>
                             </div>
@@ -51,14 +51,14 @@
                 </div>
 
                 <div id="panel_partner">
-                    <header class="section-header swidth text-center">
+                    <header class="section-header swidth text-center" data-aos="super-zoom-in">
                         <h2>{{ $settings['partners_hospital_title'] ?? 'Đối tác bệnh viện' }}</h2>
                         <div class="desc">
                             {!! $settings['partners_hospital_desc'] ?? 'hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum...' !!}
                         </div>
                     </header>
                     @foreach($partners as $partner)
-                        <div class="img">
+                        <div class="img" data-aos="super-zoom-in" data-aos-delay="{{ 50 * ($loop->iteration % 6) }}">
                             <div class="inner">
                                 <img src="{{ asset($partner->image) }}" alt="{{ $partner->name ?? 'Hospital Partner' }}" class="img-fluid"/>
                             </div>
@@ -67,14 +67,14 @@
                 </div>
 
                 <div id="panel_partner">
-                    <header class="section-header swidth text-center">
+                    <header class="section-header swidth text-center" data-aos="super-zoom-in">
                         <h2>{{ $settings['partners_media_title'] ?? 'Đối tác truyền thông' }}</h2>
                         <div class="desc">
                             {!! $settings['partners_media_desc'] ?? 'hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum...' !!}
                         </div>
                     </header>
                     @foreach($partners as $partner)
-                        <div class="img">
+                        <div class="img" data-aos="super-zoom-in" data-aos-delay="{{ 50 * ($loop->iteration % 6) }}">
                             <div class="inner">
                                 <img src="{{ asset($partner->image) }}" alt="{{ $partner->name ?? 'Media Partner' }}" class="img-fluid"/>
                             </div>
@@ -86,8 +86,8 @@
 
         <section id="contact">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-7">
+                <div class="row gy-4">
+                    <div class="col-md-7" data-aos="super-slide-right">
                         <div id="panel_contact">
                             <form class="form-horizontal ajaxform" action="{{ route('contact.submit') }}" name="frmContact" id="frmContact" method="post">
                                 @csrf
@@ -112,7 +112,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-5">
+                    <div class="col-md-5" data-aos="super-slide-left" data-aos-delay="200">
                         <img src="{{ asset('assets/images/right-contact.png') }}" class="img-fluid" alt="Contact"/>
                     </div>
                 </div>

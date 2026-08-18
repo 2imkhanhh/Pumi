@@ -8,7 +8,7 @@
 @section('content')
 <main id="main">
 
-        <section id="banner" class="banner-bgs d-flex align-items-end" style="background-image: url('{{ asset('assets/images/bg-banner-in.png') }}')">
+        <section id="banner" class="banner-bgs d-flex align-items-end" style="background-image: url('{{ asset('assets/images/bg-banner-in.png') }}')" data-aos="super-zoom-in" data-aos-duration="1200">
             <div class="container">
                 <div class="content" style="right: 10%;">
                      <h3>Sản phẩm</h3><h2>{{ $product->name }}</h2>
@@ -17,8 +17,8 @@
        </section>
                 <section id="panel-products-details" class="detail mt-5">
 				<div class="container">
-				<div class="row mt-5">
-                <div class="col-md-6">
+				<div class="row mt-5 gy-4">
+                <div class="col-md-6" data-aos="super-slide-right">
                     <div id="imgdt">
                         <img id="main-product-image" src="{{ asset($product->image) }}" alt="{{ $product->name }}" class="img-fluid" style="max-width: 55%; height: auto; margin: 0 auto; display: block;"/>
                     </div>
@@ -32,7 +32,7 @@
                     </div>
                     @endif
                 </div>
-                <div class="col-md-6 mt-3 mt-lg-0">
+                <div class="col-md-6 mt-3 mt-lg-0" data-aos="super-slide-left" data-aos-delay="200">
                     <h2 class="title">{{ $product->name }}</h2>
                     <div class="desc">{!! $product->description !!}</div></div>
             </div></div></section>
@@ -41,9 +41,9 @@
             <section id="pro-uses" class="mt-5">
             <div class="container">
                <h2 class="title-header">Công dụng</h2>
-                <div class="row d-flex align-items-center justify-content-center mt-5">
+                <div class="row d-flex align-items-center justify-content-center mt-5 gy-4">
                     @if($product->use_1)
-                    <div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="fade-down">
+                    <div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="super-zoom-in" data-aos-delay="100">
                         <div class="box-uses">
                             <div class="img"><img src="{{ asset('assets/') }}/images/usage-1.png" alt=""/></div>
                             <div class="content">{{ $product->use_1 }}</div>
@@ -51,7 +51,7 @@
                     </div>
                     @endif
                     @if($product->use_2)
-                    <div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="fade-down">
+                    <div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="super-zoom-in" data-aos-delay="200">
                         <div class="box-uses">
                             <div class="img"><img src="{{ asset('assets/') }}/images/usage-2.png" alt=""/></div>
                             <div class="content">{{ $product->use_2 }}</div>
@@ -59,7 +59,7 @@
                     </div>
                     @endif
                     @if($product->use_3)
-                    <div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="fade-down">
+                    <div class="col-6 col-lg-4 text-center mt-3 mt-lg-0" data-aos="super-zoom-in" data-aos-delay="300">
                         <div class="box-uses">
                             <div class="img"><img src="{{ asset('assets/') }}/images/usage-3.png" alt=""/></div>
                             <div class="content">{{ $product->use_3 }}</div>
@@ -74,8 +74,8 @@
             @if($product->usage_guide)
             <section id="pro-guide" class="mt-5 mb-5">
                 <div class="container">
-                    <div class="row d-flex align-items-center justify-content-center">
-                        <div class="col-md-6">
+                    <div class="row d-flex align-items-center justify-content-center gy-4">
+                        <div class="col-md-6" data-aos="super-slide-right">
                             <div class="info">
                                 <h2 class="title">Hướng dẫn sử dụng</h2>
                                 <div class="content">
@@ -83,7 +83,7 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-6" data-aos="super-slide-left" data-aos-delay="200">
                             <div class="img"><img src="{{ asset('assets/') }}/images/upload/post/img_68de0603897c6.jpg" alt="Hướng dẫn sử dụng" class="img-fluid"/></div>
                         </div>
                     </div>
@@ -95,11 +95,11 @@
                 @if($product->notice || $product->preservation)
                 <section id="pro-notice" class="mt-5">
                     <div class="container">
-                        <div class="row d-flex align-items-center justify-content-center">
-                            <div class="col-md-6">
+                        <div class="row d-flex align-items-center justify-content-center gy-4">
+                            <div class="col-md-6" data-aos="super-slide-right">
                                 <div class="img"><img src="{{ asset('assets/') }}/images/upload/post/img_68de064c1b7a5.jpg" alt="Lưu ý" class="img-fluid"/></div>
                             </div>
-                            <div class="col-md-6">
+                            <div class="col-md-6" data-aos="super-slide-left" data-aos-delay="200">
                                 <div class="info">
                                     <div class="content">
                                         @if($product->notice)
@@ -134,10 +134,10 @@
                     -webkit-tap-highlight-color: transparent !important;
                 }
             </style>
-            <section id="pro-rate" class="mt-5"><div class="container"><h2 class="title-section">ĐÁNH GIÁ</h2>
+            <section id="pro-rate" class="mt-5" data-aos="super-fade-up"><div class="container"><h2 class="title-section">ĐÁNH GIÁ</h2>
             <div id="list-rate" class="mb-4">
                 @if(isset($reviews) && $reviews->count() > 0)
-                    <div class="reviews-list mt-3">
+                     <div class="reviews-list mt-3">
                         @foreach($reviews as $review)
                         <div class="review-item d-flex mb-4 pb-4" style="border-bottom: 1px solid #eee;">
                             <div class="review-avatar mr-3" style="width: 50px; height: 50px; flex-shrink: 0;">
@@ -206,7 +206,7 @@
 	    <textarea name="note" placeholder="Nhập nhận xét..." class="form-control" rows="5" /></textarea>
 </div>
 	
-<div class="row mt-3">
+<div class="row mt-3 gy-3">
 	<div class="col-md-6">
 	<div class="form-group required">
 	 <label class="label">Tên *</label>
@@ -231,20 +231,20 @@
 <button type="submit" id="btn-send" name="btn-send" >Gửi đi</button>
 </div>
 </form></div></section></div>
-                <section id="related-pro" class="related-pro mt-5">
-            <div class="container" data-aos="fade-up">
-               <header class="section-header d-flex align-items-center justify-content-between" data-aos="fade-top">
-                    <h2>Sản phẩm khác</h2>
-                    <div><a href="{{ route('products') }}" class="btn-themes">Tất cả sản phẩm <img src="{{ asset('assets/') }}/images/right-arrow.svg" /></a></div>
-                </header>
-
-                <div class="position-relative mt-5">
-                    <div class="swiper homeproSwiper">
-                        <div class="swiper-wrapper">
-                        @if(isset($relatedProducts) && $relatedProducts->count() > 0)
-                            @foreach($relatedProducts as $related)
-                            <div class="swiper-slide">
-                                <div class="box-item" data-aos="fade-left">
+                <section id="related-pro" class="related-pro mt-5" data-aos="super-fade-up">
+            <div class="container">
+                 <header class="section-header d-flex align-items-center justify-content-between" data-aos="super-zoom-in">
+                      <h2>Sản phẩm khác</h2>
+                      <div><a href="{{ route('products') }}" class="btn-themes">Tất cả sản phẩm <img src="{{ asset('assets/') }}/images/right-arrow.svg" /></a></div>
+                  </header>
+  
+                  <div class="position-relative mt-5">
+                      <div class="swiper homeproSwiper">
+                          <div class="swiper-wrapper">
+                          @if(isset($relatedProducts) && $relatedProducts->count() > 0)
+                              @foreach($relatedProducts as $related)
+                              <div class="swiper-slide">
+                                  <div class="box-item">
                                 <a href="{{ route('product.detail', $related->slug) }}"><div class="img"><img src="{{ asset($related->image) }}" alt="{{ $related->name }}" class="img-fluid"/></div>
                                     <div class="info">
                                         <h4 class="title text-truncate">{{ $related->name }}</h4>
@@ -283,10 +283,11 @@
             </div>
         </section><section id="contact">
             <div class="container">
-            <div class="row">
-	<div class="col-md-7">
-	            <div id="panel_contact">
-                    <form class="form-horizontal ajaxform" action="https://pumi.vn/send-contact.html" name="frmContact" id="frmContact" method="post">
+        <div class="row gy-4">
+            <div class="col-md-7" data-aos="super-slide-right">
+                <div id="panel_contact">
+                    <form class="form-horizontal ajaxform" action="{{ route('contact.submit') }}" name="frmContact" id="frmContact" method="post">
+                        @csrf
                         <div class="form-group required mt-2">
                             <input type="text" name="fullname" value="" placeholder="Họ và tên" maxlength="256" required />
                         </div>
@@ -301,15 +302,15 @@
                         </div>
                     </form>
                     <div id="follow_on">
-                        <a href="#"><img src="{{ asset('assets/') }}/images/facebook.svg" alt=""></a>
-                        <a href="#"><img src="{{ asset('assets/') }}/images/tiktok.svg" alt=""></a>
-                        <a href="#"><img src="{{ asset('assets/') }}/images/instagram.svg" alt=""></a>
-                        <a href="#"><img src="{{ asset('assets/') }}/images/web.svg" alt=""></a>
+                        <a href="{{ $settings['facebook'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/images/facebook.svg') }}" alt=""></a>
+                        <a href="{{ $settings['tiktok'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/images/tiktok.svg') }}" alt=""></a>
+                        <a href="{{ $settings['instagram'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/images/instagram.svg') }}" alt=""></a>
+                        <a href="{{ $settings['website'] ?? '#' }}" target="_blank"><img src="{{ asset('assets/images/web.svg') }}" alt=""></a>
                     </div>
                 </div>
-</div>
-	<div class="col-md-5"><img src="{{ asset('assets/') }}/images/right-contact.png" class="img-fluid" alt="Contact"/></div>
-</div>
+            </div>
+            <div class="col-md-5" data-aos="super-slide-left" data-aos-delay="200"><img src="{{ asset('assets/images/right-contact.png') }}" class="img-fluid" alt="Contact"/></div>
+        </div>
                 
             </div></section>
     

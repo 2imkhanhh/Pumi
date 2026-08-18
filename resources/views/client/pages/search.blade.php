@@ -3,12 +3,12 @@
 @section('content')
 <main id="main">
 
-        <section id="banner" class="banner-bgs d-flex align-items-end" style="background-image: url('assets/images/upload/banner/img_68ddde15169dd.png')">
+        <section id="banner" class="banner-bgs d-flex align-items-end" style="background-image: url('assets/images/upload/banner/img_68ddde15169dd.png')" data-aos="super-zoom-in" data-aos-duration="1200">
             <div class="container">
             <h2>Tìm kiếm sản phẩm</h2>
             </div>
        </section>
-       <section id="search-hero">
+       <section id="search-hero" data-aos="super-zoom-in" data-aos-duration="1000">
             <div class="container">
                 <form id="searchForm" class="search-form-big" role="search" onsubmit="return false;">
                     <i class="fa-solid fa-magnifying-glass"></i>
@@ -26,12 +26,12 @@
        <section id="search-results" class="mt-4 mb-5">
             <div class="container">
                 <div id="searchStatus" class="search-status"></div>
-                <div id="searchGrid" class="row" data-aos="fade-up"></div>
+                <div id="searchGrid" class="row" data-aos="super-fade-up"></div>
                 <div id="searchEmpty" class="search-empty d-none">
                     <img src="{{ asset('assets/') }}/images/search.svg" alt="">
                     <h3>Không tìm thấy sản phẩm phù hợp</h3>
                     <p>Hãy thử từ khoá khác hoặc xem toàn bộ sản phẩm của Pumi.</p>
-                    <a href="san-pham.html" class="btn-themes">Xem tất cả sản phẩm <img src="{{ asset('assets/') }}/images/right-arrow.svg" /></a>
+                    <a href="{{ route('products') }}" class="btn-themes">Xem tất cả sản phẩm <img src="{{ asset('assets/images/right-arrow.svg') }}" /></a>
                 </div>
             </div>
        </section>
