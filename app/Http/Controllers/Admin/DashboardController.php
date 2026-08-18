@@ -8,7 +8,6 @@ use Inertia\Inertia;
 use App\Models\Product;
 use App\Models\Post;
 use App\Models\Contact;
-use App\Models\Partner;
 
 class DashboardController extends Controller
 {
@@ -18,7 +17,6 @@ class DashboardController extends Controller
             'products' => Product::count(),
             'posts' => Post::count(),
             'contacts' => Contact::count(),
-            'partners' => Partner::count(),
         ];
 
         $recentContacts = Contact::orderBy('id', 'desc')->take(5)->get();

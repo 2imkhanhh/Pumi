@@ -11,8 +11,7 @@ defineProps({
         default: () => ({
             products: 0,
             posts: 0,
-            contacts: 0,
-            partners: 0
+            contacts: 0
         })
     },
     recentContacts: {
@@ -59,16 +58,6 @@ defineProps({
             <div class="stat-info">
                 <h3>Liên hệ</h3>
                 <p class="value">{{ stats.contacts }}</p>
-            </div>
-        </div>
-
-        <div class="stat-card">
-            <div class="stat-icon bg-orange-light">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#f59e0b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
-            </div>
-            <div class="stat-info">
-                <h3>Đối tác</h3>
-                <p class="value">{{ stats.partners }}</p>
             </div>
         </div>
     </div>
