@@ -56,6 +56,13 @@ const form = useForm({
     home_about_content: props.settings.home_about_content || '',
     home_partner_title: props.settings.home_partner_title || '',
     home_partner_subtitle: props.settings.home_partner_subtitle || '',
+    home_partners: (() => {
+        let initial = [];
+        if (props.settings.home_partners) {
+            try { initial = JSON.parse(props.settings.home_partners).map((b, i) => ({ id: Date.now() + i, old_image: b.img, image: null })); } catch(e){}
+        }
+        return initial;
+    })(),
 
     // About Page Content
     about_welcome_title: props.settings.about_welcome_title || '',
@@ -93,16 +100,31 @@ const form = useForm({
     // Partners Page Content
     partners_banner: null,
     partners_ingredient_title: props.settings.partners_ingredient_title || '',
-    partners_ingredient_1_title: props.settings.partners_ingredient_1_title || '',
-    partners_ingredient_1_content: props.settings.partners_ingredient_1_content || '',
-    partners_ingredient_1_image: null,
-    partners_ingredient_2_title: props.settings.partners_ingredient_2_title || '',
-    partners_ingredient_2_content: props.settings.partners_ingredient_2_content || '',
-    partners_ingredient_2_image: null,
+    ingredient_partners: (() => {
+        let initial = [];
+        if (props.settings.ingredient_partners) {
+            try { initial = JSON.parse(props.settings.ingredient_partners).map((b, i) => ({ id: Date.now() + i, name: b.name, description: b.description, old_image: b.img, image: null })); } catch(e){}
+        }
+        return initial;
+    })(),
     partners_hospital_title: props.settings.partners_hospital_title || '',
     partners_hospital_desc: props.settings.partners_hospital_desc || '',
+    hospital_partners: (() => {
+        let initial = [];
+        if (props.settings.hospital_partners) {
+            try { initial = JSON.parse(props.settings.hospital_partners).map((b, i) => ({ id: Date.now() + i, old_image: b.img, image: null })); } catch(e){}
+        }
+        return initial;
+    })(),
     partners_media_title: props.settings.partners_media_title || '',
     partners_media_desc: props.settings.partners_media_desc || '',
+    media_partners: (() => {
+        let initial = [];
+        if (props.settings.media_partners) {
+            try { initial = JSON.parse(props.settings.media_partners).map((b, i) => ({ id: Date.now() + i, old_image: b.img, image: null })); } catch(e){}
+        }
+        return initial;
+    })(),
 
     // Image inputs
     logo: null,
@@ -140,6 +162,35 @@ const addBanner = () => {
 
 const removeBanner = (index) => {
     form.home_banners.splice(index, 1);
+};
+
+const handleDynamicFileChange = (e, index, field) => {
+    form[field][index].image = e.target.files[0];
+};
+
+const addHomePartner = () => form.home_partners.push({ id: Date.now(), old_image: null, image: null });
+const removeHomePartner = (index) => form.home_partners.splice(index, 1);
+
+const addIngredientPartner = () => form.ingredient_partners.push({ id: Date.now(), name: '', description: '', old_image: null, image: null });
+const removeIngredientPartner = (index) => form.ingredient_partners.splice(index, 1);
+
+const addHospitalPartner = () => form.hospital_partners.push({ id: Date.now(), old_image: null, image: null });
+const removeHospitalPartner = (index) => form.hospital_partners.splice(index, 1);
+
+const addMediaPartner = () => form.media_partners.push({ id: Date.now(), old_image: null, image: null });
+const removeMediaPartner = (index) => form.media_partners.splice(index, 1);
+
+const handleMultipleFilesChange = (e, field) => {
+    const files = e.target.files;
+    for (let i = 0; i < files.length; i++) {
+        form[field].push({
+            id: Date.now() + i + Math.random(),
+            old_image: null,
+            image: files[i],
+            preview: URL.createObjectURL(files[i])
+        });
+    }
+    e.target.value = '';
 };
 
 const submit = () => {
@@ -372,6 +423,23 @@ const submit = () => {
                 <div class="form-group">
                     <label>Mô tả ngắn phần đối tác</label>
                     <textarea v-model="form.home_partner_subtitle" class="form-control" rows="2"></textarea>
+                </div>
+
+                <div class="mt-4">
+                    <label class="font-medium mb-2 block">Hình ảnh</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem; align-items: flex-end;">
+                        <div v-for="(partner, index) in form.home_partners" :key="partner.id" style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+                            <img v-if="partner.old_image && !partner.preview" :src="'/' + partner.old_image" class="thumb-img" style="max-height: 90px;" alt="Partner" />
+                            <img v-if="partner.preview" :src="partner.preview" class="thumb-img" style="max-height: 90px;" alt="Partner Preview" />
+                            <button type="button" @click="removeHomePartner(index)" style="position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; border: 2px solid white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">✕</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="btn-secondary" style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; display: inline-block;">
+                            + Chọn nhiều ảnh Đối tác Trang chủ
+                            <input type="file" multiple @change="handleMultipleFilesChange($event, 'home_partners')" accept="image/*" style="display: none;" />
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>
@@ -678,42 +746,32 @@ const submit = () => {
                     <input type="text" v-model="form.partners_ingredient_title" class="form-control" />
                 </div>
 
-                <div class="p-3 mb-3 border rounded">
-                    <h4 class="font-medium mb-2">Đối tác nguyên liệu 1</h4>
-                    <div class="form-group">
-                        <label>Tên đối tác</label>
-                        <input type="text" v-model="form.partners_ingredient_1_title" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label>Hình ảnh đối tác</label>
-                        <div class="flex items-center gap-3">
-                            <img v-if="settings.partners_ingredient_1_image" :src="'/' + settings.partners_ingredient_1_image" class="thumb-img" style="max-height: 60px;" alt="Ingredient 1 Img" />
-                            <input type="file" @change="handleFileChange($event, 'partners_ingredient_1_image')" class="form-control" accept="image/*" />
+                <div class="mt-4">
+                    <label class="font-medium mb-2 block">Danh sách Đối tác nguyên liệu</label>
+                    <div v-for="(partner, index) in form.ingredient_partners" :key="partner.id" class="p-3 mb-3 border rounded bg-gray-50 relative">
+                        <button type="button" @click="removeIngredientPartner(index)" class="btn-icon text-red" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ef4444; cursor: pointer; padding: 0.5rem;">
+                            Xóa
+                        </button>
+                        <h4 class="font-medium mb-2">Đối tác nguyên liệu {{ index + 1 }}</h4>
+                        <div class="form-group">
+                            <label>Tên đối tác</label>
+                            <input type="text" v-model="partner.name" class="form-control" />
+                        </div>
+                        <div class="form-group">
+                            <label>Hình ảnh đối tác</label>
+                            <div class="flex items-center gap-3">
+                                <img v-if="partner.old_image && !partner.image" :src="'/' + partner.old_image" class="thumb-img" style="max-height: 60px;" alt="Ingredient Img" />
+                                <input type="file" @change="handleDynamicFileChange($event, index, 'ingredient_partners')" class="form-control" accept="image/*" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Mô tả chi tiết</label>
+                            <textarea v-model="partner.description" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
-                    <div class="form-group quill-container">
-                        <label>Mô tả chi tiết</label>
-                        <QuillEditor v-model:content="form.partners_ingredient_1_content" contentType="html" theme="snow" />
-                    </div>
-                </div>
-
-                <div class="p-3 mb-3 border rounded">
-                    <h4 class="font-medium mb-2">Đối tác nguyên liệu 2</h4>
-                    <div class="form-group">
-                        <label>Tên đối tác</label>
-                        <input type="text" v-model="form.partners_ingredient_2_title" class="form-control" />
-                    </div>
-                    <div class="form-group">
-                        <label>Hình ảnh đối tác</label>
-                        <div class="flex items-center gap-3">
-                            <img v-if="settings.partners_ingredient_2_image" :src="'/' + settings.partners_ingredient_2_image" class="thumb-img" style="max-height: 60px;" alt="Ingredient 2 Img" />
-                            <input type="file" @change="handleFileChange($event, 'partners_ingredient_2_image')" class="form-control" accept="image/*" />
-                        </div>
-                    </div>
-                    <div class="form-group quill-container">
-                        <label>Mô tả chi tiết</label>
-                        <QuillEditor v-model:content="form.partners_ingredient_2_content" contentType="html" theme="snow" />
-                    </div>
+                    <button type="button" @click="addIngredientPartner" class="btn-secondary mt-2" style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer;">
+                        + Thêm Đối tác nguyên liệu
+                    </button>
                 </div>
 
                 <h3 class="section-title mt-4">Khối 2: Đối tác bệnh viện</h3>
@@ -725,6 +783,22 @@ const submit = () => {
                     <label>Mô tả</label>
                     <QuillEditor v-model:content="form.partners_hospital_desc" contentType="html" theme="snow" />
                 </div>
+                <div class="mt-4">
+                    <label class="font-medium mb-2 block">Hình ảnh</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem; align-items: flex-end;">
+                        <div v-for="(partner, index) in form.hospital_partners" :key="partner.id" style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+                            <img v-if="partner.old_image && !partner.preview" :src="'/' + partner.old_image" class="thumb-img" style="max-height: 90px;" alt="Partner" />
+                            <img v-if="partner.preview" :src="partner.preview" class="thumb-img" style="max-height: 90px;" alt="Partner Preview" />
+                            <button type="button" @click="removeHospitalPartner(index)" style="position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; border: 2px solid white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">✕</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="btn-secondary" style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; display: inline-block;">
+                            + Chọn nhiều ảnh Bệnh viện
+                            <input type="file" multiple @change="handleMultipleFilesChange($event, 'hospital_partners')" accept="image/*" style="display: none;" />
+                        </label>
+                    </div>
+                </div>
 
                 <h3 class="section-title mt-4">Khối 3: Đối tác truyền thông</h3>
                 <div class="form-group">
@@ -734,6 +808,22 @@ const submit = () => {
                 <div class="form-group quill-container">
                     <label>Mô tả</label>
                     <QuillEditor v-model:content="form.partners_media_desc" contentType="html" theme="snow" />
+                </div>
+                <div class="mt-4">
+                    <label class="font-medium mb-2 block">Hình ảnh</label>
+                    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem; align-items: flex-end;">
+                        <div v-for="(partner, index) in form.media_partners" :key="partner.id" style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+                            <img v-if="partner.old_image && !partner.preview" :src="'/' + partner.old_image" class="thumb-img" style="max-height: 90px;" alt="Partner" />
+                            <img v-if="partner.preview" :src="partner.preview" class="thumb-img" style="max-height: 90px;" alt="Partner Preview" />
+                            <button type="button" @click="removeMediaPartner(index)" style="position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; border: 2px solid white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">✕</button>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="btn-secondary" style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; display: inline-block;">
+                            + Chọn nhiều ảnh Truyền thông
+                            <input type="file" multiple @change="handleMultipleFilesChange($event, 'media_partners')" accept="image/*" style="display: none;" />
+                        </label>
+                    </div>
                 </div>
             </div>
         </div>

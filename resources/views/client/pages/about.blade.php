@@ -141,7 +141,7 @@
                     <h2>Giá Trị Cốt Lõi</h2>
                     <h3>Core values</h3>
                 </header>
-                <div class="row d-flex align-items-center justify-content-center mt-5">
+                <div class="row d-flex align-items-center justify-content-center mt-3">
                     <div class="col-lg-4 text-center mt-3 mt-lg-0" data-aos="super-flip" data-aos-delay="100">
                         <div class="box-values">
                             <div class="img">
@@ -185,7 +185,7 @@
                     <h2>NGƯỜI ĐỨNG ĐẦU</h2>
                     <h3>Executive Board</h3>
                 </header>
-                <div class="row mt-5">
+                <div class="row mt-3">
                     <div class="col-md-6" data-aos="super-slide-right" data-aos-delay="100">
                         <div class="d-lg-flex align-items-end">
                             <div class="flex-shrink-0">
@@ -215,7 +215,7 @@
                 </div>
                 
                 <div class="culture" data-aos="super-zoom-in" data-aos-duration="1000">
-                    <header class="section-header text-center mb-5" data-aos="super-zoom-in">
+                    <header class="section-header text-center" data-aos="super-zoom-in">
                         <h2>{{ $settings['about_culture_title'] ?? 'Văn hoá công ty' }}</h2>
                     </header>
                     <div class="text-start"><img src="{{ asset('assets/images/about-left-comma.png') }}" alt=""/></div>

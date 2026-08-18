@@ -5,8 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Models\Product;
-use App\Models\Partner;
 use App\Models\Post;
+use App\Models\Setting;
 
 class HomeController extends Controller
 {
@@ -16,7 +16,10 @@ class HomeController extends Controller
         if ($products->isEmpty()) {
             $products = Product::where('is_active', true)->latest()->limit(4)->get();
         }
-        $partners = Partner::limit(10)->get();
+        
+        $homePartnersJson = Setting::where('key', 'home_partners')->value('value');
+        $partners = $homePartnersJson ? json_decode($homePartnersJson, true) : [];
+
         $posts = Post::where('type', 'news')->latest('published_at')->limit(4)->get();
 
         return view('client.pages.home', compact('products', 'partners', 'posts'));
@@ -29,8 +32,16 @@ class HomeController extends Controller
 
     public function partners()
     {
-        $partners = Partner::all();
-        return view('client.pages.partners', compact('partners'));
+        $hospitalPartnersJson = Setting::where('key', 'hospital_partners')->value('value');
+        $hospitalPartners = $hospitalPartnersJson ? json_decode($hospitalPartnersJson, true) : [];
+
+        $mediaPartnersJson = Setting::where('key', 'media_partners')->value('value');
+        $mediaPartners = $mediaPartnersJson ? json_decode($mediaPartnersJson, true) : [];
+
+        $ingredientPartnersJson = Setting::where('key', 'ingredient_partners')->value('value');
+        $ingredientPartners = $ingredientPartnersJson ? json_decode($ingredientPartnersJson, true) : [];
+        
+        return view('client.pages.partners', compact('hospitalPartners', 'mediaPartners', 'ingredientPartners'));
     }
 
     public function products()
@@ -107,10 +118,10 @@ class HomeController extends Controller
 
     public function search(\Illuminate\Http\Request $request)
     {
-        $products = \App\Models\Product::with('category')->get()->map(function($p) {
+        $products = \App\Models\Product::get()->map(function($p) {
             return [
                 'name' => $p->name,
-                'cat' => $p->category ? $p->category->name : 'Khác',
+                'cat' => 'Sản phẩm Pumi',
                 'href' => route('product.detail', $p->slug),
                 'img' => asset($p->image),
                 'desc' => $p->short_description

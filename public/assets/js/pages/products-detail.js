@@ -34,12 +34,12 @@ new Swiper('.homeproSwiper', {
     },
     breakpoints: {
         320: {
-            slidesPerView: 1,
-            spaceBetween: 0
+            slidesPerView: 2,
+            spaceBetween: 15
         },
         820: {
             slidesPerView: 2,
-            spaceBetween: 30
+            spaceBetween: 20
         },
         1200: {
             slidesPerView: 4,

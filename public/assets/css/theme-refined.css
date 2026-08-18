@@ -157,6 +157,14 @@ textarea:focus-visible {
     line-height: 1.14;
 }
 
+.banner-bgs .content h2 {
+    right: unset !important;
+    bottom: unset !important;
+    left: unset !important;
+    transform: none !important;
+    position: relative !important;
+}
+
 .banner-bgs .content {
     font-size: clamp(1.05rem, 0.9rem + 0.583vw, 1.6rem);
     line-height: 1.5;
@@ -248,13 +256,61 @@ textarea:focus-visible {
 }
 
 /* Mũi tên điều hướng của các swiper — 40px là quá lớn ở khổ nhỏ */
-#partner #box_partner .swiper-button-next-01 i,
-#partner #box_partner .swiper-button-prev-01 i,
 .reviewSwiper .swiper-button-next-01 i,
 .reviewSwiper .swiper-button-prev-01 i,
 #about-us-prize .prizeSwiper .swiper-button-next-01 i,
 #about-us-prize .prizeSwiper .swiper-button-prev-01 i {
     font-size: clamp(1.35rem, 1.1rem + 1.167vw, 2.5rem);
+}
+
+/* Đối tác của chúng tôi - Tối ưu hóa kích thước logo và chống đè mũi tên */
+#partner .featureSwiper {
+    padding: 0 45px !important;
+}
+
+#partner .box-item {
+    height: 100px !important;
+}
+
+#partner .box-item img {
+    max-height: 48px !important;
+    max-width: 80% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+}
+
+#partner #box_partner .swiper-button-next-01,
+#partner #box_partner .swiper-button-prev-01 {
+    top: 50% !important;
+    transform: translateY(-50%) !important;
+    margin-top: 0 !important;
+    width: 38px !important;
+    height: 38px !important;
+    background: #fff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 50% !important;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08) !important;
+    z-index: 10 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+}
+
+#partner #box_partner .swiper-button-next-01 {
+    right: 5px !important;
+    left: auto !important;
+}
+
+#partner #box_partner .swiper-button-prev-01 {
+    left: 5px !important;
+    right: auto !important;
+}
+
+#partner #box_partner .swiper-button-next-01 i,
+#partner #box_partner .swiper-button-prev-01 i {
+    font-size: 15px !important;
+    color: var(--pu-navy) !important;
 }
 
 #contact .contact-item i,
@@ -268,17 +324,20 @@ textarea:focus-visible {
    iframe đặt cứng height="680" nên trên điện thoại để lại một mảng đen cao
    680px, còn trên màn hình rộng thì khung video bị hụt.
    -------------------------------------------------------------------------- */
+#video-home {
+    background: #0d1b2a;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
 #video-home iframe {
     display: block;
     width: 100%;
+    max-width: 1200px;
     height: auto;
     aspect-ratio: 16 / 9;
-    max-height: min(680px, 76vh);
     border: 0;
-}
-
-#video-home {
-    background: #0d1b2a;
 }
 
 /* --------------------------------------------------------------------------
@@ -338,12 +397,10 @@ textarea:focus-visible {
     left: -150%;
     width: 100%;
     height: 100%;
-    background: linear-gradient(
-        90deg,
-        rgba(255, 255, 255, 0) 0%,
-        rgba(255, 255, 255, 0.45) 50%,
-        rgba(255, 255, 255, 0) 100%
-    );
+    background: linear-gradient(90deg,
+            rgba(255, 255, 255, 0) 0%,
+            rgba(255, 255, 255, 0.45) 50%,
+            rgba(255, 255, 255, 0) 100%);
     transform: skewX(-25deg);
     transition: none;
     z-index: -1;
@@ -393,145 +450,7 @@ textarea:focus-visible {
 /* --------------------------------------------------------------------------
    8. Menu điều hướng
    -------------------------------------------------------------------------- */
-@media (min-width: 1200px) {
-    .navmenu>ul>li>a {
-        transition: color .28s var(--pu-ease);
-    }
-
-    .navmenu>ul>li:hover>a,
-    .navmenu>ul>li>a.active {
-        color: var(--pu-cyan);
-    }
-
-    .navmenu .dropdown ul {
-        box-shadow: var(--pu-shadow);
-        border-radius: var(--pu-radius-sm);
-        overflow: hidden;
-    }
-
-    .navmenu .dropdown ul a {
-        transition: background-color .25s var(--pu-ease), padding-left .25s var(--pu-ease);
-    }
-
-    .navmenu .dropdown ul a:hover {
-        background: var(--pu-sky);
-        padding-left: 24px;
-    }
-}
-
-@media (max-width: 1199px) {
-
-    /* Vùng chạm tối thiểu 44px theo chuẩn Apple/Google */
-    .mobile-nav-toggle {
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        width: 44px;
-        height: 44px;
-        font-size: 26px;
-    }
-
-    .mobile-nav-active .mobile-nav-toggle.bi-x {
-        font-size: 30px;
-    }
-
-    .mobile-nav-active .navmenu>ul>li>a {
-        padding: 13px 22px;
-        font-size: 17px;
-    }
-
-    /* ----------------------------------------------------------------------
-       Menu mobile — nền chuyên nghiệp hơn thay vì đen phẳng
-       ------------------------------------------------------------------------
-       theme.css đặt overlay rgba(0,0,0,.9) — đơn sắc, không có chiều sâu và
-       không liên hệ gì tới bộ nhận diện thương hiệu. Đổi sang gradient
-       thương hiệu (navy → blue) kèm hiệu ứng kính mờ, thêm khung + đổ bóng
-       cho khối menu con để đồng bộ với menu desktop.
-       ---------------------------------------------------------------------- */
-    .mobile-nav-active .navmenu {
-        background: linear-gradient(165deg, rgba(15, 33, 82, .97) 0%, var(--pu-navy) 45%, var(--pu-blue) 100%);
-    }
-
-    @supports (backdrop-filter: blur(6px)) or (-webkit-backdrop-filter: blur(6px)) {
-        .mobile-nav-active .navmenu {
-            background: linear-gradient(165deg, rgba(15, 33, 82, .92) 0%, rgba(27, 63, 148, .92) 45%, rgba(46, 95, 208, .92) 100%);
-            -webkit-backdrop-filter: blur(10px);
-            backdrop-filter: blur(10px);
-        }
-    }
-
-    .navmenu ul {
-        animation: pu-mnu-in .28s var(--pu-ease-out);
-    }
-
-    @keyframes pu-mnu-in {
-        from {
-            opacity: 0;
-            transform: translateY(-6px);
-        }
-
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-
-    .mobile-nav-active .navmenu>ul>li {
-        border-bottom: 1px solid rgba(255, 255, 255, .12);
-    }
-
-    .mobile-nav-active .navmenu>ul>li:last-child {
-        border-bottom: none;
-    }
-
-    .mobile-nav-active .navmenu>ul>li>a {
-        color: rgba(255, 255, 255, .92);
-    }
-
-    .mobile-nav-active .navmenu>ul>li>a:hover,
-    .mobile-nav-active .navmenu>ul>li>a.active,
-    .mobile-nav-active .navmenu>ul>li>a:focus {
-        color: var(--pu-cyan);
-    }
-
-    .mobile-nav-active .navmenu>ul>li>a i,
-    .mobile-nav-active .navmenu>ul>li>a:focus i {
-        background-color: rgba(255, 255, 255, .12);
-        color: rgba(255, 255, 255, .85);
-    }
-
-    .mobile-nav-active .navmenu .active i,
-    .mobile-nav-active .navmenu .active:focus i {
-        color: var(--pu-cyan);
-    }
-
-    /* Menu con — thẻ trắng bo góc, đổ bóng, thay vì hình chữ nhật trắng cứng */
-    .mobile-nav-active .navmenu .dropdown ul {
-        background-color: #fff;
-        border-radius: var(--pu-radius-sm);
-        box-shadow: var(--pu-shadow-lg);
-        overflow: hidden;
-        padding: 6px 0;
-    }
-
-    .mobile-nav-active .navmenu .dropdown ul a {
-        color: var(--pu-ink);
-        font-size: 15.5px;
-    }
-
-    .mobile-nav-active .navmenu .dropdown ul a:hover,
-    .mobile-nav-active .navmenu .dropdown ul .active:hover,
-    .mobile-nav-active .navmenu .dropdown ul li:hover>a {
-        background: var(--pu-sky);
-        color: var(--pu-navy);
-    }
-
-    .mobile-nav-active .navmenu .dropdown .dropdown ul {
-        background-color: var(--pu-sky);
-        box-shadow: none;
-        margin-top: 4px;
-    }
-}
+/* (Đã di chuyển các media queries của Menu điều hướng xuống phần Responsive ở cuối file) */
 
 /* --------------------------------------------------------------------------
    9. Khoảng đệm giữa các phần — co giãn theo màn hình
@@ -559,20 +478,7 @@ textarea:focus-visible {
    theme.css chỉ có mốc 768px nên khoảng máy tính bảng và laptop nhỏ vẫn dùng
    bố cục desktop với cỡ chữ desktop. Siết lại phần đệm ngang cho vừa.
    -------------------------------------------------------------------------- */
-@media (min-width: 769px) and (max-width: 1199.98px) {
-
-    .banner-bgs .content,
-    .banner-bg .section-header {
-        padding-left: 24px;
-        padding-right: 24px;
-    }
-
-    #about-us .about-us-text,
-    #about-us-home .about-us-text {
-        padding-left: 16px;
-        padding-right: 16px;
-    }
-}
+/* (Đã di chuyển media query khoảng trống 769-1199px xuống phần Responsive ở cuối file) */
 
 /* --------------------------------------------------------------------------
    11. Biểu mẫu
@@ -663,22 +569,7 @@ textarea:focus-visible {
 /* --------------------------------------------------------------------------
    13. In ấn
    -------------------------------------------------------------------------- */
-@media print {
-
-    #header,
-    #video-home,
-    .swiper-button-next-01,
-    .swiper-button-prev-01,
-    .mobile-nav-toggle {
-        display: none !important;
-    }
-
-    body {
-        background: #fff;
-        color: #000;
-        font-size: 12pt;
-    }
-}
+/* (Đã di chuyển media query In ấn xuống phần Responsive ở cuối file) */
 
 
 /* --------------------------------------------------------------------------
@@ -686,24 +577,7 @@ textarea:focus-visible {
    --------------------------------------------------------------------------
    Bootstrap để gutter 12px mỗi bên, cộng viền của một vài khối là đủ tràn.
    -------------------------------------------------------------------------- */
-@media (max-width: 359.98px) {
-
-    .container,
-    .container-fluid {
-        padding-left: 12px;
-        padding-right: 12px;
-    }
-
-    .row {
-        margin-left: -8px;
-        margin-right: -8px;
-    }
-
-    .row>* {
-        padding-left: 8px;
-        padding-right: 8px;
-    }
-}
+/* (Đã di chuyển media query Màn hình rất hẹp xuống phần Responsive ở cuối file) */
 
 /* --------------------------------------------------------------------------
    15. Cỡ chữ thân bài
@@ -874,15 +748,7 @@ textarea:focus-visible {
     margin-bottom: 24px;
 }
 
-@media (max-width: 576px) {
-    .search-form-big {
-        padding: 4px 6px 4px 16px;
-    }
-
-    .search-form-big input {
-        font-size: 15px;
-    }
-}
+/* (Đã di chuyển media query Search Mobile xuống phần Responsive ở cuối file) */
 
 /* --------------------------------------------------------------------------
    10. Trang chi tiết Tin tức / Tuyển dụng
@@ -1188,77 +1054,12 @@ textarea:focus-visible {
     margin-bottom: 16px;
 }
 
-@media (max-width: 991px) {
-    .post-sidebar {
-        margin-top: 40px;
-    }
-}
+/* (Đã di chuyển media query Sidebar Tablet xuống phần Responsive ở cuối file) */
 
 /* --------------------------------------------------------------------------
    11. Điều chỉnh đặc biệt cho Laptop (ví dụ 1366x768, 1440x900)
    -------------------------------------------------------------------------- */
-@media (min-width: 992px) and (max-width: 1440px) and (max-height: 900px) {
-    body {
-        font-size: 16px;
-    }
-
-    .banner-bg {
-        height: 400px !important;
-    }
-
-    .banner-bgs {
-        height: 550px !important;
-    }
-
-    .banner-bgs h2,
-    .banner-bgs .content h3 {
-        font-size: 2.2rem !important;
-    }
-
-    #about-us,
-    #about-us-home,
-    #products-home,
-    #partner,
-    #news-home,
-    #contact,
-    #core-values,
-    #about-us-team,
-    #about-us-history {
-        padding-top: 40px !important;
-        padding-bottom: 40px !important;
-    }
-
-    .section-header {
-        padding-bottom: 15px !important;
-    }
-
-    #video-home iframe {
-        max-height: 550px !important;
-    }
-
-    .section-header h2,
-    #title-page h2 {
-        font-size: 2rem !important;
-    }
-
-    .section-header h3 {
-        font-size: 1.4rem !important;
-    }
-
-    .banner-bg .section-header h2 {
-        font-size: 2.5rem !important;
-    }
-
-    #about-us .desc,
-    #about-us-page #box-about-us .desc {
-        font-size: 2.5rem !important;
-    }
-
-    #carouselBanner .carousel-item img {
-        max-height: 75vh;
-        object-fit: cover;
-    }
-}
+/* (Đã di chuyển media query Laptop đặc biệt xuống phần Responsive ở cuối file) */
 
 /* Pagination Premium for Client */
 .pagination {
@@ -1549,14 +1350,27 @@ textarea:focus-visible {
     display: none !important;
 }
 
-#related-pro .swiper-button-next-01:hover,
-#related-pro .swiper-button-prev-01:hover {
+@media (hover: hover) and (pointer: fine) {
+    #related-pro .swiper-button-next-01:hover,
+    #related-pro .swiper-button-prev-01:hover {
+        background: var(--pu-cyan) !important;
+        border-color: var(--pu-cyan) !important;
+    }
+
+    #related-pro .swiper-button-next-01:hover i,
+    #related-pro .swiper-button-prev-01:hover i {
+        color: #ffffff !important;
+    }
+}
+
+#related-pro .swiper-button-next-01:active,
+#related-pro .swiper-button-prev-01:active {
     background: var(--pu-cyan) !important;
     border-color: var(--pu-cyan) !important;
 }
 
-#related-pro .swiper-button-next-01:hover i,
-#related-pro .swiper-button-prev-01:hover i {
+#related-pro .swiper-button-next-01:active i,
+#related-pro .swiper-button-prev-01:active i {
     color: #ffffff !important;
 }
 
@@ -1568,41 +1382,13 @@ textarea:focus-visible {
    16. Các tinh chỉnh Responsive & Premium bổ sung cho Mobile & Tablet
    ========================================================================== */
 
+/* ===== 16.1 CSS CHUNG (All Devices) ===== */
+
 /* Logo trên Header */
 #header .logo img {
     max-height: clamp(42px, 5.5vw, 56px) !important;
     width: auto !important;
     object-fit: contain;
-}
-
-/* Chiều cao Banner các trang con (.banner-bgs) */
-@media (max-width: 767.98px) {
-    .banner-bgs {
-        height: 240px !important;
-        background-size: cover !important;
-        background-position: center !important;
-    }
-    .banner-bgs .content,
-    .banner-bgs h2 {
-        right: unset !important;
-        left: 16px !important;
-        bottom: 20px !important;
-        text-align: left !important;
-        transform: none !important;
-    }
-}
-
-@media (min-width: 768px) and (max-width: 991.98px) {
-    .banner-bgs {
-        height: 380px !important;
-        background-size: cover !important;
-        background-position: center !important;
-    }
-    .banner-bgs .content,
-    .banner-bgs h2 {
-        right: 8% !important;
-        bottom: 12% !important;
-    }
 }
 
 /* Banner chi tiết bài viết/tuyển dụng (.banner-blog) */
@@ -1613,24 +1399,296 @@ textarea:focus-visible {
     position: relative !important;
     padding: clamp(20px, 4vw, 40px) 0 !important;
 }
+
 .banner-blog::before {
     content: '' !important;
     position: absolute !important;
-    top: 0 !important; left: 0 !important; right: 0 !important; bottom: 0 !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    bottom: 0 !important;
     background: linear-gradient(180deg, rgba(27, 63, 148, 0.3) 0%, rgba(27, 63, 148, 0.75) 100%) !important;
     z-index: 1 !important;
 }
+
 .banner-blog .container {
     position: relative !important;
     z-index: 2 !important;
 }
 
-/* Ảnh sản phẩm lưới tỉ lệ 1:1 vuông */
+/* Giới thiệu - Căn giữa ảnh ban điều hành */
+#aboutus-company .flex-shrink-0 img {
+    max-width: 150px;
+    border-radius: 50%;
+    box-shadow: var(--pu-shadow);
+}
+
+/* Khoảng cách giữa hình ảnh chai sản phẩm và section sản phẩm nổi bật */
+.banner-pro-home {
+    position: relative;
+    z-index: 2;
+}
+
+#products-home {
+    /* Đẩy phần sóng xanh lùi lên trên bằng với khoảng trống dư của ảnh trong banner-pro-home */
+    margin-top: -10vw !important;
+    position: relative;
+    z-index: 1;
+}
+
+/* Đảm bảo ảnh sản phẩm trang chủ hiển thị trọn vẹn, căn giữa và không bị méo/cắt ở các kích cỡ màn hình */
+#products-home .warp .img {
+    height: auto !important;
+    aspect-ratio: 4 / 3 !important;
+    max-height: 320px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    padding: 20px !important;
+    border-radius: 15px !important;
+}
+
+#products-home .warp .img img {
+    max-height: 100% !important;
+    max-width: 100% !important;
+    width: auto !important;
+    height: auto !important;
+    object-fit: contain !important;
+}
+
+/* Tỉ lệ ảnh tin tức trang chủ co giãn mượt mà thay vì 380px cố định trên mọi màn hình */
+.news-home article .img {
+    height: auto !important;
+    aspect-ratio: 4 / 3 !important;
+    max-height: 380px !important;
+}
+
+/* ===== 16.2 LARGE DESKTOP (min-width: 1200px) ===== */
+@media (min-width: 1200px) {
+    .navmenu>ul>li>a {
+        transition: color .28s var(--pu-ease);
+    }
+
+    .navmenu>ul>li:hover>a,
+    .navmenu>ul>li>a.active {
+        color: var(--pu-cyan);
+    }
+
+    .navmenu .dropdown ul {
+        box-shadow: var(--pu-shadow);
+        border-radius: var(--pu-radius-sm);
+        overflow: hidden;
+    }
+
+    .navmenu .dropdown ul a {
+        transition: background-color .25s var(--pu-ease), padding-left .25s var(--pu-ease);
+    }
+
+    .navmenu .dropdown ul a:hover {
+        background: var(--pu-sky);
+        padding-left: 24px;
+    }
+
+    #products-home {
+        margin-top: -180px !important;
+    }
+
+    .news-home article .img {
+        height: 380px !important;
+        aspect-ratio: auto !important;
+    }
+}
+
+@media (min-width: 992px) and (max-width: 1440px) and (max-height: 900px) {
+    body {
+        font-size: 16px;
+    }
+
+    .banner-bg {
+        height: 400px !important;
+    }
+
+    .banner-bgs {
+        height: 550px !important;
+    }
+
+    .banner-bgs h2,
+    .banner-bgs .content h3 {
+        font-size: 2.2rem !important;
+    }
+
+    #about-us,
+    #about-us-home,
+    #products-home,
+    #partner,
+    #news-home,
+    #contact,
+    #core-values,
+    #about-us-team,
+    #about-us-history {
+        padding-top: 40px !important;
+        padding-bottom: 40px !important;
+    }
+
+    .section-header {
+        padding-bottom: 15px !important;
+    }
+
+    .section-header h2,
+    #title-page h2 {
+        font-size: 2rem !important;
+    }
+
+    .section-header h3 {
+        font-size: 1.4rem !important;
+    }
+
+    .banner-bg .section-header h2 {
+        font-size: 2.5rem !important;
+    }
+
+    #about-us .desc,
+    #about-us-page #box-about-us .desc {
+        font-size: 2.5rem !important;
+    }
+
+    #carouselBanner .carousel-item img {
+        max-height: 75vh;
+        object-fit: cover;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1199.98px) {
+
+    .banner-bgs .content,
+    .banner-bg .section-header {
+        padding-left: 24px;
+        padding-right: 24px;
+    }
+
+    .banner-bgs .content,
+    .banner-bgs h2 {
+        right: 0% !important;
+    }
+
+    #about-us .about-us-text,
+    #about-us-home .about-us-text {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+}
+
 @media (max-width: 1199.98px) {
+    .mobile-nav-toggle {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 44px;
+        height: 44px;
+        font-size: 26px;
+    }
+
+    .mobile-nav-active .mobile-nav-toggle.bi-x {
+        font-size: 30px;
+        position: fixed !important;
+        top: 20px !important;
+        right: 15px !important;
+        z-index: 9999 !important;
+    }
+
+    .mobile-nav-active .navmenu>ul>li>a {
+        padding: 13px 22px;
+        font-size: 17px;
+    }
+
+    .mobile-nav-active .navmenu {
+        background: linear-gradient(165deg, rgba(15, 33, 82, .97) 0%, var(--pu-navy) 45%, var(--pu-blue) 100%);
+    }
+
+    @supports (backdrop-filter: blur(6px)) or (-webkit-backdrop-filter: blur(6px)) {
+        .mobile-nav-active .navmenu {
+            background: linear-gradient(165deg, rgba(15, 33, 82, .92) 0%, rgba(27, 63, 148, .92) 45%, rgba(46, 95, 208, .92) 100%);
+            -webkit-backdrop-filter: blur(10px);
+            backdrop-filter: blur(10px);
+        }
+    }
+
+    .navmenu ul {
+        animation: pu-mnu-in .28s var(--pu-ease-out);
+    }
+
+    @keyframes pu-mnu-in {
+        from {
+            opacity: 0;
+            transform: translateY(-6px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .mobile-nav-active .navmenu>ul>li {
+        border-bottom: 1px solid rgba(255, 255, 255, .12);
+    }
+
+    .mobile-nav-active .navmenu>ul>li:last-child {
+        border-bottom: none;
+    }
+
+    .mobile-nav-active .navmenu>ul>li>a {
+        color: rgba(255, 255, 255, .92);
+    }
+
+    .mobile-nav-active .navmenu>ul>li>a:hover,
+    .mobile-nav-active .navmenu>ul>li>a.active,
+    .mobile-nav-active .navmenu>ul>li>a:focus {
+        color: var(--pu-cyan);
+    }
+
+    .mobile-nav-active .navmenu>ul>li>a i,
+    .mobile-nav-active .navmenu>ul>li>a:focus i {
+        background-color: rgba(255, 255, 255, .12);
+        color: rgba(255, 255, 255, .85);
+    }
+
+    .mobile-nav-active .navmenu .active i,
+    .mobile-nav-active .navmenu .active:focus i {
+        color: var(--pu-cyan);
+    }
+
+    .mobile-nav-active .navmenu .dropdown ul {
+        background-color: #fff;
+        border-radius: var(--pu-radius-sm);
+        box-shadow: var(--pu-shadow-lg);
+        overflow: hidden;
+        padding: 6px 0;
+    }
+
+    .mobile-nav-active .navmenu .dropdown ul a {
+        color: var(--pu-ink);
+        font-size: 15.5px;
+    }
+
+    .mobile-nav-active .navmenu .dropdown ul a:hover,
+    .mobile-nav-active .navmenu .dropdown ul .active:hover,
+    .mobile-nav-active .navmenu .dropdown ul li:hover>a {
+        background: var(--pu-sky);
+        color: var(--pu-navy);
+    }
+
+    .mobile-nav-active .navmenu .dropdown .dropdown ul {
+        background-color: var(--pu-sky);
+        box-shadow: none;
+        margin-top: 4px;
+    }
+
     #pro-list .row {
         --bs-gutter-x: 1rem !important;
         --bs-gutter-y: 1.5rem !important;
     }
+
     #pro-list .box-item .img {
         height: auto !important;
         padding-top: 100% !important;
@@ -1638,6 +1696,7 @@ textarea:focus-visible {
         padding-left: 0 !important;
         padding-right: 0 !important;
     }
+
     #pro-list .box-item .img img {
         position: absolute !important;
         top: 50% !important;
@@ -1648,9 +1707,11 @@ textarea:focus-visible {
         width: auto !important;
         height: auto !important;
     }
+
     #pro-list .box-item .info {
         padding: 1rem !important;
     }
+
     #pro-list .box-item .title {
         font-size: 1rem !important;
         height: 2.8em !important;
@@ -1659,9 +1720,11 @@ textarea:focus-visible {
         -webkit-box-orient: vertical !important;
         overflow: hidden !important;
     }
+
     #pro-list .box-item .desc {
         display: none !important;
     }
+
     #pro-list .box-item .btn-themes {
         width: 100% !important;
         font-size: 0.85rem !important;
@@ -1669,27 +1732,19 @@ textarea:focus-visible {
         border-radius: 8px !important;
         text-transform: none !important;
     }
+
     #pro-list .box-item .btn-themes img {
         display: none !important;
     }
-}
 
-/* Chi tiết sản phẩm - Tăng kích thước ảnh chính trên di động */
-@media (max-width: 767.98px) {
-    .detail #imgdt img#main-product-image {
-        max-width: 85% !important;
-    }
-}
-
-/* Giới thiệu - Reset margins cho khối thông tin xen kẽ */
-@media (max-width: 1199.98px) {
+    /* Giới thiệu - Reset margins cho khối thông tin xen kẽ */
     #about-1.aboutus-section .info,
     #about-2.aboutus-section .info {
         margin-left: 0 !important;
         margin-right: 0 !important;
         padding: clamp(20px, 4vw, 40px) 20px !important;
     }
-    
+
     #about-3 .info {
         position: relative !important;
         top: unset !important;
@@ -1698,78 +1753,393 @@ textarea:focus-visible {
         margin-top: 20px !important;
         padding: 0 15px !important;
     }
+
     #about-3 .title {
         font-size: clamp(1.4rem, 1.2rem + 1vw, 2.2rem) !important;
         text-align: center !important;
     }
+
     #about-3 .content {
         text-align: justify !important;
     }
 }
 
-/* Giới thiệu - Căn giữa ảnh ban điều hành */
-#aboutus-company .flex-shrink-0 img {
-    max-width: 150px;
-    border-radius: 50%;
-    box-shadow: var(--pu-shadow);
-}
+/* ===== 16.6 TABLET (<= 991.98px) ===== */
 @media (max-width: 991.98px) {
+
+    /* Giảm khoảng cách cho phần Người đứng đầu và Văn hoá công ty trên responsive */
+    #aboutus-company {
+        padding-top: 60px !important;
+        padding-bottom: 10px !important;
+    }
+
+    #aboutus-company .culture {
+        margin-top: 50px !important;
+    }
+
+    /* Giới thiệu - Căn giữa ảnh ban điều hành */
     #aboutus-company .col-md-6 {
         margin-bottom: 40px;
     }
+
     #aboutus-company .col-md-6:last-child {
         margin-bottom: 0;
     }
+
     #aboutus-company .d-lg-flex {
         text-align: center;
     }
+
     #aboutus-company .flex-shrink-0 img {
         margin: 0 auto 20px;
         display: block;
     }
+
+    /* Giảm khoảng cách từ phần Lĩnh vực hoạt động xuống form liên hệ */
+    #contact {
+        padding-top: 0 !important;
+    }
+
+    #panel_contact {
+        margin-top: 0 !important;
+    }
+
+    #contact .row.gy-4 {
+        margin-top: 0 !important;
+    }
+
+    #contact .row.gy-4>[class^="col-"] {
+        padding-top: 0 !important;
+        margin-top: 0 !important;
+    }
+
+    /* Liên hệ - Khối nhập liệu */
+    #panel_contact {
+        padding: 20px !important;
+    }
+
+    /* Chiều cao Banner các trang con (Dành cho Tablet nằm ngang) */
+    .banner-bgs {
+        height: 380px !important;
+        background-size: cover !important;
+        background-position: center !important;
+    }
+
+    .banner-bgs .content,
+    .banner-bgs h2 {
+        right: 0% !important;
+        bottom: 12% !important;
+    }
+
+    /* Sidebar tin tức */
+    .post-sidebar {
+        margin-top: 40px;
+    }
+
+    /* Tiết kiệm không gian xanh thừa trang chủ trên tablet */
+    #about-us-home {
+        padding: 80px 0 !important;
+    }
+
+    #top-products-home {
+        height: 120px !important;
+        background-size: auto 100% !important;
+    }
+
+    /* Sản phẩm khác - tablet: luôn hiển thị mũi tên */
+    #related-pro .swiper-button-next-01,
+    #related-pro .swiper-button-prev-01 {
+        top: auto !important;
+        bottom: 8px !important;
+        margin-top: 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    .position-relative .swiper-button-next-01,
+    .position-relative .swiper-button-prev-01 {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    #related-pro .swiper-button-next-01 {
+        right: calc(50% - 60px) !important;
+        left: auto !important;
+    }
+
+    #related-pro .swiper-button-prev-01 {
+        left: calc(50% - 60px) !important;
+        right: auto !important;
+    }
+
+    #related-pro .homeproSwiper {
+        padding-bottom: 60px !important;
+    }
+
+    #related-pro .box-item .btn-themes {
+        margin-top: auto;
+        margin-bottom: 16px;
+    }
 }
 
-/* Trang chủ - Căn giữa phần "Xin chào" trên mobile */
+/* ===== 16.7 MOBILE (<= 767.98px) ===== */
 @media (max-width: 767.98px) {
+
+    /* Chiều cao Banner các trang con */
+    .banner-bgs {
+        height: 240px !important;
+    }
+
+    .banner-bgs .content,
+    .banner-bgs h2 {
+        left: unset !important;
+        right: 4% !important;
+        bottom: 20px !important;
+        text-align: right !important;
+        transform: none !important;
+    }
+
+    .banner-bgs .content h3 {
+        font-size: 1.15rem !important;
+    }
+
+    .banner-bgs h2 {
+        font-size: 1.35rem !important;
+    }
+
+    /* Tin tức - Ẩn mô tả ngắn khi chạm (hover) trên mobile để chuyển trang mượt mà */
+    .news-home article:hover .description .desc {
+        display: none !important;
+    }
+
+    /* Chi tiết sản phẩm - Tăng kích thước ảnh chính trên di động */
+    .detail #imgdt img#main-product-image {
+        max-width: 85% !important;
+    }
+
+    /* Trang chủ - Căn lề trái phần giới thiệu gọn gàng thay vì lệch tâm */
     #about-us h2.title,
     #about-us .desc {
-        text-align: center !important;
+        text-align: left !important;
     }
-    #about-us .content {
-        text-align: justify !important;
-        margin-top: 20px;
-    }
-}
 
-/* Đối tác - Lưới logo tối ưu trên mobile */
-@media (max-width: 767.98px) {
+    #about-us .content {
+        text-align: left !important;
+        margin-top: 15px !important;
+    }
+
+    /* Tiết kiệm không gian xanh thừa trang chủ trên mobile */
+    #about-us-home {
+        padding: 40px 0 !important;
+    }
+
+    #about-us-home .warp {
+        padding: 20px !important;
+    }
+
+    #about-us-home .about-us-text {
+        padding: 10px !important;
+    }
+
+    /* Bố cục giãn đệm chân sản phẩm hợp lý */
+    #products-home .warp {
+        padding-bottom: 150px !important;
+    }
+
+    #products-home .box-products-home {
+        margin-bottom: 50px !important;
+    }
+
+    /* Đối tác - Lưới logo tối ưu trên mobile */
     #panel_partner {
         display: flex;
         flex-wrap: wrap;
         justify-content: center;
     }
+
     #panel_partner .img {
         width: 50% !important;
         display: block !important;
         float: none !important;
     }
+
     #panel_partner .inner {
         padding: 8px 15px !important;
     }
-}
 
-/* Liên hệ - Ảnh và khối nhập liệu */
-@media (max-width: 767.98px) {
+    /* Sản phẩm khác - mobile fix */
+    #related-pro .swiper-slide {
+        height: auto;
+    }
+
+    #related-pro .box-item {
+        height: 100%;
+        margin-bottom: 0;
+    }
+
+    #related-pro .box-item > a {
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+    }
+
+    #related-pro .box-item .info {
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+    }
+
+    #related-pro .box-item .desc {
+        height: auto;
+        overflow: visible;
+        font-size: 14px;
+        flex: 1;
+    }
+
+    #related-pro .box-item .btn-themes {
+        margin-top: auto;
+        display: block;
+    }
+
+    #related-pro .box-item .img {
+        padding: 10px;
+        height: 180px;
+    }
+
+    #related-pro .box-item .title {
+        font-size: 15px;
+        margin-top: 10px;
+        margin-bottom: 8px;
+    }
+
+    #related-pro .box-item .more {
+        margin-top: 8px;
+    }
+
+    /* Mũi tên swiper - luôn hiển thị trên mobile, đặt dưới slide */
+    #related-pro .swiper-button-next-01,
+    #related-pro .swiper-button-prev-01 {
+        top: auto !important;
+        bottom: 8px !important;
+        margin-top: 0 !important;
+        opacity: 1 !important;
+        visibility: visible !important;
+        width: 36px !important;
+        height: 36px !important;
+    }
+
+    /* Override inline style ẩn nút (trên mobile luôn hiển) */
+    .position-relative .swiper-button-next-01,
+    .position-relative .swiper-button-prev-01 {
+        opacity: 1 !important;
+        visibility: visible !important;
+    }
+
+    #related-pro .swiper-button-next-01 {
+        right: calc(50% - 50px) !important;
+        left: auto !important;
+    }
+
+    #related-pro .swiper-button-prev-01 {
+        left: calc(50% - 50px) !important;
+        right: auto !important;
+    }
+
+    #related-pro .homeproSwiper {
+        padding-bottom: 60px !important;
+    }
+
+    /* Khoảng cách giữa nút Xem thêm và mũi tên */
+    #related-pro .box-item .btn-themes {
+        margin-top: auto;
+        margin-bottom: 16px;
+    }
+    
+    .news-home .btn-viewall {
+        text-align: center;
+        margin-top: 20px;
+    }
+
     #contact .col-md-5 {
         text-align: center !important;
         margin-top: 30px !important;
     }
+
     #contact .col-md-5 img {
         max-width: 80% !important;
     }
+
+    /* Khoảng cách sản phẩm trang chủ */
+    #products-home {
+        margin-top: -20px !important;
+    }
+
+    #top-products-home {
+        height: 100px !important;
+        background-size: auto 100% !important;
+    }
+
+    /* Đảm bảo chiều cao tối thiểu cho iframe của Google Drive trên mobile để không bị cắt controls */
+    #video-home iframe {
+        height: 280px !important;
+        aspect-ratio: auto !important;
+    }
+
+    /* Tối ưu hóa lại hiển thị Footer trên mobile */
+    #bmenu {
+        text-align: left !important;
+    }
+
+    #footer #blogo {
+        text-align: left !important;
+    }
 }
-@media (max-width: 991.98px) {
-    #panel_contact {
-        padding: 20px !important;
+
+/* ===== 16.8 SMALL MOBILE (<= 576px) ===== */
+@media (max-width: 576px) {
+    .search-form-big {
+        padding: 4px 6px 4px 16px;
+    }
+
+    .search-form-big input {
+        font-size: 15px;
+    }
+}
+
+/* ===== 16.9 EXTRA SMALL MOBILE (<= 359.98px) ===== */
+@media (max-width: 359.98px) {
+
+    .container,
+    .container-fluid {
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+
+    .row {
+        margin-left: -8px;
+        margin-right: -8px;
+    }
+
+    .row>* {
+        padding-left: 8px;
+        padding-right: 8px;
+    }
+}
+
+/* ===== 16.10 IN ẤN (Print Styles) ===== */
+@media print {
+
+    #header,
+    #video-home,
+    .swiper-button-next-01,
+    .swiper-button-prev-01,
+    .mobile-nav-toggle {
+        display: none !important;
+    }
+
+    body {
+        background: #fff;
+        color: #000;
+        font-size: 12pt;
     }
 }

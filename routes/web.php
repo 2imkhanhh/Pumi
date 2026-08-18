@@ -23,7 +23,6 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/', [\App\Http\Controllers\Admin\DashboardController::class, 'index'])->name('dashboard');
 
     Route::resource('products', \App\Http\Controllers\Admin\ProductController::class)->except(['create', 'edit', 'show']);
-    Route::resource('partners', \App\Http\Controllers\Admin\PartnerController::class)->except(['create', 'edit', 'show']);
     Route::resource('contacts', \App\Http\Controllers\Admin\ContactController::class)->only(['index', 'update', 'destroy']);
     Route::resource('reviews', \App\Http\Controllers\Admin\ReviewController::class)->only(['index', 'update', 'destroy']);
     Route::get('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');

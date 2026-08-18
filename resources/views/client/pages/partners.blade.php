@@ -12,42 +12,28 @@
         <section id="partners-page">
             <div class="container">
                 <div id="panel_partner">
-                    <header class="section-header swidth text-center">
+                    <header class="section-header swidth text-center mt-4">
                         <h2>{{ $settings['partners_ingredient_title'] ?? 'Đối tác nguyên liệu' }}</h2>
                         <div class="desc"></div>
                     </header>
                     
-                    <div class="row mt-5 d-flex justify-content-center align-items-center">
-                        <div class="col-md-6 order-1 order-lg-1" data-aos="super-slide-left" data-aos-delay="200">
+                    @foreach($ingredientPartners as $partner)
+                    <div class="row {{ $loop->first ? 'mt-2' : 'mt-5' }} d-flex justify-content-center align-items-center">
+                        <div class="col-md-6 order-1 {{ $loop->iteration % 2 == 0 ? 'order-lg-0' : 'order-lg-1' }}" data-aos="{{ $loop->iteration % 2 == 0 ? 'super-slide-right' : 'super-slide-left' }}" data-aos-delay="200">
                             <div class="w-100">
-                                 <h2 class="title">{{ $settings['partners_ingredient_1_title'] ?? 'Đối tác ABC' }}</h2>
+                                 <h2 class="title">{{ $partner['name'] ?? '' }}</h2>
                                  <div class="text">
-                                     {!! $settings['partners_ingredient_1_content'] ?? '<p>hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>' !!}
+                                     {!! nl2br(e($partner['description'] ?? '')) !!}
                                  </div>
                             </div>
                         </div>
-                        <div class="col-md-6 order-0 order-lg-0" data-aos="super-slide-right">
+                        <div class="col-md-6 order-0 {{ $loop->iteration % 2 == 0 ? 'order-lg-1' : 'order-lg-0' }}" data-aos="{{ $loop->iteration % 2 == 0 ? 'super-slide-left' : 'super-slide-right' }}">
                             <div class="img_st">
-                                <img src="{{ asset($settings['partners_ingredient_1_image'] ?? 'assets/images/upload/document/img_68de34175aa5b.jpg') }}" alt="{{ $settings['partners_ingredient_1_title'] ?? 'Đối tác ABC' }}" class="img-fluid"/>
+                                <img src="{{ isset($partner['img']) ? asset($partner['img']) : '' }}" alt="{{ $partner['name'] ?? 'Partner' }}" class="img-fluid"/>
                             </div>
                         </div>
                     </div>
-
-                    <div class="row mt-5 d-flex justify-content-center align-items-center">
-                        <div class="col-md-6 order-1 order-lg-0" data-aos="super-slide-right">
-                            <div class="w-100">
-                                 <h2 class="title">{{ $settings['partners_ingredient_2_title'] ?? 'Đối tác ABC' }}</h2>
-                                 <div class="text">
-                                     {!! $settings['partners_ingredient_2_content'] ?? '<p>hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla facilisi.</p>' !!}
-                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6 order-0 order-lg-1" data-aos="super-slide-left" data-aos-delay="200">
-                            <div class="img_st">
-                                <img src="{{ asset($settings['partners_ingredient_2_image'] ?? 'assets/images/upload/document/img_68de342d7222d.jpg') }}" alt="{{ $settings['partners_ingredient_2_title'] ?? 'Đối tác ABC' }}" class="img-fluid"/>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
 
                 <div id="panel_partner">
@@ -57,13 +43,15 @@
                             {!! $settings['partners_hospital_desc'] ?? 'hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum...' !!}
                         </div>
                     </header>
-                    @foreach($partners as $partner)
-                        <div class="img" data-aos="super-zoom-in" data-aos-delay="{{ 50 * ($loop->iteration % 6) }}">
-                            <div class="inner">
-                                <img src="{{ asset($partner->image) }}" alt="{{ $partner->name ?? 'Hospital Partner' }}" class="img-fluid"/>
+                    <div class="d-flex flex-wrap justify-content-center w-100">
+                        @foreach($hospitalPartners as $partner)
+                            <div class="img" data-aos="super-zoom-in" data-aos-delay="{{ 50 * ($loop->iteration % 6) }}">
+                                <div class="inner">
+                                    <img src="{{ isset($partner['img']) ? asset($partner['img']) : '' }}" alt="Hospital Partner" class="img-fluid"/>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
 
                 <div id="panel_partner">
@@ -73,13 +61,15 @@
                             {!! $settings['partners_media_desc'] ?? 'hendrerit in vulputate velit esse molestie consequat, vel illum dolore eu feugiat nulla facilisis at vero eros et accumsan et iusto odio dignissim qui blandit praesent luptatum...' !!}
                         </div>
                     </header>
-                    @foreach($partners as $partner)
-                        <div class="img" data-aos="super-zoom-in" data-aos-delay="{{ 50 * ($loop->iteration % 6) }}">
-                            <div class="inner">
-                                <img src="{{ asset($partner->image) }}" alt="{{ $partner->name ?? 'Media Partner' }}" class="img-fluid"/>
+                    <div class="d-flex flex-wrap justify-content-center w-100">
+                        @foreach($mediaPartners as $partner)
+                            <div class="img" data-aos="super-zoom-in" data-aos-delay="{{ 50 * ($loop->iteration % 6) }}">
+                                <div class="inner">
+                                    <img src="{{ isset($partner['img']) ? asset($partner['img']) : '' }}" alt="Media Partner" class="img-fluid"/>
+                                </div>
                             </div>
-                        </div>
-                    @endforeach
+                        @endforeach
+                    </div>
                 </div>
             </div>
         </section>

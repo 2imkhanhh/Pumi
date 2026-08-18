@@ -26,7 +26,7 @@
                             </ul>
                         </nav>
                     </div>
-                    <div class="d-none d-md-block ms-3"><a href="{{ route('search') }}" aria-label="Tìm kiếm sản phẩm"><img src="{{ asset('assets/images/search.svg') }}" class="mx-2"></a></div>
+                    <div class="ms-3 me-5 me-xl-0"><a href="{{ route('search') }}" aria-label="Tìm kiếm sản phẩm"><img src="{{ asset('assets/images/search.svg') }}" class="mx-2" style="width: 22px;"></a></div>
                 </div>
             </div>
         </div>

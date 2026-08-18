@@ -5,10 +5,7 @@
 new Swiper('.featureSwiper', {
     speed: 600,
     loop: true,
-    autoplay: {
-        delay: 5000,
-        disableOnInteraction: false
-    },
+    autoplay: false,
     slidesPerView: 'auto',
     pagination: {
         el: '.swiper-pagination',

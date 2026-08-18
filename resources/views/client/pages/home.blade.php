@@ -44,7 +44,7 @@
 
 <section id="about-us">
     <div class="container">
-        <div class="row d-flex align-items-center justify-content-center">
+        <div class="row d-flex align-items-center justify-content-center gy-4">
             <div class="col-md-5" data-aos="super-slide-right">
                  <h2 class="title">{{ $settings['home_welcome_title'] ?? 'Pumi Việt Nam' }}</h2>
                  <div class="desc">{{ $settings['home_welcome_subtitle'] ?? 'Xin Chào!' }}</div>
@@ -110,11 +110,11 @@
             <p>{{ $settings['home_partner_subtitle'] ?? 'Pumi tự hào đồng hành cùng các nhà thuốc, cửa hàng mẹ và bé, hệ thống phân phối trên toàn quốc để đưa sản phẩm thảo mộc Việt đến gần hơn với mọi gia đình.' }}</p>
         </header>
         <div class="swiper featureSwiper" data-aos="super-fade-up" data-aos-delay="100">
-            <div class="swiper-wrapper"> 
+            <div class="swiper-wrapper">
                 @foreach($partners as $partner)
                 <div class="swiper-slide d-flex align-items-center justify-content-center">
                     <div class="box-item d-flex align-items-center justify-content-center">
-                        <img src="{{ asset($partner->image) }}" alt="{{ $partner->name ?? 'Partner' }}" class="img-fluid"/>
+                        <img src="{{ isset($partner['img']) ? asset($partner['img']) : '' }}" alt="Partner" class="img-fluid"/>
                     </div>
                 </div>
                 @endforeach
@@ -125,7 +125,7 @@
     </div>
 </section>
 
-<section id="news-home" class="news-home mb-5">
+<section id="news-home" class="news-home">
     <div class="container">
         <header class="section-header d-flex align-items-center justify-content-between" data-aos="super-zoom-in">
             <h2>Tin tức</h2>
@@ -133,7 +133,7 @@
         </header>
         <div class="row gy-4">
             @foreach($posts as $post)
-            <div class="col-xl-3 col-md-6 col-6" data-aos="super-fade-up" data-aos-delay="{{ 100 * ($loop->index + 1) }}">
+            <div class="col-xl-3 col-md-6 col-12" data-aos="super-fade-up" data-aos-delay="{{ 100 * ($loop->index + 1) }}">
                 <article>
                 <a href="{{ url('/tin-tuc/' . $post->slug) }}">
                     <div class="img"><img src="{{ asset($post->image) }}" alt="{{ $post->title }}"/></div>
@@ -152,7 +152,7 @@
     </div>
 </section>
 
-<section id="contact">
+<section id="contact" class="pt-0">
     <div class="container">
         <div class="row gy-4">
             <div class="col-md-7" data-aos="super-slide-right">

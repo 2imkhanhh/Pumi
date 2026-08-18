@@ -15,11 +15,7 @@
                     <input type="text" id="searchInput" placeholder="Nhập tên sản phẩm, ví dụ: nước tắm thảo dược, dung dịch vệ sinh..." autocomplete="off" autofocus>
                     <button type="button" id="searchClear" class="search-clear" aria-label="Xoá từ khoá"><i class="fa-solid fa-xmark"></i></button>
                 </form>
-                <div class="search-tags" id="searchTags">
-                    <button type="button" class="tag-chip active" data-cat="all">Tất cả</button>
-                    <button type="button" class="tag-chip" data-cat="Nước tắm thảo dược">Nước tắm thảo dược</button>
-                    <button type="button" class="tag-chip" data-cat="Dung dịch vệ sinh cho bé">Dung dịch vệ sinh cho bé</button>
-                    <button type="button" class="tag-chip" data-cat="Nước giặt thảo mộc">Nước giặt thảo mộc</button>
+                <div class="search-tags d-none" id="searchTags">
                 </div>
             </div>
        </section>

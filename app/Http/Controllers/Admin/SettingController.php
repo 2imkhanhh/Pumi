@@ -46,6 +46,37 @@ class SettingController extends Controller
             unset($data['home_banners']);
         }
 
+        $jsonFields = ['home_partners', 'ingredient_partners', 'hospital_partners', 'media_partners'];
+        foreach ($jsonFields as $field) {
+            if (isset($data[$field])) {
+                $items = [];
+                foreach ($data[$field] as $item) {
+                    $itemData = [];
+                    if (isset($item['name'])) $itemData['name'] = $item['name'];
+                    if (isset($item['description'])) $itemData['description'] = $item['description'];
+
+                    if (isset($item['image']) && $item['image'] instanceof \Illuminate\Http\UploadedFile) {
+                        $file = $item['image'];
+                        $filename = time() . '_' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+                        $file->move(public_path('uploads/settings'), $filename);
+                        $itemData['img'] = 'uploads/settings/' . $filename;
+                    } elseif (isset($item['old_image'])) {
+                        $itemData['img'] = $item['old_image'];
+                    }
+
+                    if (isset($itemData['img'])) {
+                        $items[] = $itemData;
+                    }
+                }
+                Setting::updateOrCreate(['key' => $field], ['value' => json_encode($items), 'type' => 'json']);
+                unset($data[$field]);
+            } else if ($request->exists($field)) {
+                // If it exists in request but is empty (e.g. user deleted all items)
+                Setting::updateOrCreate(['key' => $field], ['value' => json_encode([]), 'type' => 'json']);
+                unset($data[$field]);
+            }
+        }
+
         foreach ($data as $key => $value) {
             // Xử lý nếu là file upload (như logo, favicon)
             if ($request->hasFile($key)) {
