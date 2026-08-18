@@ -32,7 +32,6 @@ const deleteReview = (id) => {
     <div class="page-header">
         <div>
             <h1 class="title">Đánh giá Sản phẩm</h1>
-            <p class="subtitle">Quản lý và kiểm duyệt các đánh giá từ khách hàng.</p>
         </div>
     </div>
 

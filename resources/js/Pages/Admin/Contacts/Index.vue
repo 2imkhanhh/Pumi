@@ -35,8 +35,7 @@ const formatDate = (dateString) => {
 
     <div class="page-header">
         <div>
-            <h1 class="title">Hòm thư Liên hệ</h1>
-            <p class="subtitle">Quản lý các tin nhắn từ khách hàng gửi qua form liên hệ.</p>
+            <h1 class="title">Liên hệ</h1>
         </div>
     </div>
 

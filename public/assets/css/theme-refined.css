@@ -624,18 +624,17 @@ textarea:focus-visible {
     font-size: 14px;
     color: rgba(255, 255, 255, .85);
     background: rgba(27, 63, 148, .55);
-    display: inline-flex;
-    align-items: center;
-    gap: 8px;
+    display: inline-block;
     padding: 8px 18px;
-    border-radius: 999px;
+    border-radius: 20px;
     margin-bottom: 14px;
-    flex-wrap: wrap;
+    line-height: 1.6;
 }
 
 .breadcrumb-pu a {
     color: #fff;
     text-decoration: none;
+    display: inline;
 }
 
 .breadcrumb-pu a:hover {
@@ -644,15 +643,14 @@ textarea:focus-visible {
 
 .breadcrumb-pu span.sep {
     opacity: .7;
+    margin: 0 8px;
+    display: inline;
 }
 
 .breadcrumb-pu span.current {
     color: #fff;
     font-weight: 600;
-    max-width: 320px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    display: inline;
 }
 
 .post-article .post-tag {
@@ -1988,43 +1986,40 @@ textarea:focus-visible {
 /* Post Categories Styles */
 .post-categories-filter {
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    margin-bottom: 2rem;
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-bottom: 2.5rem;
+    padding-bottom: 15px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none; /* Firefox */
+}
+
+.post-categories-filter::-webkit-scrollbar {
+    display: none; /* Chrome/Safari */
 }
 
 .category-pill {
-    padding: 8px 20px;
-    background: #f1f5f9;
-    color: #475569;
-    border-radius: 30px;
+    padding: 10px 24px;
+    background: #ffffff;
+    color: #64748b;
+    border-radius: 8px;
     font-weight: 600;
-    font-size: 14px;
+    font-size: 15px;
+    white-space: nowrap;
     text-decoration: none;
     transition: all 0.3s ease;
-    border: 1px solid transparent;
+    border: 1px solid #e2e8f0;
 }
 
-.category-pill:hover, .category-pill.active {
+.category-pill:hover,
+.category-pill.active {
     background: var(--pu-navy);
     color: #fff;
     border-color: var(--pu-navy);
-    box-shadow: 0 4px 10px rgba(27, 63, 148, 0.2);
-}
-
-.news-category-badge {
-    position: absolute;
-    top: 15px;
-    left: 15px;
-    background: var(--pu-orange);
-    color: #fff;
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 12px;
-    font-weight: bold;
-    z-index: 2;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 12px rgba(27, 63, 148, 0.2);
+    transform: translateY(-2px);
 }
 
 #news-list .imgbox {

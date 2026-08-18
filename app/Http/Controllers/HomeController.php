@@ -125,7 +125,12 @@ class HomeController extends Controller
     public function postDetail($slug)
     {
         $post = \App\Models\Post::with('category')->where('slug', $slug)->where('type', 'news')->firstOrFail();
-        return view('client.pages.post_detail', compact('post'));
+        $query = \App\Models\Post::where('type', 'news')->where('id', '!=', $post->id);
+        if ($post->category_id) {
+            $query->where('category_id', $post->category_id);
+        }
+        $relatedPosts = $query->latest('published_at')->limit(4)->get();
+        return view('client.pages.post_detail', compact('post', 'relatedPosts'));
     }
 
     public function search(\Illuminate\Http\Request $request)

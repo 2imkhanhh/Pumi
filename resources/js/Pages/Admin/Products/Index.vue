@@ -7,12 +7,14 @@ defineOptions({ layout: AdminLayout });
 
 const props = defineProps({
     products: Object,
+    filters: Object,
 });
 
 const isModalOpen = ref(false);
 const isEditing = ref(false);
 const previewImages = ref([]);
 const fileInput = ref(null);
+const searchKeyword = ref(props.filters?.search || '');
 
 const form = useForm({
     id: null,
@@ -157,6 +159,17 @@ watch(() => form.name, (newName) => {
         form.slug = generateSlug(newName);
     }
 });
+
+let searchTimeout = null;
+watch(searchKeyword, (value) => {
+    clearTimeout(searchTimeout);
+    searchTimeout = setTimeout(() => {
+        router.get(route('admin.products.index'), { search: value }, {
+            preserveState: true,
+            replace: true
+        });
+    }, 300);
+});
 </script>
 
 <template>
@@ -165,7 +178,6 @@ watch(() => form.name, (newName) => {
     <div class="page-header">
         <div>
             <h1 class="title">Sản phẩm</h1>
-            <p class="subtitle">Quản lý danh sách sản phẩm hiển thị trên website.</p>
         </div>
         <button @click="openCreateModal" class="btn-primary">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
@@ -180,6 +192,10 @@ watch(() => form.name, (newName) => {
     </div>
 
     <div class="card">
+        <div class="table-toolbar">
+            <input type="text" v-model="searchKeyword" class="form-control search-input"
+                placeholder="Tìm kiếm sản phẩm..." />
+        </div>
         <div class="table-responsive">
             <table class="table">
                 <thead>
@@ -478,6 +494,15 @@ watch(() => form.name, (newName) => {
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     border: 1px solid #f1f5f9;
     overflow: hidden;
+}
+
+.table-toolbar {
+    padding: 1rem;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.search-input {
+    max-width: 300px;
 }
 
 .table-responsive {

@@ -12,7 +12,7 @@
         <section id="news" class="news">
             <div class="container">
                 <!-- Category Filter -->
-                <div class="post-categories-filter text-center mb-4" data-aos="fade-up">
+                <div class="post-categories-filter mb-4" data-aos="fade-up">
                     <a href="{{ route('posts') }}" class="category-pill {{ !request()->has('category') ? 'active' : '' }}">Tất cả</a>
                     @foreach($categories as $category)
                         <a href="{{ route('posts', ['category' => $category->slug]) }}" class="category-pill {{ request()->query('category') == $category->slug ? 'active' : '' }}">
@@ -28,9 +28,6 @@
                                 <div class="inner">
                                      <article>
                                         <div class="imgbox">
-                                            @if($post->category)
-                                                <span class="news-category-badge">{{ $post->category->name }}</span>
-                                            @endif
                                             <img src="{{ asset($post->image) }}"
                                                 alt="{{ $post->title }}" />
                                         </div>

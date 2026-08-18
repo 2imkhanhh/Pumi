@@ -207,7 +207,6 @@ const submit = () => {
     <div class="page-header">
         <div>
             <h1 class="title">Cấu hình Website</h1>
-            <p class="subtitle">Quản lý và cập nhật toàn bộ nội dung của trang chủ, trang giới thiệu và thông tin chung.</p>
         </div>
     </div>
 

@@ -3,7 +3,7 @@
 @section('content')
 <main id="main">
 
-        <section id="banner" class="banner-blog d-flex align-items-end" style="background-image: url('{{ asset('assets/images/upload/banner/img_68dde2e81b6f1.png') }}')" data-aos="super-zoom-in" data-aos-duration="1200"><div class="container"><nav class="breadcrumb-pu"><a href="{{ route('home') }}">Trang chủ</a><span class="sep">/</span><a href="{{ route('recruitment') }}">Tuyển dụng</a><span class="sep">/</span><span class="current">{{ Str::limit($post->title, 50) }}</span></nav></div></section><section id="detail-post" class="mt-5"><div class="container"><div class="row">
+        <section id="banner" class="banner-blog d-flex align-items-end" style="background-image: url('{{ asset('assets/images/upload/banner/img_68dde2e81b6f1.png') }}')" data-aos="super-zoom-in" data-aos-duration="1200"><div class="container"><nav class="breadcrumb-pu"><a href="{{ route('home') }}">Trang chủ</a><span class="sep">/</span><a href="{{ route('recruitment') }}">Tuyển dụng</a><span class="sep">/</span><span class="current">{{ $post->title }}</span></nav></div></section><section id="detail-post" class="mt-5"><div class="container"><div class="row">
         <div class="col-lg-8" data-aos="super-slide-right">
             <article class="post-article job-article">
                 <span class="post-tag">Tuyển dụng</span>
@@ -34,7 +34,7 @@
                 <div class="sidebar-box">
                     <h4>Tìm kiếm sản phẩm</h4>
                     <form class="sidebar-search" action="{{ route('search') }}" method="get">
-                        <input type="text" name="q" placeholder="Tìm sản phẩm Pumi...">
+                        <input type="text" name="keyword" placeholder="Tìm sản phẩm Pumi...">
                         <button type="submit" aria-label="Tìm kiếm"><i class="fa-solid fa-magnifying-glass"></i></button>
                     </form>
                 </div>

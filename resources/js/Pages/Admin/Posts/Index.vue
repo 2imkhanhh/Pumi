@@ -203,7 +203,6 @@ watch(searchKeyword, (value) => {
     <div class="page-header">
         <div>
             <h1 class="title">Tin tức</h1>
-            <p class="subtitle">Quản lý bài viết tin tức, kiến thức.</p>
         </div>
         <button @click="openCreateModal" class="btn-primary">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">

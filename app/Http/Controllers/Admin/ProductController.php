@@ -11,12 +11,19 @@ use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $products = Product::orderBy('id', 'asc')->paginate(10);
+        $query = Product::query();
+        
+        if ($request->has('search')) {
+            $query->where('name', 'like', '%' . $request->search . '%');
+        }
+        
+        $products = $query->orderBy('id', 'asc')->paginate(10)->withQueryString();
         
         return Inertia::render('Admin/Products/Index', [
-            'products' => $products
+            'products' => $products,
+            'filters' => $request->only(['search'])
         ]);
     }
 
