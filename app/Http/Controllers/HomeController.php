@@ -71,7 +71,8 @@ class HomeController extends Controller
 
     public function contact()
     {
-        return view('client.pages.contact');
+        $settings = Setting::pluck('value', 'key')->toArray();
+        return view('client.pages.contact', compact('settings'));
     }
 
     public function submitContact(\Illuminate\Http\Request $request)

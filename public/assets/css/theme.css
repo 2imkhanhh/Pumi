@@ -1,7 +1,3 @@
-#page {}
-
-.bg-pagein {}
-
 .section-header {
     padding-bottom: 10px;
 }
@@ -57,8 +53,6 @@
     border-bottom: 2px solid #14B6C3;
     background: #FFF;
 }
-
-#header #lang_choosen {}
 
 #header #lang_choosen button {
     background: none;
@@ -340,10 +334,6 @@
     }
 }
 
-/*--------------------------------------------------------------
-# Navigation Menu
---------------------------------------------------------------*/
-/* Desktop Navigation */
 @media (min-width: 1200px) {
     .navmenu {
         padding: 0;
@@ -416,10 +406,6 @@
     .navmenu .dropdown ul a {
         padding: 5px 20px;
     }
-
-    .navmenu .dropdown ul a:hover,
-    .navmenu .dropdown ul .active:hover,
-    .navmenu .dropdown ul li:hover>a {}
 
     .navmenu .dropdown:hover>ul {
         opacity: 1;
@@ -638,10 +624,6 @@
     max-width: 100% !important;
 }
 
-/*--------------------------------------------------------------
-# Core Values Section
---------------------------------------------------------------*/
-
 #core-values {
     padding-top: 100px;
     padding-bottom: 100px;
@@ -665,7 +647,6 @@
     font-size: 20px;
     font-weight: 400;
     line-height: 32px;
-    /* 160% */
 }
 
 @media screen and (max-width: 768px) {
@@ -678,9 +659,6 @@
     }
 }
 
-/*--------------------------------------------------------------
-# About us Company Section
---------------------------------------------------------------*/
 #aboutus-company {
     background: url(../images/aboutus-company.png) no-repeat left top;
     -webkit-background-size: cover;
@@ -734,9 +712,6 @@
     }
 }
 
-/*--------------------------------------------------------------
-# FIELD OF ACTIVITY Section
---------------------------------------------------------------*/
 #about-activity {
     background: url(../images/bg-activity.png) repeat-x left top #386fa5;
     padding-top: 120px;
@@ -751,9 +726,6 @@
     line-height: 32px;
 }
 
-/*--------------------------------------------------------------
-# About us page
---------------------------------------------------------------*/
 #about-us-page {
     margin-top: 80px;
     padding-bottom: 10%;
@@ -768,8 +740,6 @@
     right: 5%;
     bottom: -20%;
 }
-
-#panel-about-us .img img {}
 
 #about-us-page #box-about-us {
     position: relative;
@@ -950,10 +920,6 @@
     }
 }
 
-/*--------------------------------------------------------------
-# Video home
---------------------------------------------------------------*/
-
 #video-home {
     background: #0f0f0f;
 }
@@ -971,10 +937,6 @@
         height: 320px;
     }
 }
-
-/*--------------------------------------------------------------
-# About us home
---------------------------------------------------------------*/
 
 #about-us-home {
     background: url(../images/about-home-g.jpg) left top no-repeat;
@@ -1038,10 +1000,6 @@
     }
 
 }
-
-/*--------------------------------------------------------------
-# About us Section
---------------------------------------------------------------*/
 
 #about-us {
     position: relative;
@@ -1107,7 +1065,6 @@
     color: #27397C;
     font-weight: 400;
     line-height: 32px;
-    /* 160% */
 }
 
 .about-us-logo h2 {
@@ -1128,8 +1085,6 @@
 #about-us-team .section-header h2 {
     color: #ffffff;
 }
-
-#about-us-history {}
 
 #path_history {
     position: relative;
@@ -1329,10 +1284,6 @@
 
 }
 
-/*--------------------------------------------------------------
-# Product home Section
---------------------------------------------------------------*/
-
 #products-home {
     margin-top: 50px;
 }
@@ -1405,12 +1356,6 @@
     }
 }
 
-/*--------------------------------------------------------------
-# Product Page Section
---------------------------------------------------------------*/
-
-#pro-list {}
-
 #pro-list .box-item {
     margin-bottom: 50px;
 }
@@ -1449,11 +1394,6 @@
     margin-top: 20px;
 }
 
-
-/*--------------------------------------------------------------
-# Product Detail Page
---------------------------------------------------------------*/
-
 #pro-uses {
     background: url(../images/bg-uses.jpg) no-repeat center center;
     -webkit-background-size: cover;
@@ -1479,8 +1419,6 @@
     /* 160% */
 }
 
-#pro-guide {}
-
 #pro-guide .title {
     color: #4DC5C9;
     font-size: 20px;
@@ -1495,7 +1433,6 @@
     font-size: 20px;
     font-weight: 800;
 }
-
 
 #panel-pro-cus {
     background: url(../images/aboutus-company.png) no-repeat left top;
@@ -1516,8 +1453,6 @@
     font-size: 20px;
     font-weight: 900;
 }
-
-#pro-rate {}
 
 #pro-rate .title-section {
     color: #27397C;
@@ -1577,12 +1512,6 @@
         padding: 20px;
     }
 }
-
-/*--------------------------------------------------------------
-# Relate Products Section
---------------------------------------------------------------*/
-
-#related-pro {}
 
 #related-pro .section-header h2 {
     text-transform: unset;
@@ -1644,11 +1573,6 @@
         font-size: 16px;
     }
 }
-
-/*--------------------------------------------------------------
-# Projects Section
---------------------------------------------------------------*/
-#projects {}
 
 #projects #projectTab {
     border-bottom: 4px solid #C6EDFF;
@@ -1755,10 +1679,6 @@
     }
 }
 
-/*--------------------------------------------------------------
-# Partner Section
---------------------------------------------------------------*/
-
 #partner {
     margin: 0 auto;
     margin-top: -150px;
@@ -1819,10 +1739,6 @@
     }
 }
 
-/*--------------------------------------------------------------
-# Partners Page
---------------------------------------------------------------*/
-
 #panel_partner {
     margin-bottom: 60px;
 }
@@ -1845,7 +1761,6 @@
     font-size: 20px;
     font-weight: 400;
     line-height: 32px;
-    /* 160% */
 }
 
 #panel_partner .img_st {
@@ -1874,10 +1789,6 @@
         width: 50%;
     }
 }
-
-/*--------------------------------------------------------------
-# Review
---------------------------------------------------------------*/
 
 .testimonials {
     background: url("../images/bgreview.jpg") repeat-x #2f2f88;
@@ -2110,8 +2021,6 @@
     margin-bottom: 20px;
 }
 
-#contact-shop {}
-
 #contact-shop .title-section {
     color: #2F2F88;
     text-align: justify;
@@ -2287,8 +2196,6 @@
     }
 }
 
-/* News Section - Home Page ------------------------------*/
-
 .news-home {
     margin-top: 100px;
 }
@@ -2372,12 +2279,6 @@
 
 }
 
-/*--------------------------------------------------------------
-# Blog Page
---------------------------------------------------------------*/
-
-#news-list {}
-
 #news-list .imgbox {
     height: 220px;
     overflow: hidden;
@@ -2439,8 +2340,6 @@
     background: #37BEC9;
 }
 
-/* Blog Section - Blog Page
-------------------------------*/
 .blog .posts-list article {
     box-shadow: 0 4px 16px rgba(var(--color-default-rgb), 0.1);
     padding: 30px;
@@ -2494,8 +2393,6 @@
     margin-bottom: 0;
 }
 
-.post-box {}
-
 .post-box .post-title a {
     display: block;
     color: #181C32;
@@ -2537,10 +2434,6 @@
     font-weight: 600;
 }
 
-/*--------------------------------------------------------------
-# Blog Detail Page
---------------------------------------------------------------*/
-
 .news-detail {
     text-align: justify;
     font-size: 16px;
@@ -2565,7 +2458,6 @@
 .news-detail ul li {
     margin-bottom: 8px;
 }
-
 
 :root {
     --swiper-navigation-size: 44;
