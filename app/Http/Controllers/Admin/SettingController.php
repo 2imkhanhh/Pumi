@@ -46,7 +46,7 @@ class SettingController extends Controller
             unset($data['home_banners']);
         }
 
-        $jsonFields = ['home_partners', 'ingredient_partners', 'hospital_partners', 'media_partners'];
+        $jsonFields = ['home_partners', 'ingredient_partners', 'hospital_partners', 'media_partners', 'contact_stores'];
         foreach ($jsonFields as $field) {
             if (isset($data[$field])) {
                 $items = [];
@@ -54,6 +54,8 @@ class SettingController extends Controller
                     $itemData = [];
                     if (isset($item['name'])) $itemData['name'] = $item['name'];
                     if (isset($item['description'])) $itemData['description'] = $item['description'];
+                    if (isset($item['address'])) $itemData['address'] = $item['address'];
+                    if (isset($item['phone'])) $itemData['phone'] = $item['phone'];
 
                     if (isset($item['image']) && $item['image'] instanceof \Illuminate\Http\UploadedFile) {
                         $file = $item['image'];
@@ -64,7 +66,7 @@ class SettingController extends Controller
                         $itemData['img'] = $item['old_image'];
                     }
 
-                    if (isset($itemData['img'])) {
+                    if (isset($itemData['img']) || $field === 'contact_stores') {
                         $items[] = $itemData;
                     }
                 }

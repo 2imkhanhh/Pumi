@@ -24,7 +24,7 @@ const form = useForm({
     zalo: props.settings.zalo || '',
     tiktok: props.settings.tiktok || '',
     instagram: props.settings.instagram || '',
-    
+
     // Homepage Content
     home_banners: (() => {
         let initialBanners = [];
@@ -36,7 +36,7 @@ const form = useForm({
                     image: null,
                     link: b.link
                 }));
-            } catch (e) {}
+            } catch (e) { }
         } else {
             if (props.settings.home_banner_1) initialBanners.push({ id: 1, old_image: props.settings.home_banner_1, image: null, link: props.settings.home_banner_1_link || '' });
             if (props.settings.home_banner_2) initialBanners.push({ id: 2, old_image: props.settings.home_banner_2, image: null, link: props.settings.home_banner_2_link || '' });
@@ -59,7 +59,7 @@ const form = useForm({
     home_partners: (() => {
         let initial = [];
         if (props.settings.home_partners) {
-            try { initial = JSON.parse(props.settings.home_partners).map((b, i) => ({ id: Date.now() + i, old_image: b.img, image: null })); } catch(e){}
+            try { initial = JSON.parse(props.settings.home_partners).map((b, i) => ({ id: Date.now() + i, old_image: b.img, image: null })); } catch (e) { }
         }
         return initial;
     })(),
@@ -103,7 +103,7 @@ const form = useForm({
     ingredient_partners: (() => {
         let initial = [];
         if (props.settings.ingredient_partners) {
-            try { initial = JSON.parse(props.settings.ingredient_partners).map((b, i) => ({ id: Date.now() + i, name: b.name, description: b.description, old_image: b.img, image: null })); } catch(e){}
+            try { initial = JSON.parse(props.settings.ingredient_partners).map((b, i) => ({ id: Date.now() + i, name: b.name, description: b.description, old_image: b.img, image: null })); } catch (e) { }
         }
         return initial;
     })(),
@@ -112,7 +112,7 @@ const form = useForm({
     hospital_partners: (() => {
         let initial = [];
         if (props.settings.hospital_partners) {
-            try { initial = JSON.parse(props.settings.hospital_partners).map((b, i) => ({ id: Date.now() + i, old_image: b.img, image: null })); } catch(e){}
+            try { initial = JSON.parse(props.settings.hospital_partners).map((b, i) => ({ id: Date.now() + i, old_image: b.img, image: null })); } catch (e) { }
         }
         return initial;
     })(),
@@ -121,7 +121,7 @@ const form = useForm({
     media_partners: (() => {
         let initial = [];
         if (props.settings.media_partners) {
-            try { initial = JSON.parse(props.settings.media_partners).map((b, i) => ({ id: Date.now() + i, old_image: b.img, image: null })); } catch(e){}
+            try { initial = JSON.parse(props.settings.media_partners).map((b, i) => ({ id: Date.now() + i, old_image: b.img, image: null })); } catch (e) { }
         }
         return initial;
     })(),
@@ -145,8 +145,20 @@ const form = useForm({
     about_leader_2_image: null,
     about_activity_image: null,
 
+    // Contact Page
+    contact_stores: (() => {
+        let initial = [];
+        if (props.settings.contact_stores) {
+            try { initial = JSON.parse(props.settings.contact_stores).map((b, i) => ({ id: Date.now() + i, name: b.name, address: b.address, phone: b.phone })); } catch (e) { }
+        }
+        return initial;
+    })(),
+
     _method: 'POST'
 });
+
+const addContactStore = () => form.contact_stores.push({ id: Date.now(), name: '', address: '', phone: '' });
+const removeContactStore = (index) => form.contact_stores.splice(index, 1);
 
 const handleFileChange = (e, key) => {
     form[key] = e.target.files[0];
@@ -202,53 +214,44 @@ const submit = () => {
 </script>
 
 <template>
-    <Head title="Cấu hình Website" />
+
+    <Head title="Nội dung website" />
 
     <div class="page-header">
         <div>
-            <h1 class="title">Cấu hình Website</h1>
+            <h1 class="title">Nội dung website</h1>
         </div>
     </div>
 
     <!-- Notification -->
     <div v-if="$page.props.flash && $page.props.flash.success" class="alert-success">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
         {{ $page.props.flash.success }}
     </div>
 
     <!-- Tab Navigation -->
     <div class="tabs-nav">
-        <button 
-            type="button" 
-            class="tab-btn" 
-            :class="{ active: activeTab === 'general' }" 
-            @click="activeTab = 'general'"
-        >
+        <button type="button" class="tab-btn" :class="{ active: activeTab === 'general' }"
+            @click="activeTab = 'general'">
             Cấu hình chung
         </button>
-        <button 
-            type="button" 
-            class="tab-btn" 
-            :class="{ active: activeTab === 'homepage' }" 
-            @click="activeTab = 'homepage'"
-        >
+        <button type="button" class="tab-btn" :class="{ active: activeTab === 'homepage' }"
+            @click="activeTab = 'homepage'">
             Trang chủ
         </button>
-        <button 
-            type="button" 
-            class="tab-btn" 
-            :class="{ active: activeTab === 'about' }" 
-            @click="activeTab = 'about'"
-        >
+        <button type="button" class="tab-btn" :class="{ active: activeTab === 'about' }" @click="activeTab = 'about'">
             Trang giới thiệu
         </button>
-        <button 
-            type="button" 
-            class="tab-btn" 
-            :class="{ active: activeTab === 'partners_page' }" 
-            @click="activeTab = 'partners_page'"
-        >
+        <button type="button" class="tab-btn" :class="{ active: activeTab === 'partners_page' }"
+            @click="activeTab = 'partners_page'">
             Trang đối tác
+        </button>
+        <button type="button" class="tab-btn" :class="{ active: activeTab === 'contact_page' }"
+            @click="activeTab = 'contact_page'">
+            Trang liên hệ
         </button>
     </div>
 
@@ -260,7 +263,8 @@ const submit = () => {
                 <div class="grid-2">
                     <div class="form-group">
                         <label>Tên công ty / Cửa hàng</label>
-                        <input type="text" v-model="form.company_name" class="form-control" placeholder="Pumi - Thảo mộc cho người Việt" />
+                        <input type="text" v-model="form.company_name" class="form-control"
+                            placeholder="Pumi - Thảo mộc cho người Việt" />
                     </div>
 
                     <div class="form-group">
@@ -289,7 +293,8 @@ const submit = () => {
                         <label>Logo Website</label>
                         <div class="flex items-center gap-3">
                             <img v-if="settings.logo" :src="'/' + settings.logo" class="thumb-img" alt="Logo" />
-                            <input type="file" @change="handleFileChange($event, 'logo')" class="form-control" accept="image/*" />
+                            <input type="file" @change="handleFileChange($event, 'logo')" class="form-control"
+                                accept="image/*" />
                         </div>
                         <p class="text-sm text-gray mt-1">Để trống nếu giữ nguyên.</p>
                     </div>
@@ -297,25 +302,25 @@ const submit = () => {
                     <div class="form-group">
                         <label>Logo chân trang</label>
                         <div class="flex items-center gap-3">
-                            <img v-if="settings.footer_logo" :src="'/' + settings.footer_logo" class="thumb-img" alt="Footer Logo" />
-                            <input type="file" @change="handleFileChange($event, 'footer_logo')" class="form-control" accept="image/*" />
+                            <img v-if="settings.footer_logo" :src="'/' + settings.footer_logo" class="thumb-img"
+                                alt="Footer Logo" />
+                            <input type="file" @change="handleFileChange($event, 'footer_logo')" class="form-control"
+                                accept="image/*" />
                         </div>
                         <p class="text-sm text-gray mt-1">Để trống nếu giữ nguyên.</p>
                     </div>
                 </div>
 
-                <div class="form-group mt-3">
-                    <label>Google Map Iframe</label>
-                    <textarea v-model="form.map_iframe" class="form-control" rows="3" placeholder="<iframe src='...'></iframe>"></textarea>
-                </div>
+
 
                 <h3 class="section-title mt-4">Mạng xã hội</h3>
                 <div class="grid-2">
                     <div class="form-group">
                         <label>Link Facebook</label>
-                        <input type="url" v-model="form.facebook" class="form-control" placeholder="https://facebook.com/..." />
+                        <input type="url" v-model="form.facebook" class="form-control"
+                            placeholder="https://facebook.com/..." />
                     </div>
-                    
+
                     <div class="form-group">
                         <label>Link Zalo</label>
                         <input type="url" v-model="form.zalo" class="form-control" placeholder="https://zalo.me/..." />
@@ -323,12 +328,14 @@ const submit = () => {
 
                     <div class="form-group">
                         <label>Link Tiktok</label>
-                        <input type="url" v-model="form.tiktok" class="form-control" placeholder="https://tiktok.com/..." />
+                        <input type="url" v-model="form.tiktok" class="form-control"
+                            placeholder="https://tiktok.com/..." />
                     </div>
 
                     <div class="form-group">
                         <label>Link Instagram</label>
-                        <input type="url" v-model="form.instagram" class="form-control" placeholder="https://instagram.com/..." />
+                        <input type="url" v-model="form.instagram" class="form-control"
+                            placeholder="https://instagram.com/..." />
                     </div>
                 </div>
             </div>
@@ -338,18 +345,28 @@ const submit = () => {
         <div v-show="activeTab === 'homepage'" class="card">
             <div class="card-body">
                 <h3 class="section-title">Banners Trang chủ</h3>
-                
-                <div v-for="(banner, index) in form.home_banners" :key="banner.id" class="banner-box p-3 mb-3 border rounded relative">
-                    <button type="button" @click="removeBanner(index)" class="absolute top-2 right-2 text-red-500 hover:text-red-700" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ef4444; cursor: pointer;">
-                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+
+                <div v-for="(banner, index) in form.home_banners" :key="banner.id"
+                    class="banner-box p-3 mb-3 border rounded relative">
+                    <button type="button" @click="removeBanner(index)"
+                        class="absolute top-2 right-2 text-red-500 hover:text-red-700"
+                        style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ef4444; cursor: pointer;">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor"
+                            stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <polyline points="3 6 5 6 21 6"></polyline>
+                            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                            </path>
+                        </svg>
                     </button>
                     <h4 class="font-medium mb-2">Banner {{ index + 1 }}</h4>
                     <div class="grid-2">
                         <div class="form-group">
                             <label>Hình ảnh Banner</label>
                             <div class="flex items-center gap-3">
-                                <img v-if="banner.old_image && !banner.image" :src="'/' + banner.old_image" class="thumb-img" style="max-height: 80px;" alt="Banner" />
-                                <input type="file" @change="handleBannerFileChange($event, index)" class="form-control" accept="image/*" />
+                                <img v-if="banner.old_image && !banner.image" :src="'/' + banner.old_image"
+                                    class="thumb-img" style="max-height: 80px;" alt="Banner" />
+                                <input type="file" @change="handleBannerFileChange($event, index)" class="form-control"
+                                    accept="image/*" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -360,7 +377,8 @@ const submit = () => {
                 </div>
 
                 <div class="text-center">
-                    <button type="button" @click="addBanner" class="btn-secondary" style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; font-weight: 500;">
+                    <button type="button" @click="addBanner" class="btn-secondary"
+                        style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; font-weight: 500;">
                         + Thêm Banner mới
                     </button>
                 </div>
@@ -369,11 +387,13 @@ const submit = () => {
                 <div class="grid-2">
                     <div class="form-group">
                         <label>Tiêu đề chào mừng</label>
-                        <input type="text" v-model="form.home_welcome_title" class="form-control" placeholder="Pumi Việt Nam" />
+                        <input type="text" v-model="form.home_welcome_title" class="form-control"
+                            placeholder="Pumi Việt Nam" />
                     </div>
                     <div class="form-group">
                         <label>Tiêu đề phụ chào mừng</label>
-                        <input type="text" v-model="form.home_welcome_subtitle" class="form-control" placeholder="Xin Chào!" />
+                        <input type="text" v-model="form.home_welcome_subtitle" class="form-control"
+                            placeholder="Xin Chào!" />
                     </div>
                 </div>
                 <div class="form-group quill-container">
@@ -407,8 +427,10 @@ const submit = () => {
                 <div class="form-group">
                     <label>Hình ảnh Banner giữa trang</label>
                     <div class="flex items-center gap-3">
-                        <img v-if="settings.home_middle_banner" :src="'/' + settings.home_middle_banner" class="thumb-img" style="max-height: 80px;" alt="Middle Banner" />
-                        <input type="file" @change="handleFileChange($event, 'home_middle_banner')" class="form-control" accept="image/*" />
+                        <img v-if="settings.home_middle_banner" :src="'/' + settings.home_middle_banner"
+                            class="thumb-img" style="max-height: 80px;" alt="Middle Banner" />
+                        <input type="file" @change="handleFileChange($event, 'home_middle_banner')" class="form-control"
+                            accept="image/*" />
                     </div>
                 </div>
 
@@ -426,17 +448,24 @@ const submit = () => {
 
                 <div class="mt-4">
                     <label class="font-medium mb-2 block">Hình ảnh</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem; align-items: flex-end;">
-                        <div v-for="(partner, index) in form.home_partners" :key="partner.id" style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
-                            <img v-if="partner.old_image && !partner.preview" :src="'/' + partner.old_image" class="thumb-img" style="max-height: 90px;" alt="Partner" />
-                            <img v-if="partner.preview" :src="partner.preview" class="thumb-img" style="max-height: 90px;" alt="Partner Preview" />
-                            <button type="button" @click="removeHomePartner(index)" style="position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; border: 2px solid white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">✕</button>
+                    <div
+                        style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem; align-items: flex-end;">
+                        <div v-for="(partner, index) in form.home_partners" :key="partner.id"
+                            style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+                            <img v-if="partner.old_image && !partner.preview" :src="'/' + partner.old_image"
+                                class="thumb-img" style="max-height: 90px;" alt="Partner" />
+                            <img v-if="partner.preview" :src="partner.preview" class="thumb-img"
+                                style="max-height: 90px;" alt="Partner Preview" />
+                            <button type="button" @click="removeHomePartner(index)"
+                                style="position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; border: 2px solid white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">✕</button>
                         </div>
                     </div>
                     <div>
-                        <label class="btn-secondary" style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; display: inline-block;">
+                        <label class="btn-secondary"
+                            style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; display: inline-block;">
                             + Chọn nhiều ảnh Đối tác Trang chủ
-                            <input type="file" multiple @change="handleMultipleFilesChange($event, 'home_partners')" accept="image/*" style="display: none;" />
+                            <input type="file" multiple @change="handleMultipleFilesChange($event, 'home_partners')"
+                                accept="image/*" style="display: none;" />
                         </label>
                     </div>
                 </div>
@@ -450,8 +479,10 @@ const submit = () => {
                 <div class="form-group">
                     <label>Hình ảnh Banner đầu trang</label>
                     <div class="flex items-center gap-3">
-                        <img v-if="settings.about_banner" :src="'/' + settings.about_banner" class="thumb-img" style="max-height: 80px;" alt="About Banner" />
-                        <input type="file" @change="handleFileChange($event, 'about_banner')" class="form-control" accept="image/*" />
+                        <img v-if="settings.about_banner" :src="'/' + settings.about_banner" class="thumb-img"
+                            style="max-height: 80px;" alt="About Banner" />
+                        <input type="file" @change="handleFileChange($event, 'about_banner')" class="form-control"
+                            accept="image/*" />
                     </div>
                 </div>
 
@@ -470,8 +501,10 @@ const submit = () => {
                     <div class="form-group">
                         <label>Hình ảnh khối giới thiệu</label>
                         <div class="flex items-center gap-3">
-                            <img v-if="settings.about_welcome_image" :src="'/' + settings.about_welcome_image" class="thumb-img" style="max-height: 60px;" alt="Welcome Img" />
-                            <input type="file" @change="handleFileChange($event, 'about_welcome_image')" class="form-control" accept="image/*" />
+                            <img v-if="settings.about_welcome_image" :src="'/' + settings.about_welcome_image"
+                                class="thumb-img" style="max-height: 60px;" alt="Welcome Img" />
+                            <input type="file" @change="handleFileChange($event, 'about_welcome_image')"
+                                class="form-control" accept="image/*" />
                         </div>
                     </div>
                 </div>
@@ -494,8 +527,10 @@ const submit = () => {
                 <div class="form-group">
                     <label>Hình ảnh</label>
                     <div class="flex items-center gap-3">
-                        <img v-if="settings.about_story_image" :src="'/' + settings.about_story_image" class="thumb-img" style="max-height: 60px;" alt="Story Img" />
-                        <input type="file" @change="handleFileChange($event, 'about_story_image')" class="form-control" accept="image/*" />
+                        <img v-if="settings.about_story_image" :src="'/' + settings.about_story_image" class="thumb-img"
+                            style="max-height: 60px;" alt="Story Img" />
+                        <input type="file" @change="handleFileChange($event, 'about_story_image')" class="form-control"
+                            accept="image/*" />
                     </div>
                 </div>
                 <div class="form-group quill-container">
@@ -517,8 +552,10 @@ const submit = () => {
                 <div class="form-group">
                     <label>Hình ảnh</label>
                     <div class="flex items-center gap-3">
-                        <img v-if="settings.about_message_image" :src="'/' + settings.about_message_image" class="thumb-img" style="max-height: 60px;" alt="Message Img" />
-                        <input type="file" @change="handleFileChange($event, 'about_message_image')" class="form-control" accept="image/*" />
+                        <img v-if="settings.about_message_image" :src="'/' + settings.about_message_image"
+                            class="thumb-img" style="max-height: 60px;" alt="Message Img" />
+                        <input type="file" @change="handleFileChange($event, 'about_message_image')"
+                            class="form-control" accept="image/*" />
                     </div>
                 </div>
                 <div class="form-group quill-container">
@@ -534,8 +571,10 @@ const submit = () => {
                 <div class="form-group">
                     <label>Hình ảnh</label>
                     <div class="flex items-center gap-3">
-                        <img v-if="settings.about_herb_image" :src="'/' + settings.about_herb_image" class="thumb-img" style="max-height: 60px;" alt="Herb Img" />
-                        <input type="file" @change="handleFileChange($event, 'about_herb_image')" class="form-control" accept="image/*" />
+                        <img v-if="settings.about_herb_image" :src="'/' + settings.about_herb_image" class="thumb-img"
+                            style="max-height: 60px;" alt="Herb Img" />
+                        <input type="file" @change="handleFileChange($event, 'about_herb_image')" class="form-control"
+                            accept="image/*" />
                     </div>
                 </div>
                 <div class="form-group quill-container">
@@ -551,8 +590,10 @@ const submit = () => {
                 <div class="form-group">
                     <label>Hình ảnh nhà máy</label>
                     <div class="flex items-center gap-3">
-                        <img v-if="settings.about_cgmp_image" :src="'/' + settings.about_cgmp_image" class="thumb-img" style="max-height: 60px;" alt="CGMP Img" />
-                        <input type="file" @change="handleFileChange($event, 'about_cgmp_image')" class="form-control" accept="image/*" />
+                        <img v-if="settings.about_cgmp_image" :src="'/' + settings.about_cgmp_image" class="thumb-img"
+                            style="max-height: 60px;" alt="CGMP Img" />
+                        <input type="file" @change="handleFileChange($event, 'about_cgmp_image')" class="form-control"
+                            accept="image/*" />
                     </div>
                 </div>
 
@@ -566,8 +607,10 @@ const submit = () => {
                     <div class="form-group">
                         <label>Hình ảnh Sứ mệnh</label>
                         <div class="flex items-center gap-3">
-                            <img v-if="settings.about_mission_image" :src="'/' + settings.about_mission_image" class="thumb-img" style="max-height: 60px;" alt="Mission Img" />
-                            <input type="file" @change="handleFileChange($event, 'about_mission_image')" class="form-control" accept="image/*" />
+                            <img v-if="settings.about_mission_image" :src="'/' + settings.about_mission_image"
+                                class="thumb-img" style="max-height: 60px;" alt="Mission Img" />
+                            <input type="file" @change="handleFileChange($event, 'about_mission_image')"
+                                class="form-control" accept="image/*" />
                         </div>
                     </div>
                     <div class="form-group quill-container">
@@ -585,8 +628,10 @@ const submit = () => {
                     <div class="form-group">
                         <label>Hình ảnh Tầm nhìn</label>
                         <div class="flex items-center gap-3">
-                            <img v-if="settings.about_vision_image" :src="'/' + settings.about_vision_image" class="thumb-img" style="max-height: 60px;" alt="Vision Img" />
-                            <input type="file" @change="handleFileChange($event, 'about_vision_image')" class="form-control" accept="image/*" />
+                            <img v-if="settings.about_vision_image" :src="'/' + settings.about_vision_image"
+                                class="thumb-img" style="max-height: 60px;" alt="Vision Img" />
+                            <input type="file" @change="handleFileChange($event, 'about_vision_image')"
+                                class="form-control" accept="image/*" />
                         </div>
                     </div>
                     <div class="form-group quill-container">
@@ -605,8 +650,10 @@ const submit = () => {
                     <div class="form-group">
                         <label>Hình ảnh biểu tượng</label>
                         <div class="flex items-center gap-3">
-                            <img v-if="settings.about_core_1_image" :src="'/' + settings.about_core_1_image" class="thumb-img" style="max-height: 40px;" alt="Core 1 Img" />
-                            <input type="file" @change="handleFileChange($event, 'about_core_1_image')" class="form-control" accept="image/*" />
+                            <img v-if="settings.about_core_1_image" :src="'/' + settings.about_core_1_image"
+                                class="thumb-img" style="max-height: 40px;" alt="Core 1 Img" />
+                            <input type="file" @change="handleFileChange($event, 'about_core_1_image')"
+                                class="form-control" accept="image/*" />
                         </div>
                     </div>
                     <div class="form-group quill-container">
@@ -624,8 +671,10 @@ const submit = () => {
                     <div class="form-group">
                         <label>Hình ảnh biểu tượng</label>
                         <div class="flex items-center gap-3">
-                            <img v-if="settings.about_core_2_image" :src="'/' + settings.about_core_2_image" class="thumb-img" style="max-height: 40px;" alt="Core 2 Img" />
-                            <input type="file" @change="handleFileChange($event, 'about_core_2_image')" class="form-control" accept="image/*" />
+                            <img v-if="settings.about_core_2_image" :src="'/' + settings.about_core_2_image"
+                                class="thumb-img" style="max-height: 40px;" alt="Core 2 Img" />
+                            <input type="file" @change="handleFileChange($event, 'about_core_2_image')"
+                                class="form-control" accept="image/*" />
                         </div>
                     </div>
                     <div class="form-group quill-container">
@@ -643,8 +692,10 @@ const submit = () => {
                     <div class="form-group">
                         <label>Hình ảnh biểu tượng</label>
                         <div class="flex items-center gap-3">
-                            <img v-if="settings.about_core_3_image" :src="'/' + settings.about_core_3_image" class="thumb-img" style="max-height: 40px;" alt="Core 3 Img" />
-                            <input type="file" @change="handleFileChange($event, 'about_core_3_image')" class="form-control" accept="image/*" />
+                            <img v-if="settings.about_core_3_image" :src="'/' + settings.about_core_3_image"
+                                class="thumb-img" style="max-height: 40px;" alt="Core 3 Img" />
+                            <input type="file" @change="handleFileChange($event, 'about_core_3_image')"
+                                class="form-control" accept="image/*" />
                         </div>
                     </div>
                     <div class="form-group quill-container">
@@ -667,8 +718,10 @@ const submit = () => {
                     <div class="form-group">
                         <label>Hình ảnh chân dung</label>
                         <div class="flex items-center gap-3">
-                            <img v-if="settings.about_leader_1_image" :src="'/' + settings.about_leader_1_image" class="thumb-img" style="max-height: 60px;" alt="Leader 1 Img" />
-                            <input type="file" @change="handleFileChange($event, 'about_leader_1_image')" class="form-control" accept="image/*" />
+                            <img v-if="settings.about_leader_1_image" :src="'/' + settings.about_leader_1_image"
+                                class="thumb-img" style="max-height: 60px;" alt="Leader 1 Img" />
+                            <input type="file" @change="handleFileChange($event, 'about_leader_1_image')"
+                                class="form-control" accept="image/*" />
                         </div>
                     </div>
                 </div>
@@ -686,8 +739,10 @@ const submit = () => {
                     <div class="form-group">
                         <label>Hình ảnh chân dung</label>
                         <div class="flex items-center gap-3">
-                            <img v-if="settings.about_leader_2_image" :src="'/' + settings.about_leader_2_image" class="thumb-img" style="max-height: 60px;" alt="Leader 2 Img" />
-                            <input type="file" @change="handleFileChange($event, 'about_leader_2_image')" class="form-control" accept="image/*" />
+                            <img v-if="settings.about_leader_2_image" :src="'/' + settings.about_leader_2_image"
+                                class="thumb-img" style="max-height: 60px;" alt="Leader 2 Img" />
+                            <input type="file" @change="handleFileChange($event, 'about_leader_2_image')"
+                                class="form-control" accept="image/*" />
                         </div>
                     </div>
                 </div>
@@ -716,8 +771,10 @@ const submit = () => {
                 <div class="form-group">
                     <label>Hình ảnh đại diện</label>
                     <div class="flex items-center gap-3">
-                        <img v-if="settings.about_activity_image" :src="'/' + settings.about_activity_image" class="thumb-img" style="max-height: 60px;" alt="Activity Img" />
-                        <input type="file" @change="handleFileChange($event, 'about_activity_image')" class="form-control" accept="image/*" />
+                        <img v-if="settings.about_activity_image" :src="'/' + settings.about_activity_image"
+                            class="thumb-img" style="max-height: 60px;" alt="Activity Img" />
+                        <input type="file" @change="handleFileChange($event, 'about_activity_image')"
+                            class="form-control" accept="image/*" />
                     </div>
                 </div>
                 <div class="form-group quill-container">
@@ -734,8 +791,10 @@ const submit = () => {
                 <div class="form-group">
                     <label>Hình ảnh Banner đầu trang</label>
                     <div class="flex items-center gap-3">
-                        <img v-if="settings.partners_banner" :src="'/' + settings.partners_banner" class="thumb-img" style="max-height: 80px;" alt="Partners Banner" />
-                        <input type="file" @change="handleFileChange($event, 'partners_banner')" class="form-control" accept="image/*" />
+                        <img v-if="settings.partners_banner" :src="'/' + settings.partners_banner" class="thumb-img"
+                            style="max-height: 80px;" alt="Partners Banner" />
+                        <input type="file" @change="handleFileChange($event, 'partners_banner')" class="form-control"
+                            accept="image/*" />
                     </div>
                 </div>
 
@@ -747,8 +806,10 @@ const submit = () => {
 
                 <div class="mt-4">
                     <label class="font-medium mb-2 block">Danh sách Đối tác nguyên liệu</label>
-                    <div v-for="(partner, index) in form.ingredient_partners" :key="partner.id" class="p-3 mb-3 border rounded bg-gray-50 relative">
-                        <button type="button" @click="removeIngredientPartner(index)" class="btn-icon text-red" style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ef4444; cursor: pointer; padding: 0.5rem;">
+                    <div v-for="(partner, index) in form.ingredient_partners" :key="partner.id"
+                        class="p-3 mb-3 border rounded bg-gray-50 relative">
+                        <button type="button" @click="removeIngredientPartner(index)" class="btn-icon text-red"
+                            style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ef4444; cursor: pointer; padding: 0.5rem;">
                             Xóa
                         </button>
                         <h4 class="font-medium mb-2">Đối tác nguyên liệu {{ index + 1 }}</h4>
@@ -759,8 +820,11 @@ const submit = () => {
                         <div class="form-group">
                             <label>Hình ảnh đối tác</label>
                             <div class="flex items-center gap-3">
-                                <img v-if="partner.old_image && !partner.image" :src="'/' + partner.old_image" class="thumb-img" style="max-height: 60px;" alt="Ingredient Img" />
-                                <input type="file" @change="handleDynamicFileChange($event, index, 'ingredient_partners')" class="form-control" accept="image/*" />
+                                <img v-if="partner.old_image && !partner.image" :src="'/' + partner.old_image"
+                                    class="thumb-img" style="max-height: 60px;" alt="Ingredient Img" />
+                                <input type="file"
+                                    @change="handleDynamicFileChange($event, index, 'ingredient_partners')"
+                                    class="form-control" accept="image/*" />
                             </div>
                         </div>
                         <div class="form-group">
@@ -768,7 +832,8 @@ const submit = () => {
                             <textarea v-model="partner.description" class="form-control" rows="3"></textarea>
                         </div>
                     </div>
-                    <button type="button" @click="addIngredientPartner" class="btn-secondary mt-2" style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer;">
+                    <button type="button" @click="addIngredientPartner" class="btn-secondary mt-2"
+                        style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer;">
                         + Thêm Đối tác nguyên liệu
                     </button>
                 </div>
@@ -784,17 +849,24 @@ const submit = () => {
                 </div>
                 <div class="mt-4">
                     <label class="font-medium mb-2 block">Hình ảnh</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem; align-items: flex-end;">
-                        <div v-for="(partner, index) in form.hospital_partners" :key="partner.id" style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
-                            <img v-if="partner.old_image && !partner.preview" :src="'/' + partner.old_image" class="thumb-img" style="max-height: 90px;" alt="Partner" />
-                            <img v-if="partner.preview" :src="partner.preview" class="thumb-img" style="max-height: 90px;" alt="Partner Preview" />
-                            <button type="button" @click="removeHospitalPartner(index)" style="position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; border: 2px solid white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">✕</button>
+                    <div
+                        style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem; align-items: flex-end;">
+                        <div v-for="(partner, index) in form.hospital_partners" :key="partner.id"
+                            style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+                            <img v-if="partner.old_image && !partner.preview" :src="'/' + partner.old_image"
+                                class="thumb-img" style="max-height: 90px;" alt="Partner" />
+                            <img v-if="partner.preview" :src="partner.preview" class="thumb-img"
+                                style="max-height: 90px;" alt="Partner Preview" />
+                            <button type="button" @click="removeHospitalPartner(index)"
+                                style="position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; border: 2px solid white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">✕</button>
                         </div>
                     </div>
                     <div>
-                        <label class="btn-secondary" style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; display: inline-block;">
+                        <label class="btn-secondary"
+                            style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; display: inline-block;">
                             + Chọn nhiều ảnh Bệnh viện
-                            <input type="file" multiple @change="handleMultipleFilesChange($event, 'hospital_partners')" accept="image/*" style="display: none;" />
+                            <input type="file" multiple @change="handleMultipleFilesChange($event, 'hospital_partners')"
+                                accept="image/*" style="display: none;" />
                         </label>
                     </div>
                 </div>
@@ -810,19 +882,69 @@ const submit = () => {
                 </div>
                 <div class="mt-4">
                     <label class="font-medium mb-2 block">Hình ảnh</label>
-                    <div style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem; align-items: flex-end;">
-                        <div v-for="(partner, index) in form.media_partners" :key="partner.id" style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
-                            <img v-if="partner.old_image && !partner.preview" :src="'/' + partner.old_image" class="thumb-img" style="max-height: 90px;" alt="Partner" />
-                            <img v-if="partner.preview" :src="partner.preview" class="thumb-img" style="max-height: 90px;" alt="Partner Preview" />
-                            <button type="button" @click="removeMediaPartner(index)" style="position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; border: 2px solid white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">✕</button>
+                    <div
+                        style="display: flex; flex-wrap: wrap; gap: 1.5rem; margin-bottom: 1rem; align-items: flex-end;">
+                        <div v-for="(partner, index) in form.media_partners" :key="partner.id"
+                            style="position: relative; display: inline-flex; align-items: center; justify-content: center;">
+                            <img v-if="partner.old_image && !partner.preview" :src="'/' + partner.old_image"
+                                class="thumb-img" style="max-height: 90px;" alt="Partner" />
+                            <img v-if="partner.preview" :src="partner.preview" class="thumb-img"
+                                style="max-height: 90px;" alt="Partner Preview" />
+                            <button type="button" @click="removeMediaPartner(index)"
+                                style="position: absolute; top: -10px; right: -10px; background: #ef4444; color: white; border: 2px solid white; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-size: 12px; cursor: pointer; padding: 0; box-shadow: 0 2px 4px rgba(0,0,0,0.2);">✕</button>
                         </div>
                     </div>
                     <div>
-                        <label class="btn-secondary" style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; display: inline-block;">
+                        <label class="btn-secondary"
+                            style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer; display: inline-block;">
                             + Chọn nhiều ảnh Truyền thông
-                            <input type="file" multiple @change="handleMultipleFilesChange($event, 'media_partners')" accept="image/*" style="display: none;" />
+                            <input type="file" multiple @change="handleMultipleFilesChange($event, 'media_partners')"
+                                accept="image/*" style="display: none;" />
                         </label>
                     </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab 5: Nội dung Trang liên hệ -->
+        <div v-show="activeTab === 'contact_page'" class="card">
+            <div class="card-body">
+                <h3 class="section-title">Bản đồ</h3>
+                <div class="form-group mt-3">
+                    <label>Google Map Iframe</label>
+                    <textarea v-model="form.map_iframe" class="form-control" rows="3"
+                        placeholder="<iframe src='...'></iframe>"></textarea>
+                </div>
+
+                <h3 class="section-title mt-4">Hệ thống Cửa hàng</h3>
+                <div class="mt-4">
+                    <label class="font-medium mb-2 block">Danh sách Cửa hàng</label>
+                    <div v-for="(store, index) in form.contact_stores" :key="store.id"
+                        class="p-3 mb-3 border rounded bg-gray-50 relative">
+                        <button type="button" @click="removeContactStore(index)" class="btn-icon text-red"
+                            style="position: absolute; top: 10px; right: 10px; background: none; border: none; color: #ef4444; cursor: pointer; padding: 0.5rem;">
+                            Xóa
+                        </button>
+                        <h4 class="font-medium mb-2">Cửa hàng {{ index + 1 }}</h4>
+                        <div class="grid-2">
+                            <div class="form-group">
+                                <label>Tên cửa hàng</label>
+                                <input type="text" v-model="store.name" class="form-control" />
+                            </div>
+                            <div class="form-group">
+                                <label>Số điện thoại</label>
+                                <input type="text" v-model="store.phone" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label>Địa chỉ</label>
+                            <textarea v-model="store.address" class="form-control" rows="2"></textarea>
+                        </div>
+                    </div>
+                    <button type="button" @click="addContactStore" class="btn-secondary mt-2"
+                        style="padding: 0.5rem 1rem; border: 1px dashed #3b82f6; color: #3b82f6; background: transparent; border-radius: 8px; cursor: pointer;">
+                        + Thêm Cửa hàng
+                    </button>
                 </div>
             </div>
         </div>
@@ -830,7 +952,11 @@ const submit = () => {
         <!-- Form Submit Bar -->
         <div class="form-actions-bar mt-4 pt-3 border-top text-right">
             <button type="submit" class="btn-primary ml-auto" :disabled="form.processing">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" v-if="!form.processing"><path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path><polyline points="17 21 17 13 7 13 7 21"></polyline><polyline points="7 3 7 8 15 8"></polyline></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" v-if="!form.processing">
+                    <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"></path>
+                    <polyline points="17 21 17 13 7 13 7 21"></polyline>
+                    <polyline points="7 3 7 8 15 8"></polyline>
+                </svg>
                 {{ form.processing ? 'Đang lưu cấu hình...' : 'Lưu' }}
             </button>
         </div>
@@ -838,12 +964,44 @@ const submit = () => {
 </template>
 
 <style scoped>
-.page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem; }
-.title { font-size: 1.5rem; font-weight: 700; color: #0f172a; margin: 0; }
-.subtitle { color: #64748b; margin: 0.25rem 0 0 0; font-size: 0.9rem; }
+.page-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
 
-.alert-success { background: #ecfdf5; color: #059669; padding: 1rem; border-radius: 12px; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; font-weight: 500; font-size: 0.9rem; border: 1px solid #a7f3d0; }
-.alert-success svg { width: 20px; height: 20px; }
+.title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 0;
+}
+
+.subtitle {
+    color: #64748b;
+    margin: 0.25rem 0 0 0;
+    font-size: 0.9rem;
+}
+
+.alert-success {
+    background: #ecfdf5;
+    color: #059669;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 500;
+    font-size: 0.9rem;
+    border: 1px solid #a7f3d0;
+}
+
+.alert-success svg {
+    width: 20px;
+    height: 20px;
+}
 
 /* Tabbed Premium Navigation */
 .tabs-nav {
@@ -853,6 +1011,7 @@ const submit = () => {
     border-bottom: 2px solid #e2e8f0;
     padding-bottom: 0.5rem;
 }
+
 .tab-btn {
     background: none;
     border: none;
@@ -864,46 +1023,164 @@ const submit = () => {
     border-radius: 8px;
     transition: all 0.2s ease;
 }
+
 .tab-btn:hover {
     background: #f1f5f9;
     color: #0f172a;
 }
+
 .tab-btn.active {
     background: #eff6ff;
     color: #3b82f6;
     box-shadow: 0 2px 4px rgba(59, 130, 246, 0.08);
 }
 
-.card { background: #ffffff; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05); border: 1px solid #f1f5f9; overflow: hidden; }
-.card-body { padding: 2rem; }
+.card {
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+    border: 1px solid #f1f5f9;
+    overflow: hidden;
+}
 
-.grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
-@media (max-width: 768px) { .grid-2 { grid-template-columns: 1fr; } }
+.card-body {
+    padding: 2rem;
+}
 
-.form-group { margin-bottom: 1.25rem; }
-.form-group label { display: block; font-size: 0.9rem; font-weight: 600; color: #334155; margin-bottom: 0.5rem; }
-.form-control { width: 100%; padding: 0.75rem 1rem; border: 1px solid #cbd5e1; border-radius: 10px; font-size: 0.95rem; color: #0f172a; background: #ffffff; transition: all 0.2s; font-family: inherit; box-sizing: border-box; }
-.form-control:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
+.grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
 
-.flex { display: flex; }
-.items-center { align-items: center; }
-.gap-3 { gap: 1rem; }
-.thumb-img { max-height: 48px; border-radius: 6px; border: 1px solid #e2e8f0; background: #f8fafc; padding: 4px; object-fit: contain; }
-.text-sm { font-size: 0.8rem; }
-.text-gray { color: #64748b; }
-.mt-1 { margin-top: 0.25rem; }
-.mt-3 { margin-top: 1rem; }
-.mt-4 { margin-top: 1.5rem; }
-.pt-3 { padding-top: 1rem; }
-.border-top { border-top: 1px solid #e2e8f0; }
+@media (max-width: 768px) {
+    .grid-2 {
+        grid-template-columns: 1fr;
+    }
+}
 
-.section-title { font-size: 1.15rem; font-weight: 700; color: #0f172a; margin: 1.5rem 0 1rem 0; padding-bottom: 0.5rem; border-bottom: 2px solid #f1f5f9; }
-.section-title:first-of-type { margin-top: 0; }
+.form-group {
+    margin-bottom: 1.25rem;
+}
 
-.btn-primary { display: flex; align-items: center; gap: 0.5rem; background: #3b82f6; color: white; border: none; padding: 0.75rem 2rem; border-radius: 10px; font-weight: 600; font-size: 0.95rem; cursor: pointer; transition: all 0.2s; box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2); }
-.btn-primary:hover { background: #2563eb; transform: translateY(-1px); }
-.btn-primary svg { width: 18px; height: 18px; }
-.ml-auto { margin-left: auto; }
+.form-group label {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    background: #ffffff;
+    transition: all 0.2s;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.flex {
+    display: flex;
+}
+
+.items-center {
+    align-items: center;
+}
+
+.gap-3 {
+    gap: 1rem;
+}
+
+.thumb-img {
+    max-height: 48px;
+    border-radius: 6px;
+    border: 1px solid #e2e8f0;
+    background: #f8fafc;
+    padding: 4px;
+    object-fit: contain;
+}
+
+.text-sm {
+    font-size: 0.8rem;
+}
+
+.text-gray {
+    color: #64748b;
+}
+
+.mt-1 {
+    margin-top: 0.25rem;
+}
+
+.mt-3 {
+    margin-top: 1rem;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.pt-3 {
+    padding-top: 1rem;
+}
+
+.border-top {
+    border-top: 1px solid #e2e8f0;
+}
+
+.section-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin: 1.5rem 0 1rem 0;
+    padding-bottom: 0.5rem;
+    border-bottom: 2px solid #f1f5f9;
+}
+
+.section-title:first-of-type {
+    margin-top: 0;
+}
+
+.btn-primary {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: #3b82f6;
+    color: white;
+    border: none;
+    padding: 0.75rem 2rem;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 4px 6px -1px rgba(59, 130, 246, 0.2);
+}
+
+.btn-primary:hover {
+    background: #2563eb;
+    transform: translateY(-1px);
+}
+
+.btn-primary svg {
+    width: 18px;
+    height: 18px;
+}
+
+.ml-auto {
+    margin-left: auto;
+}
 
 .banner-box {
     background: #f8fafc;
@@ -918,6 +1195,7 @@ const submit = () => {
     border-bottom-left-radius: 10px;
     border-bottom-right-radius: 10px;
 }
+
 .quill-container :deep(.ql-toolbar) {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
