@@ -1,6 +1,9 @@
 <script setup>
 import { Head, Link, router } from '@inertiajs/vue3';
 import AdminLayout from '../Layouts/AdminLayout.vue';
+import { inject } from 'vue';
+
+const showConfirm = inject('confirm');
 
 defineOptions({ layout: AdminLayout });
 
@@ -16,8 +19,9 @@ const toggleApproval = (review) => {
     });
 };
 
-const deleteReview = (id) => {
-    if (confirm('Bạn có chắc chắn muốn xóa đánh giá này?')) {
+const deleteReview = async (id) => {
+    const confirmed = await showConfirm('Xóa đánh giá', 'Bạn có chắc chắn muốn xóa đánh giá này? Thao tác này không thể hoàn tác.');
+    if (confirmed) {
         router.delete(route('admin.reviews.destroy', id), {
             preserveScroll: true
         });
@@ -35,11 +39,7 @@ const deleteReview = (id) => {
         </div>
     </div>
 
-    <!-- Notification -->
-    <div v-if="$page.props.flash && $page.props.flash.message" class="alert-success">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
-        {{ $page.props.flash.message }}
-    </div>
+
 
     <div class="card">
         <div class="table-responsive">

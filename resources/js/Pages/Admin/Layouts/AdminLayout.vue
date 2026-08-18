@@ -1,7 +1,23 @@
 <script setup>
 import Sidebar from '../Components/Sidebar.vue';
 import Topnav from '../Components/Topnav.vue';
-import { onMounted, onUnmounted } from 'vue';
+import Toast from '../Components/Toast.vue';
+import ConfirmDialog from '../Components/ConfirmDialog.vue';
+import { onMounted, onUnmounted, provide, ref } from 'vue';
+
+const toastRef = ref(null);
+const confirmDialogRef = ref(null);
+
+const showToast = (message, type = 'success') => {
+    toastRef.value?.addToast(message, type);
+};
+
+const showConfirm = (title, message) => {
+    return confirmDialogRef.value?.show(title, message);
+};
+
+provide('toast', showToast);
+provide('confirm', showConfirm);
 
 onMounted(() => {
     document.body.classList.add('admin-mode');
@@ -21,6 +37,8 @@ onUnmounted(() => {
                 <slot />
             </main>
         </div>
+        <Toast ref="toastRef" />
+        <ConfirmDialog ref="confirmDialogRef" />
     </div>
 </template>
 

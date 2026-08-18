@@ -1,6 +1,8 @@
 <script setup>
 import { Link, router, useForm } from '@inertiajs/vue3';
-import { ref, onMounted, onUnmounted } from 'vue';
+import { ref, onMounted, onUnmounted, inject } from 'vue';
+
+const showToast = inject('toast');
 
 const isDropdownOpen = ref(false);
 const isPasswordModalOpen = ref(false);
@@ -41,7 +43,7 @@ const updatePassword = () => {
         onSuccess: () => {
             isPasswordModalOpen.value = false;
             passwordForm.reset();
-            alert('Đổi mật khẩu thành công!');
+            showToast('Đổi mật khẩu thành công!', 'success');
         }
     });
 };

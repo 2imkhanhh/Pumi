@@ -1,7 +1,9 @@
 <script setup>
 import { Head, useForm, router, Link } from '@inertiajs/vue3';
 import AdminLayout from '../Layouts/AdminLayout.vue';
-import { ref, watch } from 'vue';
+import { ref, watch, inject } from 'vue';
+
+const showConfirm = inject('confirm');
 
 defineOptions({ layout: AdminLayout });
 
@@ -65,8 +67,9 @@ const submit = () => {
     }
 };
 
-const deleteCategory = (id) => {
-    if (confirm('Bạn có chắc chắn muốn xóa danh mục này? Các bài viết thuộc danh mục này sẽ bị mất danh mục.')) {
+const deleteCategory = async (id) => {
+    const confirmed = await showConfirm('Xóa danh mục', 'Bạn có chắc chắn muốn xóa danh mục này? Các bài viết thuộc danh mục này sẽ bị mất danh mục.');
+    if (confirmed) {
         router.delete(route('admin.post-categories.destroy', id), {
             preserveScroll: true
         });
@@ -124,14 +127,7 @@ watch(searchKeyword, (value) => {
         </button>
     </div>
 
-    <!-- Notification -->
-    <div v-if="$page.props.flash && $page.props.flash.message" class="alert-success">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
-            <polyline points="22 4 12 14.01 9 11.01"></polyline>
-        </svg>
-        {{ $page.props.flash.message }}
-    </div>
+
 
     <div class="card">
         <div class="table-toolbar">
