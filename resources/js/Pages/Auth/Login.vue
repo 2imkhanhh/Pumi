@@ -2,6 +2,8 @@
 import { Head, Link, useForm } from '@inertiajs/vue3';
 import { ref } from 'vue';
 
+const showPassword = ref(false);
+
 defineProps({
     canResetPassword: {
         type: Boolean,
@@ -35,14 +37,8 @@ const submit = () => {
     <div class="login-wrapper">
         <div class="login-container">
             <div class="login-left">
-                <div class="brand">
-                    <img src="/assets/images/favicon.png" alt="Pumi Logo" class="logo-img" />
-                    <h1>Pumi Admin</h1>
-                </div>
-                <p class="subtitle">Hệ thống quản trị nội dung cao cấp</p>
-                <div class="graphic">
-                    <div class="glass-sphere"></div>
-                    <div class="glass-sphere small"></div>
+                <div class="mascot-container">
+                    <img src="/assets/images/thumbs.png" alt="Pumi Mascot" class="mascot-img" />
                 </div>
             </div>
             <div class="login-right">
@@ -78,23 +74,21 @@ const submit = () => {
                                 <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
                                 <input 
                                     id="password" 
-                                    type="password" 
+                                    :type="showPassword ? 'text' : 'password'" 
                                     v-model="form.password" 
                                     placeholder="••••••••" 
                                     required 
                                     :class="{ 'has-error': form.errors.password }"
                                 />
+                                <button type="button" class="toggle-password" @click="showPassword = !showPassword" tabindex="-1">
+                                    <svg v-if="!showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
+                                    <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                </button>
                             </div>
                             <span v-if="form.errors.password" class="error-text">{{ form.errors.password }}</span>
                         </div>
 
                         <div class="form-actions">
-                            <label class="checkbox-container">
-                                <input type="checkbox" v-model="form.remember" />
-                                <span class="checkmark"></span>
-                                Ghi nhớ đăng nhập
-                            </label>
-                            
                             <Link v-if="canResetPassword" :href="route('password.request')" class="forgot-link">
                                 Quên mật khẩu?
                             </Link>
@@ -167,64 +161,20 @@ const submit = () => {
     100% { transform: rotate(360deg); }
 }
 
-.brand {
+.mascot-container {
     display: flex;
     align-items: center;
-    gap: 1rem;
+    justify-content: center;
     z-index: 2;
-    margin-bottom: 1rem;
+    flex: 1;
 }
 
-.logo-img {
-    width: 48px;
-    height: 48px;
+.mascot-img {
+    width: 280px;
+    max-width: 80%;
+    height: auto;
     object-fit: contain;
-    border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-
-.brand h1 {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #1e3a8a;
-    margin: 0;
-    letter-spacing: -0.5px;
-}
-
-.subtitle {
-    font-size: 1.1rem;
-    color: #475569;
-    z-index: 2;
-    margin: 0;
-    font-weight: 400;
-}
-
-.graphic {
-    position: absolute;
-    bottom: -10%;
-    right: -10%;
-    width: 300px;
-    height: 300px;
-}
-
-.glass-sphere {
-    position: absolute;
-    width: 250px;
-    height: 250px;
-    border-radius: 50%;
-    background: linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0.1));
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.5);
-    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
-    top: 0;
-    left: 0;
-}
-.glass-sphere.small {
-    width: 100px;
-    height: 100px;
-    top: -50px;
-    left: -20px;
+    filter: drop-shadow(0 10px 30px rgba(30, 58, 138, 0.15));
 }
 
 .login-right {
@@ -325,6 +275,27 @@ const submit = () => {
     color: #3b82f6;
 }
 
+.toggle-password {
+    position: absolute;
+    right: 0.75rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.25rem;
+    color: #94a3b8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
+}
+.toggle-password:hover {
+    color: #475569;
+}
+.toggle-password svg {
+    width: 18px;
+    height: 18px;
+}
+
 .error-text {
     display: block;
     color: #ef4444;
@@ -335,63 +306,8 @@ const submit = () => {
 .form-actions {
     display: flex;
     align-items: center;
-    justify-content: space-between;
+    justify-content: flex-end;
     margin-bottom: 2rem;
-}
-
-.checkbox-container {
-    display: flex;
-    align-items: center;
-    cursor: pointer;
-    font-size: 0.875rem;
-    color: #475569;
-    user-select: none;
-    position: relative;
-}
-
-.checkbox-container input {
-    position: absolute;
-    opacity: 0;
-    cursor: pointer;
-    height: 0;
-    width: 0;
-}
-
-.checkmark {
-    height: 18px;
-    width: 18px;
-    background-color: #f1f5f9;
-    border: 1px solid #cbd5e1;
-    border-radius: 4px;
-    margin-right: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s ease;
-}
-
-.checkbox-container:hover input ~ .checkmark {
-    background-color: #e2e8f0;
-}
-
-.checkbox-container input:checked ~ .checkmark {
-    background-color: #3b82f6;
-    border-color: #3b82f6;
-}
-
-.checkmark:after {
-    content: "";
-    display: none;
-    width: 4px;
-    height: 8px;
-    border: solid white;
-    border-width: 0 2px 2px 0;
-    transform: rotate(45deg);
-    margin-bottom: 2px;
-}
-
-.checkbox-container input:checked ~ .checkmark:after {
-    display: block;
 }
 
 .forgot-link {
