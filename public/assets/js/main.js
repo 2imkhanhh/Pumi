@@ -17,8 +17,27 @@ $(document).ready(function(){
 
     $(document).on("submit","#frmContact", function (e){
         e.preventDefault();
-        var url = $(this).attr("action");
-        var form_data = $(this).serialize();
+        var $form = $(this);
+        var url = $form.attr("action");
+        var form_data = $form.serialize();
+        var $btn = $form.find('button[type="submit"]');
+        var originalBtnText = $btn.text();
+
+        // Show loading state
+        $btn.prop('disabled', true).text('Đang gửi...');
+
+        // Setup SweetAlert2 Toast
+        const Toast = Swal.mixin({
+            toast: true,
+            position: 'bottom-end',
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true,
+            didOpen: (toast) => {
+                toast.addEventListener('mouseenter', Swal.stopTimer)
+                toast.addEventListener('mouseleave', Swal.resumeTimer)
+            }
+        });
 
         $.ajax({
             type: 'POST',
@@ -26,20 +45,18 @@ $(document).ready(function(){
             data: form_data,
             dataType : 'JSON',
             success: function (data) {
-                if(data.type=='success'){
-                    Swal.fire({
-                        text: "Bạn đã gửi liên hệ thành công.",
-                        confirmButtonText: 'Đồng ý'
+                if(data.type == 'success'){
+                    Toast.fire({
+                        icon: 'success',
+                        title: data.message || "Bạn đã gửi liên hệ thành công."
                     });
-                    $('input[name="fullname"]').val('');
-                    $('input[name="email"]').val('');
-                    $('textarea[name="content"]').val('');
+                    // Reset the entire form
+                    $form[0].reset();
                 }
                 else {
-                    Swal.fire({
-                        text: "Lỗi hệ thống. Vui lòng thông báo quản trị.",
+                    Toast.fire({
                         icon: 'error',
-                        confirmButtonText: 'Đồng ý'
+                        title: data.message || "Lỗi hệ thống. Vui lòng thông báo quản trị."
                     });
                 }
             },
@@ -47,8 +64,15 @@ $(document).ready(function(){
             {
                 console.log("Error: " + thrownError);
                 console.log("Error: " + textStatus);
+                Toast.fire({
+                    icon: 'error',
+                    title: "Có lỗi xảy ra, vui lòng thử lại sau."
+                });
+            },
+            complete: function() {
+                // Restore button state
+                $btn.prop('disabled', false).text(originalBtnText);
             }
         });
-
     });
 });
