@@ -16,7 +16,7 @@ class HomeController extends Controller
         if ($products->isEmpty()) {
             $products = Product::where('is_active', true)->latest()->limit(4)->get();
         }
-        
+
         $homePartnersJson = Setting::where('key', 'home_partners')->value('value');
         $partners = $homePartnersJson ? json_decode($homePartnersJson, true) : [];
 
@@ -40,7 +40,7 @@ class HomeController extends Controller
 
         $ingredientPartnersJson = Setting::where('key', 'ingredient_partners')->value('value');
         $ingredientPartners = $ingredientPartnersJson ? json_decode($ingredientPartnersJson, true) : [];
-        
+
         return view('client.pages.partners', compact('hospitalPartners', 'mediaPartners', 'ingredientPartners'));
     }
 
@@ -53,17 +53,17 @@ class HomeController extends Controller
     public function posts(\Illuminate\Http\Request $request)
     {
         $query = \App\Models\Post::with('category')->where('type', 'news');
-        
+
         if ($request->has('category')) {
             $categorySlug = $request->query('category');
-            $query->whereHas('category', function($q) use ($categorySlug) {
+            $query->whereHas('category', function ($q) use ($categorySlug) {
                 $q->where('slug', $categorySlug);
             });
         }
-        
+
         $posts = $query->latest('published_at')->paginate(12);
         $categories = \App\Models\PostCategory::where('is_active', true)->orderBy('name', 'asc')->get();
-        
+
         return view('client.pages.posts', compact('posts', 'categories'));
     }
 
@@ -94,12 +94,21 @@ class HomeController extends Controller
             'content' => 'required|string|max:1000'
         ]);
 
-        \App\Models\Contact::create([
+        $contact = \App\Models\Contact::create([
             'fullname' => $request->fullname,
             'email' => $request->email,
             'content' => $request->content,
             'status' => 'pending'
         ]);
+
+        try {
+            $adminEmail = config('mail.from.address');
+            if (!empty($adminEmail)) {
+                \Illuminate\Support\Facades\Mail::to($adminEmail)->send(new \App\Mail\ContactNotification($contact));
+            }
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\Log::error('Gửi email thông báo liên hệ thất bại: ' . $e->getMessage());
+        }
 
         if ($request->ajax()) {
             return response()->json(['type' => 'success', 'message' => 'Cảm ơn bạn đã liên hệ, chúng tôi sẽ phản hồi sớm nhất!']);
@@ -112,13 +121,13 @@ class HomeController extends Controller
     {
         $product = \App\Models\Product::where('slug', $slug)->firstOrFail();
         $reviews = \App\Models\ProductReview::where('product_id', $product->id)
-                                            ->where('is_approved', true)
-                                            ->latest()
-                                            ->get();
+            ->where('is_approved', true)
+            ->latest()
+            ->get();
         $relatedProducts = \App\Models\Product::where('id', '!=', $product->id)
-                                              ->latest()
-                                              ->limit(10)
-                                              ->get();
+            ->latest()
+            ->limit(10)
+            ->get();
         return view('client.pages.product_detail', compact('product', 'reviews', 'relatedProducts'));
     }
 
@@ -135,7 +144,7 @@ class HomeController extends Controller
 
     public function search(\Illuminate\Http\Request $request)
     {
-        $products = \App\Models\Product::get()->map(function($p) {
+        $products = \App\Models\Product::get()->map(function ($p) {
             return [
                 'name' => $p->name,
                 'cat' => 'Sản phẩm Pumi',
