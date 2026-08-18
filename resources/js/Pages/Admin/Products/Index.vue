@@ -383,7 +383,7 @@ watch(() => form.name, (newName) => {
                 <div class="modal-footer">
                     <button type="button" class="btn-default" @click="isModalOpen = false">Hủy</button>
                     <button type="submit" class="btn-primary" :disabled="form.processing">
-                        {{ form.processing ? 'Đang xử lý...' : 'Lưu lại' }}
+                        {{ form.processing ? 'Đang xử lý...' : 'Lưu' }}
                     </button>
                 </div>
             </form>

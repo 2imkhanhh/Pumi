@@ -1984,3 +1984,49 @@ textarea:focus-visible {
         font-size: 12pt;
     }
 }
+
+/* Post Categories Styles */
+.post-categories-filter {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+    margin-bottom: 2rem;
+}
+
+.category-pill {
+    padding: 8px 20px;
+    background: #f1f5f9;
+    color: #475569;
+    border-radius: 30px;
+    font-weight: 600;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    border: 1px solid transparent;
+}
+
+.category-pill:hover, .category-pill.active {
+    background: var(--pu-navy);
+    color: #fff;
+    border-color: var(--pu-navy);
+    box-shadow: 0 4px 10px rgba(27, 63, 148, 0.2);
+}
+
+.news-category-badge {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+    background: var(--pu-orange);
+    color: #fff;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+    z-index: 2;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.15);
+}
+
+#news-list .imgbox {
+    position: relative;
+}

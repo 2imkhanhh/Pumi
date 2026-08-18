@@ -11,14 +11,29 @@
         </section>
         <section id="news" class="news">
             <div class="container">
+                <!-- Category Filter -->
+                <div class="post-categories-filter text-center mb-4" data-aos="fade-up">
+                    <a href="{{ route('posts') }}" class="category-pill {{ !request()->has('category') ? 'active' : '' }}">Tất cả</a>
+                    @foreach($categories as $category)
+                        <a href="{{ route('posts', ['category' => $category->slug]) }}" class="category-pill {{ request()->query('category') == $category->slug ? 'active' : '' }}">
+                            {{ $category->name }}
+                        </a>
+                    @endforeach
+                </div>
+
                 <div id="news-list" class="news-list row gy-4 mt-4">
                     @foreach ($posts as $post)
                         <div class="col-xl-3 col-md-6 col-12" data-aos="super-fade-up" data-aos-delay="{{ 100 * (($loop->index % 4) + 1) }}">
                             <a href="{{ route('post.detail', $post->slug) }}">
                                 <div class="inner">
                                      <article>
-                                        <div class="imgbox"><img src="{{ asset($post->image) }}"
-                                                alt="{{ $post->title }}" /></div>
+                                        <div class="imgbox">
+                                            @if($post->category)
+                                                <span class="news-category-badge">{{ $post->category->name }}</span>
+                                            @endif
+                                            <img src="{{ asset($post->image) }}"
+                                                alt="{{ $post->title }}" />
+                                        </div>
                                         <div class="date">Pumi |
                                             {{ \Carbon\Carbon::parse($post->published_at)->format('d.m.y') }}</div>
                                         <h2 class="title">{{ $post->title }}</h2>

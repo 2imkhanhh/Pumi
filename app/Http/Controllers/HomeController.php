@@ -50,10 +50,21 @@ class HomeController extends Controller
         return view('client.pages.products', compact('products'));
     }
 
-    public function posts()
+    public function posts(\Illuminate\Http\Request $request)
     {
-        $posts = \App\Models\Post::where('type', 'news')->latest('published_at')->paginate(12);
-        return view('client.pages.posts', compact('posts'));
+        $query = \App\Models\Post::with('category')->where('type', 'news');
+        
+        if ($request->has('category')) {
+            $categorySlug = $request->query('category');
+            $query->whereHas('category', function($q) use ($categorySlug) {
+                $q->where('slug', $categorySlug);
+            });
+        }
+        
+        $posts = $query->latest('published_at')->paginate(12);
+        $categories = \App\Models\PostCategory::where('is_active', true)->orderBy('name', 'asc')->get();
+        
+        return view('client.pages.posts', compact('posts', 'categories'));
     }
 
     public function recruitment()
@@ -113,7 +124,7 @@ class HomeController extends Controller
 
     public function postDetail($slug)
     {
-        $post = \App\Models\Post::where('slug', $slug)->where('type', 'news')->firstOrFail();
+        $post = \App\Models\Post::with('category')->where('slug', $slug)->where('type', 'news')->firstOrFail();
         return view('client.pages.post_detail', compact('post'));
     }
 

@@ -21,8 +21,11 @@ class PostController extends Controller
         
         $posts = $query->orderBy('published_at', 'asc')->paginate(10)->withQueryString();
         
+        $categories = \App\Models\PostCategory::where('is_active', true)->orderBy('name', 'asc')->get();
+        
         return Inertia::render('Admin/Posts/Index', [
             'posts' => $posts,
+            'categories' => $categories,
             'filters' => ['search' => $search]
         ]);
     }
@@ -41,6 +44,7 @@ class PostController extends Controller
             'salary' => 'nullable|string|max:255',
             'deadline' => 'nullable|date',
             'published_at' => 'nullable|date',
+            'category_id' => 'nullable|exists:post_categories,id',
         ]);
 
         if (empty($validated['slug'])) {
@@ -75,6 +79,7 @@ class PostController extends Controller
             'salary' => 'nullable|string|max:255',
             'deadline' => 'nullable|date',
             'published_at' => 'nullable|date',
+            'category_id' => 'nullable|exists:post_categories,id',
         ]);
 
         if ($request->hasFile('image')) {

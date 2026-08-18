@@ -6,7 +6,7 @@
         <section id="banner" class="banner-blog d-flex align-items-end" style="background-image: url('{{ asset('assets/images/upload/banner/img_68dde2e81b6f1.png') }}')" data-aos="super-zoom-in" data-aos-duration="1200"><div class="container"><nav class="breadcrumb-pu"><a href="{{ route('home') }}">Trang chủ</a><span class="sep">/</span><a href="{{ route('posts') }}">Tin tức</a><span class="sep">/</span><span class="current">{{ Str::limit($post->title, 50) }}</span></nav></div></section><section id="detail-post" class="mt-5"><div class="container"><div class="row">
         <div class="col-lg-8" data-aos="super-slide-right">
             <article class="post-article">
-                <span class="post-tag">Tin tức</span>
+                <span class="post-tag">{{ $post->category ? $post->category->name : 'Tin tức' }}</span>
                 <h1 class="pd-title">{{ $post->title }}</h1>
                 <div class="post-meta">
                     <span><i class="fa-regular fa-calendar"></i> {{ \Carbon\Carbon::parse($post->published_at)->format('d.m.y') }}</span>

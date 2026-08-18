@@ -28,6 +28,7 @@ Route::middleware(['auth', 'verified'])->prefix('admin')->name('admin.')->group(
     Route::get('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'index'])->name('settings.index');
     Route::post('/settings', [\App\Http\Controllers\Admin\SettingController::class, 'store'])->name('settings.store');
     Route::resource('posts', \App\Http\Controllers\Admin\PostController::class)->except(['create', 'edit', 'show']);
+    Route::resource('post-categories', \App\Http\Controllers\Admin\PostCategoryController::class)->except(['create', 'edit', 'show']);
     Route::post('upload-image', [\App\Http\Controllers\Admin\ImageUploadController::class, 'upload'])->name('upload.image');
 });
 

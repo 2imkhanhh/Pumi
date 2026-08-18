@@ -2,140 +2,52 @@
 import { Head, useForm, router, Link } from '@inertiajs/vue3';
 import AdminLayout from '../Layouts/AdminLayout.vue';
 import { ref, watch } from 'vue';
-import { QuillEditor } from '@vueup/vue-quill';
-import '@vueup/vue-quill/dist/vue-quill.snow.css';
-import axios from 'axios';
 
 defineOptions({ layout: AdminLayout });
 
 const props = defineProps({
-    posts: Object,
-    categories: Array,
+    categories: Object,
     filters: Object,
 });
 
 const isModalOpen = ref(false);
 const isEditing = ref(false);
 const searchKeyword = ref(props.filters.search || '');
-const currentImage = ref(null);
 
 const form = useForm({
     id: null,
-    title: '',
+    name: '',
     slug: '',
-    slug: '',
-    type: 'news',
-    category_id: null,
-    job_type: '',
-    location: '',
-    salary: '',
-    deadline: '',
-    excerpt: '',
-    content: '',
-    published_at: '',
-    image: null,
+    is_active: true,
     _method: 'POST'
 });
 
-const quillRef = ref(null);
-
-const imageHandler = () => {
-    const input = document.createElement('input');
-    input.setAttribute('type', 'file');
-    input.setAttribute('accept', 'image/*');
-    input.click();
-    input.onchange = async () => {
-        const file = input.files[0];
-        if (file) {
-            const formData = new FormData();
-            formData.append('image', file);
-            try {
-                const res = await axios.post(route('admin.upload.image'), formData, {
-                    headers: { 'Content-Type': 'multipart/form-data' }
-                });
-                const url = res.data.url;
-                const quill = quillRef.value.getQuill();
-                const range = quill.getSelection();
-                const cursorPosition = range ? range.index : quill.getLength();
-                quill.insertEmbed(cursorPosition, 'image', url);
-            } catch (err) {
-                console.error('Image upload failed', err);
-                alert('Tải ảnh lên thất bại!');
-            }
-        }
-    };
-};
-
-const editorOptions = {
-    modules: {
-        toolbar: {
-            container: [
-                ['bold', 'italic', 'underline', 'strike'],
-                ['blockquote'],
-                [{ 'header': 1 }, { 'header': 2 }],
-                [{ 'list': 'ordered' }, { 'list': 'bullet' }],
-                [{ 'size': ['small', false, 'large', 'huge'] }],
-                [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
-                [{ 'color': [] }, { 'background': [] }],
-                [{ 'align': [] }],
-                ['clean'],
-                ['link', 'image', 'video']
-            ],
-            handlers: {
-                image: imageHandler
-            }
-        }
-    }
-};
-
 const openCreateModal = () => {
     isEditing.value = false;
-    currentImage.value = null;
     form.reset();
     form.clearErrors();
     form.id = null;
-    form.title = '';
+    form.name = '';
     form.slug = '';
-    form.type = 'news';
-    form.category_id = null;
-    form.job_type = '';
-    form.location = '';
-    form.salary = '';
-    form.deadline = '';
-    form.excerpt = '';
-    form.content = '';
-    form.image = null;
+    form.is_active = true;
     form._method = 'POST';
-    const now = new Date();
-    // format to YYYY-MM-DD
-    form.published_at = now.toISOString().split('T')[0];
     isModalOpen.value = true;
 };
 
-const openEditModal = (post) => {
+const openEditModal = (category) => {
     isEditing.value = true;
-    currentImage.value = post.image;
     form.clearErrors();
-    form.id = post.id;
-    form.title = post.title;
-    form.slug = post.slug;
-    form.type = post.type || 'news';
-    form.category_id = post.category_id || null;
-    form.job_type = post.job_type || '';
-    form.location = post.location || '';
-    form.salary = post.salary || '';
-    form.deadline = post.deadline || '';
-    form.excerpt = post.excerpt;
-    form.content = post.content;
-    form.published_at = post.published_at ? post.published_at.split(' ')[0] : '';
-    form.image = null;
+    form.id = category.id;
+    form.name = category.name;
+    form.slug = category.slug;
+    form.is_active = category.is_active == 1;
     form._method = 'PUT';
     isModalOpen.value = true;
 };
 
 const submit = () => {
     if (isEditing.value) {
-        form.post(route('admin.posts.update', form.id), {
+        form.post(route('admin.post-categories.update', form.id), {
             preserveScroll: true,
             onSuccess: () => { 
                 isModalOpen.value = false; 
@@ -143,7 +55,7 @@ const submit = () => {
             }
         });
     } else {
-        form.post(route('admin.posts.store'), {
+        form.post(route('admin.post-categories.store'), {
             preserveScroll: true,
             onSuccess: () => { 
                 isModalOpen.value = false; 
@@ -153,9 +65,9 @@ const submit = () => {
     }
 };
 
-const deletePost = (id) => {
-    if (confirm('Bạn có chắc chắn muốn xóa bài viết này?')) {
-        router.delete(route('admin.posts.destroy', id), {
+const deleteCategory = (id) => {
+    if (confirm('Bạn có chắc chắn muốn xóa danh mục này? Các bài viết thuộc danh mục này sẽ bị mất danh mục.')) {
+        router.delete(route('admin.post-categories.destroy', id), {
             preserveScroll: true
         });
     }
@@ -176,10 +88,9 @@ const generateSlug = (str) => {
     return str;
 };
 
-watch(() => form.title, (newTitle) => {
-    // Chỉ tự động tạo khi đang Thêm mới
+watch(() => form.name, (newName) => {
     if (!isEditing.value) {
-        form.slug = generateSlug(newTitle);
+        form.slug = generateSlug(newName);
     }
 });
 
@@ -188,7 +99,7 @@ let searchTimeout = null;
 watch(searchKeyword, (value) => {
     clearTimeout(searchTimeout);
     searchTimeout = setTimeout(() => {
-        router.get(route('admin.posts.index'), { search: value }, {
+        router.get(route('admin.post-categories.index'), { search: value }, {
             preserveState: true,
             replace: true
         });
@@ -198,19 +109,19 @@ watch(searchKeyword, (value) => {
 
 <template>
 
-    <Head title="Quản lý Tin tức" />
+    <Head title="Danh mục Tin tức" />
 
     <div class="page-header">
         <div>
-            <h1 class="title">Tin tức</h1>
-            <p class="subtitle">Quản lý bài viết tin tức, kiến thức.</p>
+            <h1 class="title">Danh mục Tin tức</h1>
+            <p class="subtitle">Quản lý các chủ đề bài viết tin tức.</p>
         </div>
         <button @click="openCreateModal" class="btn-primary">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                 <line x1="12" y1="5" x2="12" y2="19"></line>
                 <line x1="5" y1="12" x2="19" y2="12"></line>
             </svg>
-            Thêm bài viết
+            Thêm danh mục
         </button>
     </div>
 
@@ -226,7 +137,7 @@ watch(searchKeyword, (value) => {
     <div class="card">
         <div class="table-toolbar">
             <input type="text" v-model="searchKeyword" class="form-control search-input"
-                placeholder="Tìm kiếm bài viết..." />
+                placeholder="Tìm kiếm danh mục..." />
         </div>
 
         <div class="table-responsive">
@@ -234,47 +145,29 @@ watch(searchKeyword, (value) => {
                 <thead>
                     <tr>
                         <th width="60">STT</th>
-                        <th width="80">Ảnh</th>
-                        <th style="max-width: 250px;">Tiêu đề</th>
-                        <th style="white-space: nowrap;">Danh mục</th>
-                        <th style="white-space: nowrap;">Loại</th>
-                        <th style="white-space: nowrap;">Ngày đăng</th>
+                        <th>Tên danh mục</th>
+                        <th>Trạng thái</th>
                         <th width="120" class="text-right">Thao tác</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="(post, index) in posts.data" :key="post.id">
-                        <td>{{ (posts.current_page - 1) * posts.per_page + index + 1 }}</td>
+                    <tr v-for="(category, index) in categories.data" :key="category.id">
+                        <td>{{ (categories.current_page - 1) * categories.per_page + index + 1 }}</td>
+                        <td class="font-medium text-dark">{{ category.name }}</td>
                         <td>
-                            <div class="thumb">
-                                <img v-if="post.image" :src="'/' + post.image" alt="Post" />
-                                <div v-else class="no-img">No IMG</div>
-                            </div>
-                        </td>
-                        <td style="max-width: 250px; white-space: normal; word-break: break-word;" class="font-medium text-dark">{{ post.title }}</td>
-                        <td style="white-space: nowrap;">
-                            <span v-if="post.type === 'news'">
-                                {{ categories.find(c => c.id === post.category_id)?.name || 'Chưa phân loại' }}
+                            <span class="badge" :class="category.is_active ? 'bg-green' : 'bg-gray'">
+                                {{ category.is_active ? 'Hiển thị' : 'Ẩn' }}
                             </span>
-                            <span v-else class="text-gray">-</span>
-                        </td>
-                        <td style="white-space: nowrap;">
-                            <span class="badge" :class="post.type === 'recruitment' ? 'bg-indigo' : 'bg-blue'">
-                                {{ post.type === 'recruitment' ? 'Tuyển dụng' : 'Tin tức' }}
-                            </span>
-                        </td>
-                        <td style="white-space: nowrap;">
-                            <span class="badge">{{ post.published_at ? post.published_at.split(' ')[0] : '' }}</span>
                         </td>
                         <td class="text-right">
                             <div class="actions">
-                                <button @click="openEditModal(post)" class="btn-icon text-blue" title="Sửa">
+                                <button @click="openEditModal(category)" class="btn-icon text-blue" title="Sửa">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                     </svg>
                                 </button>
-                                <button @click="deletePost(post.id)" class="btn-icon text-red" title="Xóa">
+                                <button @click="deleteCategory(category.id)" class="btn-icon text-red" title="Xóa">
                                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                         <polyline points="3 6 5 6 21 6"></polyline>
                                         <path
@@ -285,17 +178,17 @@ watch(searchKeyword, (value) => {
                             </div>
                         </td>
                     </tr>
-                    <tr v-if="posts.data.length === 0">
-                        <td colspan="5" class="text-center py-4 text-gray">Không có bài viết nào.</td>
+                    <tr v-if="categories.data.length === 0">
+                        <td colspan="4" class="text-center py-4 text-gray">Không có danh mục nào.</td>
                     </tr>
                 </tbody>
             </table>
         </div>
 
         <!-- Pagination Component -->
-        <div class="pagination-wrap" v-if="posts.links && posts.links.length > 3">
+        <div class="pagination-wrap" v-if="categories.links && categories.links.length > 3">
             <div class="pagination">
-                <template v-for="(link, i) in posts.links" :key="i">
+                <template v-for="(link, i) in categories.links" :key="i">
                     <Link v-if="link.url" :href="link.url" class="page-link" :class="{ active: link.active }"
                         v-html="link.label"></Link>
                     <span v-else class="page-link disabled" v-html="link.label"></span>
@@ -306,9 +199,9 @@ watch(searchKeyword, (value) => {
 
     <!-- Slide-over Modal -->
     <div class="modal-overlay" :class="{ show: isModalOpen }" @click="isModalOpen = false"></div>
-    <div class="center-modal" :class="{ show: isModalOpen }">
+    <div class="center-modal" :class="{ show: isModalOpen }" style="max-width: 500px">
         <div class="modal-header">
-            <h2>{{ isEditing ? 'Cập nhật Bài viết' : 'Thêm Bài viết mới' }}</h2>
+            <h2>{{ isEditing ? 'Cập nhật Danh mục' : 'Thêm Danh mục mới' }}</h2>
             <button class="close-btn" @click="isModalOpen = false">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -318,91 +211,21 @@ watch(searchKeyword, (value) => {
         </div>
         <div class="modal-body">
             <form @submit.prevent="submit">
-                <div class="form-row">
-                    <div class="form-group flex-1">
-                        <label>Tiêu đề bài viết <span class="required">*</span></label>
-                        <input type="text" v-model="form.title" class="form-control" required />
-                        <span class="error" v-if="form.errors.title">{{ form.errors.title }}</span>
-                    </div>
-                </div>
-                <div class="form-row">
-                    <div class="form-group flex-1">
-                        <label>Loại bài viết</label>
-                        <select v-model="form.type" class="form-control">
-                            <option value="news">Tin tức</option>
-                            <option value="recruitment">Tuyển dụng</option>
-                        </select>
-                        <span class="error" v-if="form.errors.type">{{ form.errors.type }}</span>
-                    </div>
-                    <div class="form-group flex-1" v-if="form.type === 'news'">
-                        <label>Danh mục tin tức</label>
-                        <select v-model="form.category_id" class="form-control">
-                            <option :value="null">-- Chọn danh mục --</option>
-                            <option v-for="cat in categories" :key="cat.id" :value="cat.id">{{ cat.name }}</option>
-                        </select>
-                        <span class="error" v-if="form.errors.category_id">{{ form.errors.category_id }}</span>
-                    </div>
-                    <div class="form-group flex-1" v-else>
-                        <!-- Empty placeholder for flex layout -->
-                    </div>
-                </div>
-
-                <div class="form-row" v-if="form.type === 'recruitment'">
-                    <div class="form-group flex-1">
-                        <label>Loại công việc</label>
-                        <input type="text" v-model="form.job_type" placeholder="VD: Toàn thời gian" class="form-control" />
-                    </div>
-                    <div class="form-group flex-1">
-                        <label>Địa điểm</label>
-                        <input type="text" v-model="form.location" placeholder="VD: Thành phố Sơn La" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="form-row" v-if="form.type === 'recruitment'">
-                    <div class="form-group flex-1">
-                        <label>Mức lương</label>
-                        <input type="text" v-model="form.salary" placeholder="VD: Thỏa thuận + thưởng" class="form-control" />
-                    </div>
-                    <div class="form-group flex-1">
-                        <label>Hạn nộp hồ sơ</label>
-                        <input type="date" v-model="form.deadline" class="form-control" />
-                    </div>
-                </div>
-
-                <div class="form-row">
-                    <div class="form-group flex-1">
-                        <label>Đường dẫn tĩnh</label>
-                        <input type="text" v-model="form.slug" class="form-control" />
-                        <span class="error" v-if="form.errors.slug">{{ form.errors.slug }}</span>
-                    </div>
-                    <div class="form-group flex-1">
-                        <label>Ngày xuất bản</label>
-                        <input type="date" v-model="form.published_at" class="form-control" />
-                        <span class="error" v-if="form.errors.published_at">{{ form.errors.published_at }}</span>
-                    </div>
-                </div>
-
                 <div class="form-group">
-                    <label>Tóm tắt</label>
-                    <textarea v-model="form.excerpt" class="form-control" rows="3"></textarea>
-                    <span class="error" v-if="form.errors.excerpt">{{ form.errors.excerpt }}</span>
+                    <label>Tên danh mục <span class="required">*</span></label>
+                    <input type="text" v-model="form.name" class="form-control" required />
+                    <span class="error" v-if="form.errors.name">{{ form.errors.name }}</span>
                 </div>
-
-                <div class="form-group quill-container">
-                    <label>Nội dung</label>
-                    <QuillEditor ref="quillRef" v-model:content="form.content" contentType="html"
-                        :options="editorOptions" theme="snow" />
-                    <span class="error" v-if="form.errors.content">{{ form.errors.content }}</span>
-                </div>
-
                 <div class="form-group">
-                    <label>Hình ảnh đại diện</label>
-                    <div v-if="isEditing && currentImage" style="margin-bottom: 10px;">
-                        <img :src="'/' + currentImage" alt="Current" style="max-height: 100px; border-radius: 8px; object-fit: cover;" />
-                    </div>
-                    <input type="file" @input="form.image = $event.target.files[0]" class="form-control file-input"
-                        accept="image/*" />
-                    <span class="error" v-if="form.errors.image">{{ form.errors.image }}</span>
+                    <label>Đường dẫn tĩnh (Slug)</label>
+                    <input type="text" v-model="form.slug" class="form-control" />
+                    <span class="error" v-if="form.errors.slug">{{ form.errors.slug }}</span>
+                </div>
+                <div class="form-group">
+                    <label class="d-flex align-items-center" style="gap: 8px;">
+                        <input type="checkbox" v-model="form.is_active" />
+                        Hiển thị
+                    </label>
                 </div>
 
                 <div class="modal-footer">
@@ -578,40 +401,18 @@ watch(searchKeyword, (value) => {
     padding-bottom: 1.5rem;
 }
 
-.thumb {
-    width: 60px;
-    height: 40px;
-    border-radius: 8px;
-    background: #f1f5f9;
-    overflow: hidden;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.no-img {
-    font-size: 0.6rem;
-    color: #94a3b8;
-    font-weight: bold;
-}
-
-.bg-blue {
-    background: #e0f2fe;
-    color: #0284c7;
-}
-
-.bg-indigo {
-    background: #e0e7ff;
-    color: #4f46e5;
-}
-
 .bg-green {
+    background: #ecfdf5;
+    color: #059669;
+    padding: 0.25rem 0.75rem;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.bg-gray {
+    background: #f1f5f9;
+    color: #64748b;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -619,8 +420,6 @@ watch(searchKeyword, (value) => {
 }
 
 .badge {
-    background: #eff6ff;
-    color: #3b82f6;
     padding: 0.25rem 0.75rem;
     border-radius: 20px;
     font-size: 0.8rem;
@@ -811,20 +610,6 @@ watch(searchKeyword, (value) => {
     margin-bottom: 1.25rem;
 }
 
-.form-row {
-    display: flex;
-    gap: 1rem;
-    margin-bottom: 1.25rem;
-}
-
-.form-row .form-group {
-    margin-bottom: 0;
-}
-
-.flex-1 {
-    flex: 1;
-}
-
 .form-group label {
     display: block;
     font-size: 0.85rem;
@@ -846,8 +631,6 @@ watch(searchKeyword, (value) => {
     color: #0f172a;
     background: #ffffff;
     transition: all 0.2s;
-    font-family: inherit;
-    box-sizing: border-box;
 }
 
 .form-control:focus {
@@ -856,41 +639,10 @@ watch(searchKeyword, (value) => {
     box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
 }
 
-.file-input {
-    padding: 0.5rem;
-    font-size: 0.85rem;
-}
-
-textarea.form-control {
-    resize: vertical;
-}
-
 .error {
-    display: block;
     color: #ef4444;
     font-size: 0.8rem;
-    margin-top: 0.4rem;
-}
-
-/* Quill Custom Overrides */
-.quill-container :deep(.ql-container) {
-    min-height: 250px;
-    font-size: 0.95rem;
-    font-family: inherit;
-    border-bottom-left-radius: 10px;
-    border-bottom-right-radius: 10px;
-    border-color: #cbd5e1;
-    background: #ffffff;
-}
-
-.quill-container :deep(.ql-toolbar) {
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    border-color: #cbd5e1;
-    background: #f8fafc;
-}
-
-.quill-container :deep(.ql-editor) {
-    min-height: 250px;
+    margin-top: 0.25rem;
+    display: block;
 }
 </style>
