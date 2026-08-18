@@ -1,10 +1,6 @@
 <script setup>
-import GuestLayout from '@/Layouts/GuestLayout.vue';
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { Head, useForm } from '@inertiajs/vue3';
+import { Head, Link, useForm } from '@inertiajs/vue3';
+import { ref } from 'vue';
 
 defineProps({
     status: {
@@ -16,53 +12,343 @@ const form = useForm({
     email: '',
 });
 
+const isSubmitting = ref(false);
+
 const submit = () => {
-    form.post(route('password.email'));
+    isSubmitting.value = true;
+    form.post(route('password.email'), {
+        onFinish: () => {
+            isSubmitting.value = false;
+        }
+    });
 };
 </script>
 
 <template>
-    <GuestLayout>
-        <Head title="Forgot Password" />
-
-        <div class="mb-4 text-sm text-gray-600 dark:text-gray-400">
-            Forgot your password? No problem. Just let us know your email
-            address and we will email you a password reset link that will allow
-            you to choose a new one.
-        </div>
-
-        <div
-            v-if="status"
-            class="mb-4 text-sm font-medium text-green-600 dark:text-green-400"
-        >
-            {{ status }}
-        </div>
-
-        <form @submit.prevent="submit">
-            <div>
-                <InputLabel for="email" value="Email" />
-
-                <TextInput
-                    id="email"
-                    type="email"
-                    class="mt-1 block w-full"
-                    v-model="form.email"
-                    required
-                    autofocus
-                    autocomplete="username"
-                />
-
-                <InputError class="mt-2" :message="form.errors.email" />
+    <Head title="Pumi Admin - Quên mật khẩu" />
+    <div class="forgot-wrapper">
+        <div class="forgot-container">
+            <div class="forgot-left">
+                <div class="mascot-container">
+                    <img src="/assets/images/thumbs.png" alt="Pumi Mascot" class="mascot-img" />
+                </div>
             </div>
+            <div class="forgot-right">
+                <div class="form-wrapper">
+                    <h2>Quên mật khẩu?</h2>
+                    <p class="instruction-text">
+                        Đừng lo lắng! Hãy nhập địa chỉ email đã đăng ký của bạn. Chúng tôi sẽ gửi liên kết đặt lại mật khẩu mới qua email.
+                    </p>
+                    
+                    <div v-if="status" class="status-message">
+                        {{ status }}
+                    </div>
 
-            <div class="mt-4 flex items-center justify-end">
-                <PrimaryButton
-                    :class="{ 'opacity-25': form.processing }"
-                    :disabled="form.processing"
-                >
-                    Email Password Reset Link
-                </PrimaryButton>
+                    <form @submit.prevent="submit" class="forgot-form">
+                        <div class="input-group">
+                            <label for="email">Email</label>
+                            <div class="input-wrapper">
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+                                <input 
+                                    id="email" 
+                                    type="email" 
+                                    v-model="form.email" 
+                                    placeholder="admin@pumi.vn" 
+                                    required 
+                                    autofocus 
+                                    :class="{ 'has-error': form.errors.email }"
+                                />
+                            </div>
+                            <span v-if="form.errors.email" class="error-text">{{ form.errors.email }}</span>
+                        </div>
+
+                        <button type="submit" class="submit-btn" :disabled="form.processing">
+                            <span v-if="form.processing">Đang gửi liên kết...</span>
+                            <span v-else>Gửi liên kết đặt lại mật khẩu</span>
+                            <svg v-if="!form.processing" class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                        </button>
+                    </form>
+
+                    <div class="back-to-login">
+                        <Link :href="route('login')" class="login-link">
+                            <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            Quay lại trang đăng nhập
+                        </Link>
+                    </div>
+                </div>
             </div>
-        </form>
-    </GuestLayout>
+        </div>
+    </div>
 </template>
+
+<style scoped>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+.forgot-wrapper {
+    font-family: 'Inter', sans-serif;
+    min-height: 100vh;
+    background: #f0f4f8; 
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    box-sizing: border-box;
+    margin: -8px; /* Offset default body margin if any */
+}
+
+.forgot-container {
+    display: flex;
+    width: 100%;
+    max-width: 1000px;
+    min-height: 600px;
+    background: #ffffff;
+    border-radius: 24px;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
+    overflow: hidden;
+    position: relative;
+}
+
+.forgot-left {
+    flex: 1;
+    background: linear-gradient(135deg, #eff6ff 0%, #dbeafe 100%);
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.forgot-left::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 60%);
+    opacity: 0.5;
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.mascot-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+    flex: 1;
+}
+
+.mascot-img {
+    width: 280px;
+    max-width: 80%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 10px 30px rgba(30, 58, 138, 0.15));
+}
+
+.forgot-right {
+    flex: 1;
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #ffffff;
+}
+
+.form-wrapper {
+    width: 100%;
+    max-width: 380px;
+}
+
+.form-wrapper h2 {
+    font-size: 2rem;
+    font-weight: 700;
+    color: #0f172a;
+    margin-bottom: 0.5rem;
+}
+
+.instruction-text {
+    color: #64748b;
+    margin-bottom: 2.5rem;
+    font-size: 0.95rem;
+    line-height: 1.5;
+}
+
+.status-message {
+    background: #dcfce7;
+    color: #166534;
+    padding: 1rem;
+    border-radius: 12px;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.5rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.input-wrapper input {
+    width: 100%;
+    padding: 0.875rem 1rem 0.875rem 3rem;
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    font-size: 0.95rem;
+    color: #0f172a;
+    background: #f8fafc;
+    transition: all 0.3s ease;
+    outline: none;
+    font-family: inherit;
+    box-sizing: border-box;
+}
+
+.input-wrapper input:focus {
+    background: #ffffff;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+}
+
+.input-wrapper input.has-error {
+    border-color: #ef4444;
+    background: #fef2f2;
+}
+
+.input-wrapper input.has-error:focus {
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    width: 20px;
+    height: 20px;
+    color: #94a3b8;
+    transition: color 0.3s ease;
+}
+
+.input-wrapper input:focus + .input-icon,
+.input-wrapper input:focus ~ .input-icon {
+    color: #3b82f6;
+}
+
+.error-text {
+    display: block;
+    color: #ef4444;
+    font-size: 0.8rem;
+    margin-top: 0.5rem;
+}
+
+.submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+    color: white;
+    border: none;
+    border-radius: 12px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2);
+    font-family: inherit;
+    margin-bottom: 2rem;
+}
+
+.submit-btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 16px rgba(37, 99, 235, 0.3);
+}
+
+.submit-btn:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+}
+
+.btn-icon {
+    width: 20px;
+    height: 20px;
+    transition: transform 0.3s ease;
+}
+
+.submit-btn:hover:not(:disabled) .btn-icon {
+    transform: translateX(4px);
+}
+
+.back-to-login {
+    display: flex;
+    justify-content: center;
+}
+
+.login-link {
+    font-size: 0.875rem;
+    color: #64748b;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.login-link:hover {
+    color: #3b82f6;
+}
+
+.back-icon {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.2s ease;
+}
+
+.login-link:hover .back-icon {
+    transform: translateX(-4px);
+}
+
+@media (max-width: 768px) {
+    .forgot-container {
+        flex-direction: column;
+    }
+    
+    .forgot-left {
+        padding: 2rem;
+        flex: none;
+        height: 200px;
+    }
+    
+    .mascot-container {
+        height: 100%;
+    }
+    
+    .mascot-img {
+        width: 180px;
+    }
+    
+    .forgot-right {
+        padding: 2rem;
+    }
+}
+</style>
