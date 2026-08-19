@@ -80,7 +80,7 @@ const submit = () => {
                 <div class="form-group">
                     <label>Email nhận thông báo liên hệ</label>
                     <input type="text" v-model="form.mail_receive_address" class="form-control"
-                        placeholder="admin@example.com" />
+                        placeholder="example@gmail.com" />
                     <p class="text-sm text-gray mt-1">Địa chỉ email nhận thông báo khi có khách điền form. Nếu để trống
                         sẽ dùng tài khoản email gửi.</p>
                 </div>
