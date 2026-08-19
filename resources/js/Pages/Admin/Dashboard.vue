@@ -2,7 +2,6 @@
 import { Head, Link } from '@inertiajs/vue3';
 import AdminLayout from './Layouts/AdminLayout.vue';
 
-// Define layout so Inertia automatically wraps this page
 defineOptions({ layout: AdminLayout });
 
 defineProps({
@@ -22,8 +21,9 @@ defineProps({
 </script>
 
 <template>
+
     <Head title="Admin Dashboard" />
-    
+
     <div class="dashboard-header">
         <div>
             <h1 class="page-title">Tổng quan</h1>
@@ -33,7 +33,9 @@ defineProps({
     <div class="stats-grid">
         <div class="stat-card">
             <div class="stat-icon bg-blue-light">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2">
+                    <path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"></path>
+                </svg>
             </div>
             <div class="stat-info">
                 <h3>Sản phẩm</h3>
@@ -43,7 +45,10 @@ defineProps({
 
         <div class="stat-card">
             <div class="stat-icon bg-green-light">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
             </div>
             <div class="stat-info">
                 <h3>Bài viết</h3>
@@ -53,7 +58,11 @@ defineProps({
 
         <div class="stat-card">
             <div class="stat-icon bg-purple-light">
-                <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="#8b5cf6" stroke-width="2">
+                    <path
+                        d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z">
+                    </path>
+                </svg>
             </div>
             <div class="stat-info">
                 <h3>Liên hệ</h3>
@@ -179,12 +188,27 @@ defineProps({
     justify-content: center;
     margin-right: 1rem;
 }
-.stat-icon svg { width: 24px; height: 24px; }
 
-.bg-blue-light { background: #eff6ff; }
-.bg-green-light { background: #ecfdf5; }
-.bg-purple-light { background: #f5f3ff; }
-.bg-orange-light { background: #fffbeb; }
+.stat-icon svg {
+    width: 24px;
+    height: 24px;
+}
+
+.bg-blue-light {
+    background: #eff6ff;
+}
+
+.bg-green-light {
+    background: #ecfdf5;
+}
+
+.bg-purple-light {
+    background: #f5f3ff;
+}
+
+.bg-orange-light {
+    background: #fffbeb;
+}
 
 .stat-info {
     flex: 1;
@@ -215,11 +239,26 @@ defineProps({
     padding: 0.25rem 0.5rem;
     border-radius: 20px;
 }
-.stat-trend svg { width: 14px; height: 14px; }
 
-.stat-trend.positive { color: #10b981; background: #d1fae5; }
-.stat-trend.negative { color: #ef4444; background: #fee2e2; }
-.stat-trend.neutral { color: #64748b; background: #f1f5f9; }
+.stat-trend svg {
+    width: 14px;
+    height: 14px;
+}
+
+.stat-trend.positive {
+    color: #10b981;
+    background: #d1fae5;
+}
+
+.stat-trend.negative {
+    color: #ef4444;
+    background: #fee2e2;
+}
+
+.stat-trend.neutral {
+    color: #64748b;
+    background: #f1f5f9;
+}
 
 .recent-section {
     display: grid;
@@ -256,7 +295,10 @@ defineProps({
     font-weight: 500;
     cursor: pointer;
 }
-.btn-link:hover { text-decoration: underline; }
+
+.btn-link:hover {
+    text-decoration: underline;
+}
 
 .empty-state {
     padding: 4rem 2rem;

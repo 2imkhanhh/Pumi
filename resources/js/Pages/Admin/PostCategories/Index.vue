@@ -51,16 +51,16 @@ const submit = () => {
     if (isEditing.value) {
         form.post(route('admin.post-categories.update', form.id), {
             preserveScroll: true,
-            onSuccess: () => { 
-                isModalOpen.value = false; 
+            onSuccess: () => {
+                isModalOpen.value = false;
                 form.reset();
             }
         });
     } else {
         form.post(route('admin.post-categories.store'), {
             preserveScroll: true,
-            onSuccess: () => { 
-                isModalOpen.value = false; 
+            onSuccess: () => {
+                isModalOpen.value = false;
                 form.reset();
             }
         });
@@ -81,7 +81,7 @@ const generateSlug = (str) => {
     str = str.replace(/^\s+|\s+$/g, '');
     str = str.toLowerCase();
     const from = "àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ·/_,:;";
-    const to   = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyd------";
+    const to = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyd------";
     for (let i = 0, l = from.length; i < l; i++) {
         str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
     }
@@ -126,8 +126,6 @@ watch(searchKeyword, (value) => {
             Thêm danh mục
         </button>
     </div>
-
-
 
     <div class="card">
         <div class="table-toolbar">
@@ -180,7 +178,6 @@ watch(searchKeyword, (value) => {
             </table>
         </div>
 
-        <!-- Pagination Component -->
         <div class="pagination-wrap" v-if="categories.links && categories.links.length > 3">
             <div class="pagination">
                 <template v-for="(link, i) in categories.links" :key="i">
@@ -192,7 +189,6 @@ watch(searchKeyword, (value) => {
         </div>
     </div>
 
-    <!-- Slide-over Modal -->
     <div class="modal-overlay" :class="{ show: isModalOpen }" @click="isModalOpen = false"></div>
     <div class="center-modal" :class="{ show: isModalOpen }" style="max-width: 500px">
         <div class="modal-header">
@@ -235,7 +231,6 @@ watch(searchKeyword, (value) => {
 </template>
 
 <style scoped>
-/* Scoped Admin CSS for Premium Look */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -457,7 +452,6 @@ watch(searchKeyword, (value) => {
     color: #ef4444;
 }
 
-/* Pagination Premium */
 .pagination-wrap {
     padding: 1.5rem;
     border-top: 1px solid #f1f5f9;
@@ -506,7 +500,6 @@ watch(searchKeyword, (value) => {
     cursor: default;
 }
 
-/* Slide Modal */
 .modal-overlay {
     position: fixed;
     top: 0;
@@ -600,7 +593,6 @@ watch(searchKeyword, (value) => {
     gap: 1rem;
 }
 
-/* Form Styles */
 .form-group {
     margin-bottom: 1.25rem;
 }

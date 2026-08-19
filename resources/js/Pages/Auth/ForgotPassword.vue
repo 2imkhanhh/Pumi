@@ -25,6 +25,7 @@ const submit = () => {
 </script>
 
 <template>
+
     <Head title="Pumi Admin - Quên mật khẩu" />
     <div class="forgot-wrapper">
         <div class="forgot-container">
@@ -37,9 +38,10 @@ const submit = () => {
                 <div class="form-wrapper">
                     <h2>Quên mật khẩu?</h2>
                     <p class="instruction-text">
-                        Đừng lo lắng! Hãy nhập địa chỉ email đã đăng ký của bạn. Chúng tôi sẽ gửi liên kết đặt lại mật khẩu mới qua email.
+                        Đừng lo lắng! Hãy nhập địa chỉ email đã đăng ký của bạn. Chúng tôi sẽ gửi liên kết đặt lại mật
+                        khẩu mới qua email.
                     </p>
-                    
+
                     <div v-if="status" class="status-message">
                         {{ status }}
                     </div>
@@ -48,16 +50,15 @@ const submit = () => {
                         <div class="input-group">
                             <label for="email">Email</label>
                             <div class="input-wrapper">
-                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                <input 
-                                    id="email" 
-                                    type="email" 
-                                    v-model="form.email" 
-                                    placeholder="admin@pumi.vn" 
-                                    required 
-                                    autofocus 
-                                    :class="{ 'has-error': form.errors.email }"
-                                />
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                    </path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                                <input id="email" type="email" v-model="form.email" placeholder="admin@pumi.vn" required
+                                    autofocus :class="{ 'has-error': form.errors.email }" />
                             </div>
                             <span v-if="form.errors.email" class="error-text">{{ form.errors.email }}</span>
                         </div>
@@ -65,13 +66,21 @@ const submit = () => {
                         <button type="submit" class="submit-btn" :disabled="form.processing">
                             <span v-if="form.processing">Đang gửi liên kết...</span>
                             <span v-else>Gửi liên kết đặt lại mật khẩu</span>
-                            <svg v-if="!form.processing" class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            <svg v-if="!form.processing" class="btn-icon" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
                         </button>
                     </form>
 
                     <div class="back-to-login">
                         <Link :href="route('login')" class="login-link">
-                            <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                            <svg class="back-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="19" y1="12" x2="5" y2="12"></line>
+                                <polyline points="12 19 5 12 12 5"></polyline>
+                            </svg>
                             Quay lại trang đăng nhập
                         </Link>
                     </div>
@@ -87,13 +96,13 @@ const submit = () => {
 .forgot-wrapper {
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
-    background: #f0f4f8; 
+    background: #f0f4f8;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2rem;
     box-sizing: border-box;
-    margin: -8px; /* Offset default body margin if any */
+    margin: -8px;
 }
 
 .forgot-container {
@@ -126,14 +135,19 @@ const submit = () => {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 60%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 60%);
     opacity: 0.5;
     animation: rotate 20s linear infinite;
 }
 
 @keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .mascot-container {
@@ -246,8 +260,8 @@ const submit = () => {
     transition: color 0.3s ease;
 }
 
-.input-wrapper input:focus + .input-icon,
-.input-wrapper input:focus ~ .input-icon {
+.input-wrapper input:focus+.input-icon,
+.input-wrapper input:focus~.input-icon {
     color: #3b82f6;
 }
 
@@ -332,21 +346,21 @@ const submit = () => {
     .forgot-container {
         flex-direction: column;
     }
-    
+
     .forgot-left {
         padding: 2rem;
         flex: none;
         height: 200px;
     }
-    
+
     .mascot-container {
         height: 100%;
     }
-    
+
     .mascot-img {
         width: 180px;
     }
-    
+
     .forgot-right {
         padding: 2rem;
     }

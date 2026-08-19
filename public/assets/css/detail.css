@@ -1,31 +1,39 @@
-
-.detail #imgdt{
+.detail #imgdt {
     text-align: center;
 }
 
-.detail h2.title{
+.detail h2.title {
     color: #27397C;
     font-family: "Baloo 2", sans-serif;
     font-size: 48px;
     font-weight: 800;
 }
-.detail .desc img{
-    max-width: 100%!important;
+
+.detail .desc img {
+    max-width: 100% !important;
 }
-.detail .desc strong{
+
+.detail .desc strong {
     color: #27397C;
     font-size: 20px;
     font-weight: 600;
 }
-.detail .desc h4{
+
+.detail .desc h4 {
     margin-top: 20px;
     color: #4DC5C9;
     font-size: 20px;
     font-weight: 900;
 }
 
-.detail .btnlike{ margin-left: 20px; font-size: 48px;}
-.detail .slider-products{ padding: 20px; }
+.detail .btnlike {
+    margin-left: 20px;
+    font-size: 48px;
+}
+
+.detail .slider-products {
+    padding: 20px;
+}
 
 .icon-box-detail .mfu-icon {
     display: flex;
@@ -38,28 +46,30 @@
     margin: 0 auto;
 }
 
-.icon-box-detail .mfu-icon svg{
+.icon-box-detail .mfu-icon svg {
     width: 37.501px;
     height: 30px;
     flex-shrink: 0;
 }
 
-.icon-box-detail h4{
+.icon-box-detail h4 {
     color: #333;
     text-align: center;
     font-size: 14px;
     font-weight: 700;
 }
 
-.detail .parameter span{ background: #FFF8EF;}
+.detail .parameter span {
+    background: #FFF8EF;
+}
 
-.detail .price{
+.detail .price {
     color: #707070;
     font-size: 16px;
     font-weight: 700;
 }
 
-.detail .price .price-sales{
+.detail .price .price-sales {
     font-size: 20px;
     font-weight: 500;
     text-decoration: line-through;
@@ -83,7 +93,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 420px; overflow: hidden;
+    height: 420px;
+    overflow: hidden;
 }
 
 .detail .swiper-slide img {
@@ -125,7 +136,11 @@
 .detail .mySwiper .swiper-slide-thumb-active {
     opacity: 1;
 }
-.detail .mySwiper .swiper-slide{ height: 120px;}
+
+.detail .mySwiper .swiper-slide {
+    height: 120px;
+}
+
 .detail .mySwiper .swiper-slide img {
     display: block;
     max-width: 100%;
@@ -134,20 +149,21 @@
 }
 
 @media screen and (max-width: 768px) {
-    .detail h2.title{
+    .detail h2.title {
         font-size: 38px;
         line-height: 40px;
     }
-    .detail #imgdt{
+
+    .detail #imgdt {
         padding: 0 20px;
     }
 }
 
 .rating {
-    direction: rtl;              /* thuận tiện cho CSS hover/checked */
+    direction: rtl;
     display: inline-flex;
     gap: 6px;
-    font-size: 28px;            /* thay đổi kích thước sao ở đây */
+    font-size: 28px;
     user-select: none;
     align-items: center;
 }
@@ -160,28 +176,24 @@
 
 .rating label {
     cursor: pointer;
-    color: #ccc;                /* màu sao chưa chọn */
+    color: #ccc;
     transition: color .15s ease;
 }
 
-/* Hover effect: khi hover 1 sao -> fill sao đó và tất cả sao bên phải (do direction: rtl) */
 .rating label:hover,
-.rating label:hover ~ label {
+.rating label:hover~label {
     color: gold;
 }
 
-/* Checked: fill sao đã chọn và tất cả sao bên phải */
-.rating input:checked ~ label {
+.rating input:checked~label {
     color: gold;
 }
 
-/* Focus (keyboard) */
-.rating input:focus + label {
+.rating input:focus+label {
     outline: 2px solid #9ae;
     outline-offset: 4px;
 }
 
-/* nhỏ gọn: phần text hiện giá trị */
 .rating-value {
     margin-left: 12px;
     font-size: 18px;
@@ -189,7 +201,6 @@
     color: #333;
 }
 
-/* Make labels accessible: increase hit area */
 .rating label {
     padding: 6px 4px;
     line-height: 1;
@@ -200,7 +211,7 @@
         padding: 6px 0px;
     }
 
-    #rateModal .modal-header{
+    #rateModal .modal-header {
         padding: 8px 15px;
     }
 }

@@ -205,13 +205,6 @@
     margin-left: auto;
 }
 
-@media screen and (max-width: 768px) {
-    .banner-bgs h2 {
-        right: 10px;
-        font-size: 38px;
-    }
-}
-
 #carouselBanner .carousel-control-prev {
     width: unset;
 }
@@ -262,6 +255,11 @@
 }
 
 @media screen and (max-width: 768px) {
+    .banner-bgs h2 {
+        right: 10px;
+        font-size: 38px;
+    }
+
     .section-header.swidth {
         width: 100%;
     }
@@ -618,7 +616,6 @@
         color: #C05B3A;
     }
 }
-
 
 #sec_content img {
     max-width: 100% !important;
@@ -1416,7 +1413,6 @@
     font-size: 20px;
     font-weight: 500;
     line-height: 32px;
-    /* 160% */
 }
 
 #pro-guide .title {
@@ -1722,7 +1718,6 @@
     font-size: 40px;
 }
 
-
 @media screen and (max-width: 768px) {
     #partner {
         width: 96%;
@@ -1886,8 +1881,6 @@
     font-size: 40px;
 }
 
-
-
 @media screen and (max-width: 768px) {
     .testimonials {
         text-align: center;
@@ -1913,10 +1906,6 @@
 #follow_on img {
     margin: 0 10px;
 }
-
-/*--------------------------------------------------------------
-# Contact
---------------------------------------------------------------*/
 
 #contact {
     padding-top: 60px;
@@ -1965,11 +1954,9 @@
 #contact #frmContact input::placeholder {
     color: #37BEC9;
     opacity: 1;
-    /* Firefox */
 }
 
 #contact #frmContact input::-ms-input-placeholder {
-    /* Edge 12 -18 */
     color: #37BEC9;
 }
 
@@ -2078,6 +2065,18 @@
         padding: 10px;
         margin: 0 auto;
     }
+
+    #footer #blogo {
+        text-align: center;
+    }
+
+    #bmenu {
+        text-align: right;
+    }
+
+    #bsocial {
+        margin-top: 15px;
+    }
 }
 
 @media screen and (max-width: 950px) {
@@ -2092,7 +2091,6 @@
         background: #fff;
         padding: 20px;
     }
-
 }
 
 #newsletter {
@@ -2108,8 +2106,6 @@
     background: none;
     border: none;
 }
-
-@media screen and (max-width: 768px) {}
 
 #hotline a {
     font-size: 18px;
@@ -2180,20 +2176,6 @@
 
 #footer #copyright_text {
     color: #888;
-}
-
-@media screen and (max-width: 768px) {
-    #footer #blogo {
-        text-align: center;
-    }
-
-    #bmenu {
-        text-align: right;
-    }
-
-    #bsocial {
-        margin-top: 15px;
-    }
 }
 
 .news-home {

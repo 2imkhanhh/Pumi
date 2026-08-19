@@ -1,21 +1,6 @@
-/* ==========================================================================
-   PUMI — Lớp tinh chỉnh
-   --------------------------------------------------------------------------
-   Nạp SAU css.css, theme.css và detail.css.
-   Nguyên tắc: giữ nguyên bảng màu, cấu trúc HTML và bố cục.
-   Chỉ chỉnh: tỉ lệ chữ, khả năng đáp ứng mọi bề rộng màn hình, khoảng cách,
-   trạng thái hover/focus và chất lượng hiển thị ảnh.
-   Muốn quay lại giao diện cũ: xoá thẻ <link> tới file này.
-   ========================================================================== */
-
-/* --------------------------------------------------------------------------
-   1. Biến — lấy đúng các mã màu đang dùng trong theme.css
-   -------------------------------------------------------------------------- */
 :root {
     --pu-cyan: #37BEC9;
-    /* xanh ngọc thương hiệu */
     --pu-navy: #1B3F94;
-    /* xanh đậm tiêu đề */
     --pu-blue: #2E5FD0;
     --pu-sky: #E8F6FB;
     --pu-ink: #333333;
@@ -30,9 +15,6 @@
     --pu-ease-out: cubic-bezier(.16, 1, .3, 1);
 }
 
-/* --------------------------------------------------------------------------
-   2. Nền tảng
-   -------------------------------------------------------------------------- */
 html {
     scroll-behavior: smooth;
     -webkit-text-size-adjust: 100%;
@@ -44,11 +26,6 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* Chặn cuộn ngang.
-   AOS dịch phần tử sang ngang 100px trước khi chạy hiệu ứng (fade-left /
-   fade-right). Ở trang Sản phẩm, các ô sản phẩm vì thế thò ra ngoài khung tới
-   88px và sinh thanh cuộn ngang cho tới khi hiệu ứng chạy xong.
-   Đặt overflow-x trên CẢ html lẫn body — chỉ đặt ở body thì html vẫn cuộn. */
 html,
 body {
     overflow-x: clip;
@@ -65,7 +42,6 @@ h6 {
     line-height: 1.2;
 }
 
-/* Ảnh trong nội dung không bao giờ tràn khung */
 main img,
 footer img,
 section img {
@@ -1993,11 +1969,12 @@ textarea:focus-visible {
     padding-bottom: 15px;
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
-    scrollbar-width: none; /* Firefox */
+    scrollbar-width: none;
 }
 
 .post-categories-filter::-webkit-scrollbar {
-    display: none; /* Chrome/Safari */
+    display: none;
+    /* Chrome/Safari */
 }
 
 .category-pill {

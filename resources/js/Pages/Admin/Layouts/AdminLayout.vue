@@ -60,7 +60,7 @@ body.admin-mode {
 
 .main-content {
     flex: 1;
-    margin-left: 260px; /* Width of sidebar */
+    margin-left: 260px;
     display: flex;
     flex-direction: column;
 }

@@ -33,6 +33,7 @@ const submit = () => {
 </script>
 
 <template>
+
     <Head title="Pumi Admin - Đăng nhập" />
     <div class="login-wrapper">
         <div class="login-container">
@@ -45,7 +46,7 @@ const submit = () => {
                 <div class="form-wrapper">
                     <h2>Đăng nhập</h2>
                     <p class="welcome-text">Chào mừng trở lại! Vui lòng nhập thông tin của bạn.</p>
-                    
+
                     <div v-if="status" class="status-message">
                         {{ status }}
                     </div>
@@ -54,16 +55,15 @@ const submit = () => {
                         <div class="input-group">
                             <label for="email">Email</label>
                             <div class="input-wrapper">
-                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
-                                <input 
-                                    id="email" 
-                                    type="email" 
-                                    v-model="form.email" 
-                                    placeholder="admin@pumi.vn" 
-                                    required 
-                                    autofocus 
-                                    :class="{ 'has-error': form.errors.email }"
-                                />
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path
+                                        d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z">
+                                    </path>
+                                    <polyline points="22,6 12,13 2,6"></polyline>
+                                </svg>
+                                <input id="email" type="email" v-model="form.email" placeholder="admin@pumi.vn" required
+                                    autofocus :class="{ 'has-error': form.errors.email }" />
                             </div>
                             <span v-if="form.errors.email" class="error-text">{{ form.errors.email }}</span>
                         </div>
@@ -71,18 +71,27 @@ const submit = () => {
                         <div class="input-group">
                             <label for="password">Mật khẩu</label>
                             <div class="input-wrapper">
-                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-                                <input 
-                                    id="password" 
-                                    :type="showPassword ? 'text' : 'password'" 
-                                    v-model="form.password" 
-                                    placeholder="••••••••" 
-                                    required 
-                                    :class="{ 'has-error': form.errors.password }"
-                                />
-                                <button type="button" class="toggle-password" @click="showPassword = !showPassword" tabindex="-1">
-                                    <svg v-if="!showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path><circle cx="12" cy="12" r="3"></circle></svg>
-                                    <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24"></path><line x1="1" y1="1" x2="23" y2="23"></line></svg>
+                                <svg class="input-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                                </svg>
+                                <input id="password" :type="showPassword ? 'text' : 'password'" v-model="form.password"
+                                    placeholder="••••••••" required :class="{ 'has-error': form.errors.password }" />
+                                <button type="button" class="toggle-password" @click="showPassword = !showPassword"
+                                    tabindex="-1">
+                                    <svg v-if="!showPassword" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                        stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                                        <circle cx="12" cy="12" r="3"></circle>
+                                    </svg>
+                                    <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                        stroke-linecap="round" stroke-linejoin="round">
+                                        <path
+                                            d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19m-6.72-1.07a3 3 0 1 1-4.24-4.24">
+                                        </path>
+                                        <line x1="1" y1="1" x2="23" y2="23"></line>
+                                    </svg>
                                 </button>
                             </div>
                             <span v-if="form.errors.password" class="error-text">{{ form.errors.password }}</span>
@@ -97,7 +106,11 @@ const submit = () => {
                         <button type="submit" class="submit-btn" :disabled="form.processing">
                             <span v-if="form.processing">Đang xử lý...</span>
                             <span v-else>Đăng nhập</span>
-                            <svg v-if="!form.processing" class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+                            <svg v-if="!form.processing" class="btn-icon" viewBox="0 0 24 24" fill="none"
+                                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <line x1="5" y1="12" x2="19" y2="12"></line>
+                                <polyline points="12 5 19 12 12 19"></polyline>
+                            </svg>
                         </button>
                     </form>
                 </div>
@@ -112,13 +125,13 @@ const submit = () => {
 .login-wrapper {
     font-family: 'Inter', sans-serif;
     min-height: 100vh;
-    background: #f0f4f8; 
+    background: #f0f4f8;
     display: flex;
     align-items: center;
     justify-content: center;
     padding: 2rem;
     box-sizing: border-box;
-    margin: -8px; /* Offset default body margin if any */
+    margin: -8px;
 }
 
 .login-container {
@@ -151,14 +164,19 @@ const submit = () => {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(255,255,255,0) 60%);
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.8) 0%, rgba(255, 255, 255, 0) 60%);
     opacity: 0.5;
     animation: rotate 20s linear infinite;
 }
 
 @keyframes rotate {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
 }
 
 .mascot-container {
@@ -270,8 +288,8 @@ const submit = () => {
     transition: color 0.3s ease;
 }
 
-.input-wrapper input:focus + .input-icon,
-.input-wrapper input:focus ~ .input-icon {
+.input-wrapper input:focus+.input-icon,
+.input-wrapper input:focus~.input-icon {
     color: #3b82f6;
 }
 
@@ -288,9 +306,11 @@ const submit = () => {
     justify-content: center;
     transition: color 0.2s ease;
 }
+
 .toggle-password:hover {
     color: #475569;
 }
+
 .toggle-password svg {
     width: 18px;
     height: 18px;
@@ -366,17 +386,17 @@ const submit = () => {
     .login-container {
         flex-direction: column;
     }
-    
+
     .login-left {
         padding: 2rem;
         flex: none;
         height: 200px;
     }
-    
+
     .graphic {
         display: none;
     }
-    
+
     .login-right {
         padding: 2rem;
     }

@@ -110,7 +110,6 @@ const openCreateModal = () => {
     form.image = null;
     form._method = 'POST';
     const now = new Date();
-    // format to YYYY-MM-DD
     form.published_at = now.toISOString().split('T')[0];
     isModalOpen.value = true;
 };
@@ -140,16 +139,16 @@ const submit = () => {
     if (isEditing.value) {
         form.post(route('admin.posts.update', form.id), {
             preserveScroll: true,
-            onSuccess: () => { 
-                isModalOpen.value = false; 
+            onSuccess: () => {
+                isModalOpen.value = false;
                 form.reset();
             }
         });
     } else {
         form.post(route('admin.posts.store'), {
             preserveScroll: true,
-            onSuccess: () => { 
-                isModalOpen.value = false; 
+            onSuccess: () => {
+                isModalOpen.value = false;
                 form.reset();
             }
         });
@@ -170,7 +169,7 @@ const generateSlug = (str) => {
     str = str.replace(/^\s+|\s+$/g, '');
     str = str.toLowerCase();
     const from = "àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ·/_,:;";
-    const to   = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyd------";
+    const to = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyd------";
     for (let i = 0, l = from.length; i < l; i++) {
         str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
     }
@@ -181,13 +180,11 @@ const generateSlug = (str) => {
 };
 
 watch(() => form.title, (newTitle) => {
-    // Chỉ tự động tạo khi đang Thêm mới
     if (!isEditing.value) {
         form.slug = generateSlug(newTitle);
     }
 });
 
-// Search handling with debounce
 let searchTimeout = null;
 watch(searchKeyword, (value) => {
     clearTimeout(searchTimeout);
@@ -217,8 +214,6 @@ watch(searchKeyword, (value) => {
         </button>
     </div>
 
-
-
     <div class="card">
         <div class="table-toolbar">
             <input type="text" v-model="searchKeyword" class="form-control search-input"
@@ -247,10 +242,11 @@ watch(searchKeyword, (value) => {
                                 <div v-else class="no-img">No IMG</div>
                             </div>
                         </td>
-                        <td style="max-width: 250px; white-space: normal; word-break: break-word;" class="font-medium text-dark">{{ post.title }}</td>
+                        <td style="max-width: 250px; white-space: normal; word-break: break-word;"
+                            class="font-medium text-dark">{{ post.title }}</td>
                         <td style="white-space: nowrap;">
                             <span v-if="post.type === 'news'">
-                                {{ categories.find(c => c.id === post.category_id)?.name || 'Chưa phân loại' }}
+                                {{categories.find(c => c.id === post.category_id)?.name || 'Chưa phân loại'}}
                             </span>
                             <span v-else class="text-gray">-</span>
                         </td>
@@ -288,7 +284,6 @@ watch(searchKeyword, (value) => {
             </table>
         </div>
 
-        <!-- Pagination Component -->
         <div class="pagination-wrap" v-if="posts.links && posts.links.length > 3">
             <div class="pagination">
                 <template v-for="(link, i) in posts.links" :key="i">
@@ -300,7 +295,6 @@ watch(searchKeyword, (value) => {
         </div>
     </div>
 
-    <!-- Slide-over Modal -->
     <div class="modal-overlay" :class="{ show: isModalOpen }" @click="isModalOpen = false"></div>
     <div class="center-modal" :class="{ show: isModalOpen }">
         <div class="modal-header">
@@ -339,25 +333,27 @@ watch(searchKeyword, (value) => {
                         <span class="error" v-if="form.errors.category_id">{{ form.errors.category_id }}</span>
                     </div>
                     <div class="form-group flex-1" v-else>
-                        <!-- Empty placeholder for flex layout -->
                     </div>
                 </div>
 
                 <div class="form-row" v-if="form.type === 'recruitment'">
                     <div class="form-group flex-1">
                         <label>Loại công việc</label>
-                        <input type="text" v-model="form.job_type" placeholder="VD: Toàn thời gian" class="form-control" />
+                        <input type="text" v-model="form.job_type" placeholder="VD: Toàn thời gian"
+                            class="form-control" />
                     </div>
                     <div class="form-group flex-1">
                         <label>Địa điểm</label>
-                        <input type="text" v-model="form.location" placeholder="VD: Thành phố Sơn La" class="form-control" />
+                        <input type="text" v-model="form.location" placeholder="VD: Thành phố Sơn La"
+                            class="form-control" />
                     </div>
                 </div>
 
                 <div class="form-row" v-if="form.type === 'recruitment'">
                     <div class="form-group flex-1">
                         <label>Mức lương</label>
-                        <input type="text" v-model="form.salary" placeholder="VD: Thỏa thuận + thưởng" class="form-control" />
+                        <input type="text" v-model="form.salary" placeholder="VD: Thỏa thuận + thưởng"
+                            class="form-control" />
                     </div>
                     <div class="form-group flex-1">
                         <label>Hạn nộp hồ sơ</label>
@@ -394,7 +390,8 @@ watch(searchKeyword, (value) => {
                 <div class="form-group">
                     <label>Hình ảnh đại diện</label>
                     <div v-if="isEditing && currentImage" style="margin-bottom: 10px;">
-                        <img :src="'/' + currentImage" alt="Current" style="max-height: 100px; border-radius: 8px; object-fit: cover;" />
+                        <img :src="'/' + currentImage" alt="Current"
+                            style="max-height: 100px; border-radius: 8px; object-fit: cover;" />
                     </div>
                     <input type="file" @input="form.image = $event.target.files[0]" class="form-control file-input"
                         accept="image/*" />
@@ -413,7 +410,6 @@ watch(searchKeyword, (value) => {
 </template>
 
 <style scoped>
-/* Scoped Admin CSS for Premium Look */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -868,7 +864,6 @@ textarea.form-control {
     margin-top: 0.4rem;
 }
 
-/* Quill Custom Overrides */
 .quill-container :deep(.ql-container) {
     min-height: 250px;
     font-size: 0.95rem;

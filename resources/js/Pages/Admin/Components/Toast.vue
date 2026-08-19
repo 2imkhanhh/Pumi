@@ -23,7 +23,6 @@ const removeToast = (id) => {
     }, 400);
 };
 
-// Listen for Inertia navigation finish events to pick up flash messages
 const checkFlash = () => {
     const page = usePage();
     const flash = page.props.flash;
@@ -35,11 +34,8 @@ const checkFlash = () => {
 let removeFinishListener = null;
 
 onMounted(() => {
-    // Check on initial mount
     checkFlash();
-    // Listen for every Inertia navigation finish
     removeFinishListener = router.on('finish', () => {
-        // Small delay to ensure props are updated
         setTimeout(checkFlash, 50);
     });
 });
@@ -48,33 +44,28 @@ onUnmounted(() => {
     if (removeFinishListener) removeFinishListener();
 });
 
-// Expose addToast for external use
 defineExpose({ addToast });
 </script>
 
 <template>
     <div class="toast-container">
         <TransitionGroup name="toast">
-            <div
-                v-for="toast in toasts"
-                :key="toast.id"
-                class="toast-item"
-                :class="[toast.type, { 'toast-visible': toast.visible }]"
-            >
+            <div v-for="toast in toasts" :key="toast.id" class="toast-item"
+                :class="[toast.type, { 'toast-visible': toast.visible }]">
                 <div class="toast-icon">
-                    <!-- Success icon -->
-                    <svg v-if="toast.type === 'success'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg v-if="toast.type === 'success'" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
                         <polyline points="22 4 12 14.01 9 11.01"></polyline>
                     </svg>
-                    <!-- Error icon -->
-                    <svg v-else-if="toast.type === 'error'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg v-else-if="toast.type === 'error'" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                        stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="15" y1="9" x2="9" y2="15"></line>
                         <line x1="9" y1="9" x2="15" y2="15"></line>
                     </svg>
-                    <!-- Info icon -->
-                    <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                    <svg v-else viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"
+                        stroke-linecap="round" stroke-linejoin="round">
                         <circle cx="12" cy="12" r="10"></circle>
                         <line x1="12" y1="16" x2="12" y2="12"></line>
                         <line x1="12" y1="8" x2="12.01" y2="8"></line>
@@ -82,7 +73,8 @@ defineExpose({ addToast });
                 </div>
                 <span class="toast-message">{{ toast.message }}</span>
                 <button class="toast-close" @click="removeToast(toast.id)">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
                         <line x1="6" y1="6" x2="18" y2="18"></line>
                     </svg>
@@ -199,13 +191,26 @@ defineExpose({ addToast });
     animation: progress 5s linear forwards;
 }
 
-.toast-progress.success { background: linear-gradient(90deg, #10b981, #059669); }
-.toast-progress.error { background: linear-gradient(90deg, #f87171, #dc2626); }
-.toast-progress.info { background: linear-gradient(90deg, #60a5fa, #3b82f6); }
+.toast-progress.success {
+    background: linear-gradient(90deg, #10b981, #059669);
+}
+
+.toast-progress.error {
+    background: linear-gradient(90deg, #f87171, #dc2626);
+}
+
+.toast-progress.info {
+    background: linear-gradient(90deg, #60a5fa, #3b82f6);
+}
 
 @keyframes progress {
-    from { width: 100%; }
-    to { width: 0%; }
+    from {
+        width: 100%;
+    }
+
+    to {
+        width: 0%;
+    }
 }
 
 /* Transition group animations */

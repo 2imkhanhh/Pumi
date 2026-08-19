@@ -49,7 +49,7 @@ const openCreateModal = () => {
     form.existing_gallery = [];
     form.featured_image = '';
     previewImages.value = [];
-    if(fileInput.value) fileInput.value.value = '';
+    if (fileInput.value) fileInput.value.value = '';
     isModalOpen.value = true;
 };
 
@@ -78,7 +78,7 @@ const openEditModal = (product) => {
     form.existing_gallery = [...gal];
     form.featured_image = product.image || '';
     previewImages.value = [];
-    if(fileInput.value) fileInput.value.value = '';
+    if (fileInput.value) fileInput.value.value = '';
     form._method = 'PUT'; // Use PUT for updating with form data spoofing
     isModalOpen.value = true;
 };
@@ -86,7 +86,7 @@ const openEditModal = (product) => {
 const handleFileSelect = (event) => {
     const files = Array.from(event.target.files);
     form.images = [...form.images, ...files];
-    
+
     files.forEach(file => {
         const reader = new FileReader();
         reader.onload = (e) => {
@@ -147,13 +147,13 @@ const generateSlug = (str) => {
     str = str.replace(/^\s+|\s+$/g, '');
     str = str.toLowerCase();
     const from = "àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ·/_,:;";
-    const to   = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyd------";
+    const to = "aaaaaaaaaaaaaaaaaeeeeeeeeeeeiiiiiooooooooooooooooouuuuuuuuuuuyyyyyd------";
     for (let i = 0, l = from.length; i < l; i++) {
         str = str.replace(new RegExp(from.charAt(i), 'g'), to.charAt(i));
     }
     str = str.replace(/[^a-z0-9 -]/g, '')
-             .replace(/\s+/g, '-')
-             .replace(/-+/g, '-');
+        .replace(/\s+/g, '-')
+        .replace(/-+/g, '-');
     return str;
 };
 
@@ -176,6 +176,7 @@ watch(searchKeyword, (value) => {
 </script>
 
 <template>
+
     <Head title="Quản lý Sản phẩm" />
 
     <div class="page-header">
@@ -183,12 +184,13 @@ watch(searchKeyword, (value) => {
             <h1 class="title">Sản phẩm</h1>
         </div>
         <button @click="openCreateModal" class="btn-primary">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
             Thêm sản phẩm
         </button>
     </div>
-
-
 
     <div class="card">
         <div class="table-toolbar">
@@ -232,10 +234,18 @@ watch(searchKeyword, (value) => {
                         <td class="text-right">
                             <div class="actions">
                                 <button @click="openEditModal(product)" class="btn-icon text-blue" title="Sửa">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
+                                        <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
+                                    </svg>
                                 </button>
                                 <button @click="deleteProduct(product.id)" class="btn-icon text-red" title="Xóa">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg>
                                 </button>
                             </div>
                         </td>
@@ -246,18 +256,13 @@ watch(searchKeyword, (value) => {
                 </tbody>
             </table>
         </div>
-        
+
         <!-- Pagination Component placeholder -->
         <div class="pagination-wrap" v-if="products.links && products.links.length > 3">
             <div class="pagination">
                 <template v-for="(link, i) in products.links" :key="i">
-                    <Link 
-                        v-if="link.url" 
-                        :href="link.url" 
-                        class="page-link" 
-                        :class="{ active: link.active }"
-                        v-html="link.label"
-                    ></Link>
+                    <Link v-if="link.url" :href="link.url" class="page-link" :class="{ active: link.active }"
+                        v-html="link.label"></Link>
                     <span v-else class="page-link disabled" v-html="link.label"></span>
                 </template>
             </div>
@@ -270,7 +275,10 @@ watch(searchKeyword, (value) => {
         <div class="modal-header">
             <h2>{{ isEditing ? 'Cập nhật Sản phẩm' : 'Thêm Sản phẩm mới' }}</h2>
             <button class="close-btn" @click="isModalOpen = false">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <line x1="18" y1="6" x2="6" y2="18"></line>
+                    <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
             </button>
         </div>
         <div class="modal-body">
@@ -304,79 +312,114 @@ watch(searchKeyword, (value) => {
 
                 <div class="form-group">
                     <label>Mô tả chi tiết (Thành phần, đối tượng sử dụng...)</label>
-                    <textarea v-model="form.description" class="form-control" rows="4" placeholder="Nhập mô tả chi tiết của sản phẩm..."></textarea>
+                    <textarea v-model="form.description" class="form-control" rows="4"
+                        placeholder="Nhập mô tả chi tiết của sản phẩm..."></textarea>
                     <span class="error" v-if="form.errors.description">{{ form.errors.description }}</span>
                 </div>
 
                 <h3 class="form-section-title">Công dụng</h3>
                 <div class="form-group">
                     <label>Công dụng 1</label>
-                    <input type="text" v-model="form.use_1" class="form-control" placeholder="Ví dụ: Dùng để tắm, gội hàng ngày cho bé..." />
+                    <input type="text" v-model="form.use_1" class="form-control"
+                        placeholder="Ví dụ: Dùng để tắm, gội hàng ngày cho bé..." />
                     <span class="error" v-if="form.errors.use_1">{{ form.errors.use_1 }}</span>
                 </div>
                 <div class="form-group">
                     <label>Công dụng 2</label>
-                    <input type="text" v-model="form.use_2" class="form-control" placeholder="Ví dụ: Góp phần làm dịu mát da..." />
+                    <input type="text" v-model="form.use_2" class="form-control"
+                        placeholder="Ví dụ: Góp phần làm dịu mát da..." />
                     <span class="error" v-if="form.errors.use_2">{{ form.errors.use_2 }}</span>
                 </div>
                 <div class="form-group">
                     <label>Công dụng 3</label>
-                    <input type="text" v-model="form.use_3" class="form-control" placeholder="Ví dụ: Giúp duy trì độ ẩm tự nhiên..." />
+                    <input type="text" v-model="form.use_3" class="form-control"
+                        placeholder="Ví dụ: Giúp duy trì độ ẩm tự nhiên..." />
                     <span class="error" v-if="form.errors.use_3">{{ form.errors.use_3 }}</span>
                 </div>
 
                 <h3 class="form-section-title">Hướng dẫn & Lưu ý</h3>
                 <div class="form-group">
                     <label>Hướng dẫn sử dụng</label>
-                    <textarea v-model="form.usage_guide" class="form-control" rows="3" placeholder="Nhập hướng dẫn sử dụng..."></textarea>
+                    <textarea v-model="form.usage_guide" class="form-control" rows="3"
+                        placeholder="Nhập hướng dẫn sử dụng..."></textarea>
                     <span class="error" v-if="form.errors.usage_guide">{{ form.errors.usage_guide }}</span>
                 </div>
 
                 <div class="form-group">
                     <label>Lưu ý</label>
-                    <textarea v-model="form.notice" class="form-control" rows="2" placeholder="Nhập các lưu ý khi sử dụng..."></textarea>
+                    <textarea v-model="form.notice" class="form-control" rows="2"
+                        placeholder="Nhập các lưu ý khi sử dụng..."></textarea>
                     <span class="error" v-if="form.errors.notice">{{ form.errors.notice }}</span>
                 </div>
 
                 <div class="form-group">
                     <label>Bảo quản</label>
-                    <textarea v-model="form.preservation" class="form-control" rows="2" placeholder="Nhập hướng dẫn bảo quản..."></textarea>
+                    <textarea v-model="form.preservation" class="form-control" rows="2"
+                        placeholder="Nhập hướng dẫn bảo quản..."></textarea>
                     <span class="error" v-if="form.errors.preservation">{{ form.errors.preservation }}</span>
                 </div>
 
                 <div class="form-group">
                     <label>Thư viện hình ảnh</label>
-                    <input type="file" ref="fileInput" @change="handleFileSelect" class="form-control file-input" accept="image/*" multiple />
+                    <input type="file" ref="fileInput" @change="handleFileSelect" class="form-control file-input"
+                        accept="image/*" multiple />
                     <span class="error" v-if="form.errors.images">{{ form.errors.images }}</span>
-                    
+
                     <div class="gallery-preview">
                         <!-- Existing Images -->
-                        <div v-for="(img, idx) in form.existing_gallery" :key="'ex-'+idx" class="gallery-item" :class="{ 'is-featured': form.featured_image === img || form.featured_image === '/' + img }">
+                        <div v-for="(img, idx) in form.existing_gallery" :key="'ex-' + idx" class="gallery-item"
+                            :class="{ 'is-featured': form.featured_image === img || form.featured_image === '/' + img }">
                             <img :src="'/' + img" alt="Preview" />
                             <div class="gallery-actions">
-                                <button type="button" class="action-btn star-btn" @click="setFeaturedImage(img)" title="Đặt làm ảnh bìa">
-                                    <svg viewBox="0 0 24 24" :fill="form.featured_image === img || form.featured_image === '/' + img ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <button type="button" class="action-btn star-btn" @click="setFeaturedImage(img)"
+                                    title="Đặt làm ảnh bìa">
+                                    <svg viewBox="0 0 24 24"
+                                        :fill="form.featured_image === img || form.featured_image === '/' + img ? 'currentColor' : 'none'"
+                                        stroke="currentColor" stroke-width="2">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
                                 </button>
-                                <button type="button" class="action-btn trash-btn" @click="removeExistingImage(idx)" title="Xóa ảnh">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                <button type="button" class="action-btn trash-btn" @click="removeExistingImage(idx)"
+                                    title="Xóa ảnh">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
 
                         <!-- New Images -->
-                        <div v-for="(preview, idx) in previewImages" :key="'new-'+idx" class="gallery-item" :class="{ 'is-featured': form.featured_image === preview.file.name }">
+                        <div v-for="(preview, idx) in previewImages" :key="'new-' + idx" class="gallery-item"
+                            :class="{ 'is-featured': form.featured_image === preview.file.name }">
                             <img :src="preview.url" alt="Preview" />
                             <div class="gallery-actions">
-                                <button type="button" class="action-btn star-btn" @click="setFeaturedImage(preview.file.name, true)" title="Đặt làm ảnh bìa">
-                                    <svg viewBox="0 0 24 24" :fill="form.featured_image === preview.file.name ? 'currentColor' : 'none'" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <button type="button" class="action-btn star-btn"
+                                    @click="setFeaturedImage(preview.file.name, true)" title="Đặt làm ảnh bìa">
+                                    <svg viewBox="0 0 24 24"
+                                        :fill="form.featured_image === preview.file.name ? 'currentColor' : 'none'"
+                                        stroke="currentColor" stroke-width="2">
+                                        <polygon
+                                            points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                        </polygon>
+                                    </svg>
                                 </button>
-                                <button type="button" class="action-btn trash-btn" @click="removeNewImage(idx)" title="Xóa ảnh">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                <button type="button" class="action-btn trash-btn" @click="removeNewImage(idx)"
+                                    title="Xóa ảnh">
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg>
                                 </button>
                             </div>
                         </div>
                     </div>
-
                 </div>
 
                 <div class="form-group switch-group">
@@ -407,7 +450,6 @@ watch(searchKeyword, (value) => {
 </template>
 
 <style scoped>
-/* Scoped Admin CSS for Premium Look */
 .page-header {
     display: flex;
     justify-content: space-between;
@@ -457,7 +499,11 @@ watch(searchKeyword, (value) => {
     background: #2563eb;
     transform: translateY(-1px);
 }
-.btn-primary svg { width: 18px; height: 18px; }
+
+.btn-primary svg {
+    width: 18px;
+    height: 18px;
+}
 
 .btn-default {
     background: #f1f5f9;
@@ -470,7 +516,10 @@ watch(searchKeyword, (value) => {
     cursor: pointer;
     transition: all 0.2s;
 }
-.btn-default:hover { background: #e2e8f0; }
+
+.btn-default:hover {
+    background: #e2e8f0;
+}
 
 .alert-success {
     background: #ecfdf5;
@@ -485,7 +534,11 @@ watch(searchKeyword, (value) => {
     font-size: 0.9rem;
     border: 1px solid #a7f3d0;
 }
-.alert-success svg { width: 20px; height: 20px; }
+
+.alert-success svg {
+    width: 20px;
+    height: 20px;
+}
 
 .card {
     background: #ffffff;
@@ -533,15 +586,38 @@ watch(searchKeyword, (value) => {
     color: #475569;
 }
 
-.table tr:last-child td { border-bottom: none; }
-.table tr:hover { background: #f8fafc; }
+.table tr:last-child td {
+    border-bottom: none;
+}
 
-.text-right { text-align: right; }
-.text-center { text-align: center; }
-.font-medium { font-weight: 500; }
-.text-dark { color: #0f172a; }
-.text-gray { color: #94a3b8; }
-.py-4 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.table tr:hover {
+    background: #f8fafc;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.text-dark {
+    color: #0f172a;
+}
+
+.text-gray {
+    color: #94a3b8;
+}
+
+.py-4 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
 
 .thumb {
     width: 40px;
@@ -553,8 +629,18 @@ watch(searchKeyword, (value) => {
     align-items: center;
     justify-content: center;
 }
-.thumb img { width: 100%; height: 100%; object-fit: cover; }
-.no-img { font-size: 0.6rem; color: #94a3b8; font-weight: bold; }
+
+.thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.no-img {
+    font-size: 0.6rem;
+    color: #94a3b8;
+    font-weight: bold;
+}
 
 .badge {
     background: #eff6ff;
@@ -572,8 +658,14 @@ watch(searchKeyword, (value) => {
     border-radius: 50%;
     margin-right: 6px;
 }
-.status-dot.active { background: #10b981; }
-.status-dot.inactive { background: #cbd5e1; }
+
+.status-dot.active {
+    background: #10b981;
+}
+
+.status-dot.inactive {
+    background: #cbd5e1;
+}
 
 .actions {
     display: flex;
@@ -593,23 +685,78 @@ watch(searchKeyword, (value) => {
     align-items: center;
     justify-content: center;
 }
-.btn-icon svg { width: 18px; height: 18px; }
-.btn-icon:hover { background: #f1f5f9; }
-.text-blue { color: #3b82f6; }
-.text-red { color: #ef4444; }
 
-/* Pagination Premium */
-.pagination-wrap { padding: 1.5rem; border-top: 1px solid #f1f5f9; display: flex; justify-content: center; }
-.pagination { display: inline-flex; align-items: center; gap: 0.5rem; }
-.page-link { display: flex; align-items: center; justify-content: center; min-width: 36px; height: 36px; border-radius: 50%; background: transparent; border: none; color: #64748b; text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: all 0.25s ease; cursor: pointer; }
-.page-link:hover:not(.disabled) { background: #f1f5f9; color: #0f172a; transform: translateY(-2px); }
-.page-link.active { background: #3b82f6; color: #ffffff; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.35); }
-.page-link.disabled { opacity: 0.4; pointer-events: none; cursor: default; }
+.btn-icon svg {
+    width: 18px;
+    height: 18px;
+}
 
-/* Slide Modal */
+.btn-icon:hover {
+    background: #f1f5f9;
+}
+
+.text-blue {
+    color: #3b82f6;
+}
+
+.text-red {
+    color: #ef4444;
+}
+
+.pagination-wrap {
+    padding: 1.5rem;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.page-link:hover:not(.disabled) {
+    background: #f1f5f9;
+    color: #0f172a;
+    transform: translateY(-2px);
+}
+
+.page-link.active {
+    background: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.35);
+}
+
+.page-link.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: default;
+}
+
 .modal-overlay {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background: rgba(15, 23, 42, 0.4);
     backdrop-filter: blur(4px);
     z-index: 1000;
@@ -617,7 +764,11 @@ watch(searchKeyword, (value) => {
     visibility: hidden;
     transition: all 0.3s ease;
 }
-.modal-overlay.show { opacity: 1; visibility: visible; }
+
+.modal-overlay.show {
+    opacity: 1;
+    visibility: visible;
+}
 
 .center-modal {
     position: fixed;
@@ -629,7 +780,7 @@ watch(searchKeyword, (value) => {
     background: #ffffff;
     z-index: 1001;
     border-radius: 12px;
-    box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1), 0 10px 10px -5px rgba(0,0,0,0.04);
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     transform: translate(-50%, -50%) scale(0.95);
     opacity: 0;
     visibility: hidden;
@@ -637,7 +788,8 @@ watch(searchKeyword, (value) => {
     display: flex;
     flex-direction: column;
 }
-.center-modal.show { 
+
+.center-modal.show {
     transform: translate(-50%, -50%) scale(1);
     opacity: 1;
     visibility: visible;
@@ -650,10 +802,32 @@ watch(searchKeyword, (value) => {
     justify-content: space-between;
     align-items: center;
 }
-.modal-header h2 { margin: 0; font-size: 1.25rem; color: #0f172a; }
-.close-btn { background: none; border: none; cursor: pointer; color: #64748b; border-radius: 50%; padding: 0.5rem; transition: background 0.2s; }
-.close-btn:hover { background: #f1f5f9; color: #0f172a; }
-.close-btn svg { width: 20px; height: 20px; }
+
+.modal-header h2 {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #0f172a;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #64748b;
+    border-radius: 50%;
+    padding: 0.5rem;
+    transition: background 0.2s;
+}
+
+.close-btn:hover {
+    background: #f1f5f9;
+    color: #0f172a;
+}
+
+.close-btn svg {
+    width: 20px;
+    height: 20px;
+}
 
 .modal-body {
     padding: 1.5rem;
@@ -670,13 +844,35 @@ watch(searchKeyword, (value) => {
     gap: 1rem;
 }
 
-/* Form Styles */
-.form-group { margin-bottom: 1.25rem; }
-.form-row { display: flex; gap: 1rem; margin-bottom: 1.25rem; }
-.form-row .form-group { margin-bottom: 0; }
-.flex-1 { flex: 1; }
-.form-group label { display: block; font-size: 0.85rem; font-weight: 600; color: #334155; margin-bottom: 0.5rem; }
-.required { color: #ef4444; }
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-row {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.25rem;
+}
+
+.form-row .form-group {
+    margin-bottom: 0;
+}
+
+.flex-1 {
+    flex: 1;
+}
+
+.form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.5rem;
+}
+
+.required {
+    color: #ef4444;
+}
 
 .form-control {
     width: 100%;
@@ -690,32 +886,103 @@ watch(searchKeyword, (value) => {
     font-family: inherit;
     box-sizing: border-box;
 }
-.form-control:focus { outline: none; border-color: #3b82f6; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1); }
-.file-input { padding: 0.5rem; font-size: 0.85rem; }
-textarea.form-control { resize: vertical; }
 
-.error { display: block; color: #ef4444; font-size: 0.8rem; margin-top: 0.4rem; }
+.form-control:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
 
-/* Switch Toggle */
-.switch-group { display: flex; align-items: center; gap: 0.75rem; }
-.switch-label { font-size: 0.9rem; font-weight: 500; color: #334155; }
-.switch { position: relative; display: inline-block; width: 44px; height: 24px; }
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: #cbd5e1; transition: .3s; }
-.slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .3s; }
-input:checked + .slider { background-color: #10b981; }
-input:focus + .slider { box-shadow: 0 0 1px #10b981; }
-input:checked + .slider:before { transform: translateX(20px); }
-.slider.round { border-radius: 24px; }
-.slider.round:before { border-radius: 50%; }
+.file-input {
+    padding: 0.5rem;
+    font-size: 0.85rem;
+}
 
-/* Gallery Preview */
+textarea.form-control {
+    resize: vertical;
+}
+
+.error {
+    display: block;
+    color: #ef4444;
+    font-size: 0.8rem;
+    margin-top: 0.4rem;
+}
+
+.switch-group {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.switch-label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: #334155;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 44px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #cbd5e1;
+    transition: .3s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 18px;
+    width: 18px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: .3s;
+}
+
+input:checked+.slider {
+    background-color: #10b981;
+}
+
+input:focus+.slider {
+    box-shadow: 0 0 1px #10b981;
+}
+
+input:checked+.slider:before {
+    transform: translateX(20px);
+}
+
+.slider.round {
+    border-radius: 24px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
 .gallery-preview {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     gap: 10px;
     margin-top: 10px;
 }
+
 .gallery-item {
     position: relative;
     border-radius: 8px;
@@ -724,21 +991,24 @@ input:checked + .slider:before { transform: translateX(20px); }
     aspect-ratio: 1 / 1;
     background: #f1f5f9;
 }
+
 .gallery-item.is-featured {
     border-color: #3b82f6;
 }
+
 .gallery-item img {
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
+
 .gallery-actions {
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -746,9 +1016,11 @@ input:checked + .slider:before { transform: translateX(20px); }
     opacity: 0;
     transition: opacity 0.2s;
 }
+
 .gallery-item:hover .gallery-actions {
     opacity: 1;
 }
+
 .action-btn {
     background: white;
     border: none;
@@ -761,15 +1033,29 @@ input:checked + .slider:before { transform: translateX(20px); }
     align-items: center;
     font-size: 14px;
 }
+
 .action-btn:hover {
     transform: scale(1.1);
 }
+
 .action-btn svg {
     width: 16px;
     height: 16px;
 }
-.star-btn { color: #f59e0b; }
-.trash-btn { color: #ef4444; }
-.mt-1 { margin-top: 0.25rem; }
-.block { display: block; }
+
+.star-btn {
+    color: #f59e0b;
+}
+
+.trash-btn {
+    color: #ef4444;
+}
+
+.mt-1 {
+    margin-top: 0.25rem;
+}
+
+.block {
+    display: block;
+}
 </style>

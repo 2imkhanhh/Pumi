@@ -31,6 +31,7 @@ const deleteReview = async (id) => {
 </script>
 
 <template>
+
     <Head title="Quản lý Đánh giá" />
 
     <div class="page-header">
@@ -38,8 +39,6 @@ const deleteReview = async (id) => {
             <h1 class="title">Đánh giá Sản phẩm</h1>
         </div>
     </div>
-
-
 
     <div class="card">
         <div class="table-responsive">
@@ -59,7 +58,8 @@ const deleteReview = async (id) => {
                     <tr v-for="(review, index) in reviews.data" :key="review.id">
                         <td>{{ (reviews.current_page - 1) * reviews.per_page + index + 1 }}</td>
                         <td class="font-medium text-dark">
-                            <a :href="'/san-pham/' + (review.product ? review.product.slug : '')" target="_blank" class="text-blue">
+                            <a :href="'/san-pham/' + (review.product ? review.product.slug : '')" target="_blank"
+                                class="text-blue">
                                 {{ review.product ? review.product.name : 'Sản phẩm đã xóa' }}
                             </a>
                         </td>
@@ -69,22 +69,41 @@ const deleteReview = async (id) => {
                         </td>
                         <td>
                             <div style="display:flex; gap:2px; color: #f59e0b;">
-                                <svg v-for="i in review.rating" :key="'full'+i" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-                                <svg v-for="i in 5 - review.rating" :key="'empty'+i" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+                                <svg v-for="i in review.rating" :key="'full' + i" xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon
+                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                    </polygon>
+                                </svg>
+                                <svg v-for="i in 5 - review.rating" :key="'empty' + i" xmlns="http://www.w3.org/2000/svg"
+                                    width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#ccc"
+                                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <polygon
+                                        points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2">
+                                    </polygon>
+                                </svg>
                             </div>
                         </td>
                         <td>
-                            <div style="max-width: 250px; white-space: pre-wrap; font-size: 0.85rem;">{{ review.note }}</div>
+                            <div style="max-width: 250px; white-space: pre-wrap; font-size: 0.85rem;">{{ review.note }}
+                            </div>
                         </td>
                         <td>
-                            <button @click="toggleApproval(review)" :class="['badge-btn', review.is_approved ? 'approved' : 'pending']">
+                            <button @click="toggleApproval(review)"
+                                :class="['badge-btn', review.is_approved ? 'approved' : 'pending']">
                                 {{ review.is_approved ? 'Đã duyệt' : 'Chờ duyệt' }}
                             </button>
                         </td>
                         <td class="text-right">
                             <div class="actions">
                                 <button @click="deleteReview(review.id)" class="btn-icon text-red" title="Xóa">
-                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path></svg>
+                                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <polyline points="3 6 5 6 21 6"></polyline>
+                                        <path
+                                            d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2">
+                                        </path>
+                                    </svg>
                                 </button>
                             </div>
                         </td>
@@ -95,17 +114,12 @@ const deleteReview = async (id) => {
                 </tbody>
             </table>
         </div>
-        
+
         <div class="pagination-wrap" v-if="reviews.links && reviews.links.length > 3">
             <div class="pagination">
                 <template v-for="(link, i) in reviews.links" :key="i">
-                    <Link 
-                        v-if="link.url" 
-                        :href="link.url" 
-                        class="page-link" 
-                        :class="{ active: link.active }"
-                        v-html="link.label"
-                    ></Link>
+                    <Link v-if="link.url" :href="link.url" class="page-link" :class="{ active: link.active }"
+                        v-html="link.label"></Link>
                     <span v-else class="page-link disabled" v-html="link.label"></span>
                 </template>
             </div>
@@ -147,7 +161,11 @@ const deleteReview = async (id) => {
     font-size: 0.9rem;
     border: 1px solid #a7f3d0;
 }
-.alert-success svg { width: 20px; height: 20px; }
+
+.alert-success svg {
+    width: 20px;
+    height: 20px;
+}
 
 .card {
     background: #ffffff;
@@ -186,18 +204,52 @@ const deleteReview = async (id) => {
     color: #475569;
 }
 
-.table tr:last-child td { border-bottom: none; }
-.table tr:hover { background: #f8fafc; }
+.table tr:last-child td {
+    border-bottom: none;
+}
 
-.text-right { text-align: right; }
-.text-center { text-align: center; }
-.font-medium { font-weight: 500; }
-.text-dark { color: #0f172a; }
-.text-gray { color: #94a3b8; }
-.text-blue { color: #3b82f6; text-decoration: none; }
-.text-blue:hover { text-decoration: underline; }
-.text-warning { color: #f59e0b; letter-spacing: 2px;}
-.py-4 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.table tr:hover {
+    background: #f8fafc;
+}
+
+.text-right {
+    text-align: right;
+}
+
+.text-center {
+    text-align: center;
+}
+
+.font-medium {
+    font-weight: 500;
+}
+
+.text-dark {
+    color: #0f172a;
+}
+
+.text-gray {
+    color: #94a3b8;
+}
+
+.text-blue {
+    color: #3b82f6;
+    text-decoration: none;
+}
+
+.text-blue:hover {
+    text-decoration: underline;
+}
+
+.text-warning {
+    color: #f59e0b;
+    letter-spacing: 2px;
+}
+
+.py-4 {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
 
 .badge-btn {
     padding: 0.25rem 0.75rem;
@@ -208,9 +260,20 @@ const deleteReview = async (id) => {
     cursor: pointer;
     transition: all 0.2s;
 }
-.badge-btn.approved { background: #d1fae5; color: #059669; }
-.badge-btn.pending { background: #fef3c7; color: #d97706; }
-.badge-btn:hover { opacity: 0.8; }
+
+.badge-btn.approved {
+    background: #d1fae5;
+    color: #059669;
+}
+
+.badge-btn.pending {
+    background: #fef3c7;
+    color: #d97706;
+}
+
+.badge-btn:hover {
+    opacity: 0.8;
+}
 
 .actions {
     display: flex;
@@ -230,14 +293,65 @@ const deleteReview = async (id) => {
     align-items: center;
     justify-content: center;
 }
-.btn-icon svg { width: 18px; height: 18px; }
-.btn-icon:hover { background: #f1f5f9; }
-.text-red { color: #ef4444; }
 
-.pagination-wrap { padding: 1.5rem; border-top: 1px solid #f1f5f9; display: flex; justify-content: center; }
-.pagination { display: inline-flex; align-items: center; gap: 0.5rem; }
-.page-link { display: flex; align-items: center; justify-content: center; min-width: 36px; height: 36px; border-radius: 50%; background: transparent; border: none; color: #64748b; text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: all 0.25s ease; cursor: pointer; }
-.page-link:hover:not(.disabled) { background: #f1f5f9; color: #0f172a; transform: translateY(-2px); }
-.page-link.active { background: #3b82f6; color: #ffffff; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.35); }
-.page-link.disabled { opacity: 0.4; pointer-events: none; cursor: default; }
+.btn-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.btn-icon:hover {
+    background: #f1f5f9;
+}
+
+.text-red {
+    color: #ef4444;
+}
+
+.pagination-wrap {
+    padding: 1.5rem;
+    border-top: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.page-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: transparent;
+    border: none;
+    color: #64748b;
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 600;
+    transition: all 0.25s ease;
+    cursor: pointer;
+}
+
+.page-link:hover:not(.disabled) {
+    background: #f1f5f9;
+    color: #0f172a;
+    transform: translateY(-2px);
+}
+
+.page-link.active {
+    background: #3b82f6;
+    color: #ffffff;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.35);
+}
+
+.page-link.disabled {
+    opacity: 0.4;
+    pointer-events: none;
+    cursor: default;
+}
 </style>

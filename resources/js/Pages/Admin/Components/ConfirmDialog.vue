@@ -36,7 +36,8 @@ defineExpose({ show });
                     <div v-if="isVisible" class="dialog-card">
                         <div class="dialog-icon-wrap">
                             <div class="dialog-icon">
-                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"
+                                    stroke-linecap="round" stroke-linejoin="round">
                                     <circle cx="12" cy="12" r="10"></circle>
                                     <line x1="12" y1="8" x2="12" y2="12"></line>
                                     <line x1="12" y1="16" x2="12.01" y2="16"></line>
@@ -154,7 +155,6 @@ defineExpose({ show });
     box-shadow: 0 6px 16px rgba(239, 68, 68, 0.3);
 }
 
-/* Transition animations */
 .dialog-fade-enter-active,
 .dialog-fade-leave-active {
     transition: opacity 0.3s ease;
