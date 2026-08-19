@@ -222,9 +222,6 @@ const submit = () => {
             <h1 class="title">Nội dung website</h1>
         </div>
     </div>
-
-
-
     <!-- Tab Navigation -->
     <div class="tabs-nav">
         <button type="button" class="tab-btn" :class="{ active: activeTab === 'general' }"
@@ -249,7 +246,7 @@ const submit = () => {
     </div>
 
     <form @submit.prevent="submit" class="settings-form" novalidate>
-        <!-- Tab 1: Cấu hình chung -->
+        <!-- Tab 1 -->
         <div v-show="activeTab === 'general'" class="card">
             <div class="card-body">
                 <h3 class="section-title">Thông tin doanh nghiệp</h3>
@@ -304,8 +301,6 @@ const submit = () => {
                     </div>
                 </div>
 
-
-
                 <h3 class="section-title mt-4">Mạng xã hội</h3>
                 <div class="grid-2">
                     <div class="form-group">
@@ -334,7 +329,7 @@ const submit = () => {
             </div>
         </div>
 
-        <!-- Tab 2: Nội dung Trang chủ -->
+        <!-- Tab 2 -->
         <div v-show="activeTab === 'homepage'" class="card">
             <div class="card-body">
                 <h3 class="section-title">Banners Trang chủ</h3>
@@ -465,7 +460,7 @@ const submit = () => {
             </div>
         </div>
 
-        <!-- Tab 3: Nội dung Trang giới thiệu -->
+        <!-- Tab 3 -->
         <div v-show="activeTab === 'about'" class="card">
             <div class="card-body">
                 <h3 class="section-title">Banner trang Giới thiệu</h3>
@@ -777,7 +772,7 @@ const submit = () => {
             </div>
         </div>
 
-        <!-- Tab 4: Nội dung Trang đối tác -->
+        <!-- Tab 4 -->
         <div v-show="activeTab === 'partners_page'" class="card">
             <div class="card-body">
                 <h3 class="section-title">Banner trang đối tác</h3>
@@ -899,7 +894,7 @@ const submit = () => {
             </div>
         </div>
 
-        <!-- Tab 5: Nội dung Trang liên hệ -->
+        <!-- Tab 5 -->
         <div v-show="activeTab === 'contact_page'" class="card">
             <div class="card-body">
                 <h3 class="section-title">Bản đồ</h3>

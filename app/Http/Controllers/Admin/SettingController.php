@@ -19,6 +19,14 @@ class SettingController extends Controller
         ]);
     }
 
+    public function email()
+    {
+        $settings = Setting::pluck('value', 'key')->toArray();
+        return Inertia::render('Admin/Settings/Email', [
+            'settings' => $settings
+        ]);
+    }
+
     public function store(Request $request)
     {
         $data = $request->except(['_token', '_method']);

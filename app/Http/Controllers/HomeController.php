@@ -102,9 +102,47 @@ class HomeController extends Controller
         ]);
 
         try {
-            $adminEmail = config('mail.from.address');
-            if (!empty($adminEmail)) {
-                \Illuminate\Support\Facades\Mail::to($adminEmail)->send(new \App\Mail\ContactNotification($contact));
+            $mailHost = \App\Models\Setting::where('key', 'mail_host')->value('value');
+            $mailPort = \App\Models\Setting::where('key', 'mail_port')->value('value');
+            $mailEncryption = \App\Models\Setting::where('key', 'mail_encryption')->value('value');
+            $mailUsername = \App\Models\Setting::where('key', 'mail_username')->value('value');
+            $mailPassword = \App\Models\Setting::where('key', 'mail_password')->value('value');
+            
+            $mailReceiveStr = \App\Models\Setting::where('key', 'mail_receive_address')->value('value');
+
+            // Apply custom SMTP settings if username and password are provided
+            if (!empty($mailUsername) && !empty($mailPassword)) {
+                config([
+                    'mail.mailers.smtp.transport' => 'smtp',
+                    'mail.mailers.smtp.host' => $mailHost ?: 'smtp.gmail.com',
+                    'mail.mailers.smtp.port' => $mailPort ?: 587,
+                    'mail.mailers.smtp.encryption' => $mailEncryption ?: 'tls',
+                    'mail.mailers.smtp.username' => $mailUsername,
+                    'mail.mailers.smtp.password' => $mailPassword,
+                    'mail.from.address' => $mailUsername,
+                    'mail.from.name' => \App\Models\Setting::where('key', 'company_name')->value('value') ?: config('app.name'),
+                ]);
+                
+                // Clear the cached mailer instance so it uses the new config
+                app()->forgetInstance('mail.manager');
+            }
+
+            // Determine recipient emails
+            $adminEmails = [];
+            if (!empty($mailReceiveStr)) {
+                // Support multiple emails separated by comma
+                $adminEmails = array_map('trim', explode(',', $mailReceiveStr));
+                $adminEmails = array_filter($adminEmails, function($email) {
+                    return filter_var($email, FILTER_VALIDATE_EMAIL);
+                });
+            }
+
+            if (empty($adminEmails)) {
+                $adminEmails = !empty($mailUsername) ? [$mailUsername] : [config('mail.from.address')];
+            }
+
+            if (!empty($adminEmails)) {
+                \Illuminate\Support\Facades\Mail::to($adminEmails)->send(new \App\Mail\ContactNotification($contact));
             }
         } catch (\Exception $e) {
             \Illuminate\Support\Facades\Log::error('Gửi email thông báo liên hệ thất bại: ' . $e->getMessage());
