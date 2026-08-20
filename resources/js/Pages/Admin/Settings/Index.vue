@@ -21,9 +21,8 @@ const form = useForm({
     website: props.settings.website || '',
     map_iframe: props.settings.map_iframe || '',
     facebook: props.settings.facebook || '',
-    zalo: props.settings.zalo || '',
     tiktok: props.settings.tiktok || '',
-    instagram: props.settings.instagram || '',
+    shopee: props.settings.shopee || '',
 
     // Homepage Content
     home_banners: (() => {
@@ -310,20 +309,15 @@ const submit = () => {
                     </div>
 
                     <div class="form-group">
-                        <label>Link Zalo</label>
-                        <input type="url" v-model="form.zalo" class="form-control" placeholder="https://zalo.me/..." />
-                    </div>
-
-                    <div class="form-group">
                         <label>Link Tiktok</label>
                         <input type="url" v-model="form.tiktok" class="form-control"
                             placeholder="https://tiktok.com/..." />
                     </div>
 
                     <div class="form-group">
-                        <label>Link Instagram</label>
-                        <input type="url" v-model="form.instagram" class="form-control"
-                            placeholder="https://instagram.com/..." />
+                        <label>Link Shopee</label>
+                        <input type="url" v-model="form.shopee" class="form-control"
+                            placeholder="https://shopee.vn/..." />
                     </div>
                 </div>
             </div>
