@@ -32,8 +32,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@400..800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('assets/css/css.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/theme.css') }}">
-    <link rel="stylesheet" href="{{ asset('assets/css/theme-refined.css') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/theme.css?v=1.1') }}">
+    <link rel="stylesheet" href="{{ asset('assets/css/theme-refined.css?v=1.2') }}">
     <link rel="stylesheet" href="{{ asset('assets/vendor/timepicker/jquery.timepicker.min.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/swiper/swiper.css') }}" />
     <link rel="stylesheet" href="{{ asset('assets/vendor/glightbox/css/glightbox.min.css') }}" />
@@ -67,7 +67,7 @@
 <script type="text/javascript" src="{{ asset('assets/js/loading.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/functions.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/js/main.js?v=1.1') }}"></script>
-<script type="text/javascript" src="{{ asset('assets/js/nav.js?v=1.0') }}"></script>
+<script type="text/javascript" src="{{ asset('assets/js/nav.js?v=1.1') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/vendor/swiper/swiper-element-bundle.min.js') }}"></script>
 <script type="text/javascript" src="{{ asset('assets/vendor/timepicker/jquery.timepicker.min.js') }}"></script>

@@ -78,9 +78,12 @@
     </section>
 
     <section id="video-home" data-aos="super-zoom-in" data-aos-duration="1000">
-        <iframe
-            src="{{ $settings['home_video'] ?? 'https://drive.google.com/file/d/1ygio8NpLpmg3oKUo3ct_8PebKu096Y-m/preview?autoplay=1&mute=1' }}"
-            width="100%" height="680" allow="autoplay; encrypted-media"></iframe>
+        <video width="100%" height="680" autoplay loop playsinline controls style="background-color: #000;">
+            <source
+                src="{{ !empty($settings['home_video']) ? asset($settings['home_video']) : asset('assets/images/TVC.mp4') }}"
+                type="video/mp4">
+            Trình duyệt của bạn không hỗ trợ thẻ video.
+        </video>
     </section>
 
     <section id="about-us-home" class="about-us-home">

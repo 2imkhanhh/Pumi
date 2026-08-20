@@ -38,9 +38,21 @@ document.addEventListener('DOMContentLoaded', () => {
     navmenu.addEventListener('click', function(e) {
       if (document.querySelector('.mobile-nav-active')) {
         e.preventDefault();
-        this.parentNode.classList.toggle('active');
-        this.parentNode.nextElementSibling.classList.toggle('dropdown-active');
         e.stopImmediatePropagation();
+        
+        const link = this.parentNode;
+        const isOpening = !link.classList.contains('dropdown-open');
+        
+        link.classList.toggle('dropdown-open');
+        link.nextElementSibling.classList.toggle('dropdown-active');
+        
+        // Delay blur to run AFTER browser's native focus handling
+        if (!isOpening) {
+          setTimeout(() => {
+            link.blur();
+            if (document.activeElement) document.activeElement.blur();
+          }, 0);
+        }
       }
     });
   });

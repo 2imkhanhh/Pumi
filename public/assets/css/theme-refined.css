@@ -1248,13 +1248,14 @@ textarea:focus-visible {
     align-items: center !important;
     padding: 20px !important;
     border-radius: 15px !important;
+    overflow: hidden !important;
 }
 
 #products-home .warp .img img {
     max-height: 100% !important;
     max-width: 100% !important;
-    width: auto !important;
-    height: auto !important;
+    width: 100% !important;
+    height: 100% !important;
     object-fit: contain !important;
 }
 
@@ -1401,20 +1402,22 @@ textarea:focus-visible {
         top: 20px !important;
         right: 15px !important;
         z-index: 9999 !important;
+        color: #fff;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
     }
 
     .mobile-nav-active .navmenu>ul>li>a {
-        padding: 13px 22px;
+        padding: 14px 22px;
         font-size: 17px;
     }
 
     .mobile-nav-active .navmenu {
-        background: linear-gradient(165deg, rgba(15, 33, 82, .97) 0%, var(--pu-navy) 45%, var(--pu-blue) 100%);
+        background: #14B6C3;
     }
 
     @supports (backdrop-filter: blur(6px)) or (-webkit-backdrop-filter: blur(6px)) {
         .mobile-nav-active .navmenu {
-            background: linear-gradient(165deg, rgba(15, 33, 82, .92) 0%, rgba(27, 63, 148, .92) 45%, rgba(46, 95, 208, .92) 100%);
+            background: rgba(20, 182, 195, 0.95);
             -webkit-backdrop-filter: blur(10px);
             backdrop-filter: blur(10px);
         }
@@ -1437,7 +1440,7 @@ textarea:focus-visible {
     }
 
     .mobile-nav-active .navmenu>ul>li {
-        border-bottom: 1px solid rgba(255, 255, 255, .12);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.18);
     }
 
     .mobile-nav-active .navmenu>ul>li:last-child {
@@ -1445,48 +1448,67 @@ textarea:focus-visible {
     }
 
     .mobile-nav-active .navmenu>ul>li>a {
-        color: rgba(255, 255, 255, .92);
+        color: #fff;
     }
 
-    .mobile-nav-active .navmenu>ul>li>a:hover,
+    .mobile-nav-active .navmenu>ul>li>a:hover {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
     .mobile-nav-active .navmenu>ul>li>a.active,
-    .mobile-nav-active .navmenu>ul>li>a:focus {
-        color: var(--pu-cyan);
+    .mobile-nav-active .navmenu>ul>li>a.dropdown-open {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.15);
+    }
+
+    .mobile-nav-active .navmenu>ul>li>a:focus:not(.active):not(.dropdown-open) {
+        background-color: transparent;
     }
 
     .mobile-nav-active .navmenu>ul>li>a i,
     .mobile-nav-active .navmenu>ul>li>a:focus i {
-        background-color: rgba(255, 255, 255, .12);
-        color: rgba(255, 255, 255, .85);
+        background-color: rgba(255, 255, 255, 0.2);
+        color: #fff;
     }
 
-    .mobile-nav-active .navmenu .active i,
-    .mobile-nav-active .navmenu .active:focus i {
-        color: var(--pu-cyan);
+    .mobile-nav-active .navmenu .dropdown-open i,
+    .mobile-nav-active .navmenu .dropdown-open:focus i {
+        color: #fff;
+        background-color: rgba(255, 255, 255, 0.3);
+        transform: rotate(180deg);
     }
 
     .mobile-nav-active .navmenu .dropdown ul {
-        background-color: #fff;
-        border-radius: var(--pu-radius-sm);
-        box-shadow: var(--pu-shadow-lg);
+        background-color: rgba(0, 0, 0, 0.12);
+        border-radius: 8px;
+        box-shadow: none;
         overflow: hidden;
         padding: 6px 0;
+        margin: 4px 14px 8px 14px;
     }
 
     .mobile-nav-active .navmenu .dropdown ul a {
-        color: var(--pu-ink);
+        color: rgba(255, 255, 255, 0.92);
         font-size: 15.5px;
+        padding: 11px 18px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        transition: background 0.25s ease, color 0.25s ease;
+    }
+
+    .mobile-nav-active .navmenu .dropdown ul a:last-child {
+        border-bottom: none;
     }
 
     .mobile-nav-active .navmenu .dropdown ul a:hover,
     .mobile-nav-active .navmenu .dropdown ul .active:hover,
     .mobile-nav-active .navmenu .dropdown ul li:hover>a {
-        background: var(--pu-sky);
-        color: var(--pu-navy);
+        background: rgba(255, 255, 255, 0.12);
+        color: #fff;
     }
 
     .mobile-nav-active .navmenu .dropdown .dropdown ul {
-        background-color: var(--pu-sky);
+        background-color: rgba(0, 0, 0, 0.1);
         box-shadow: none;
         margin-top: 4px;
     }

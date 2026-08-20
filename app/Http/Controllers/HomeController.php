@@ -107,10 +107,9 @@ class HomeController extends Controller
             $mailEncryption = \App\Models\Setting::where('key', 'mail_encryption')->value('value');
             $mailUsername = \App\Models\Setting::where('key', 'mail_username')->value('value');
             $mailPassword = \App\Models\Setting::where('key', 'mail_password')->value('value');
-            
+
             $mailReceiveStr = \App\Models\Setting::where('key', 'mail_receive_address')->value('value');
 
-            // Apply custom SMTP settings if username and password are provided
             if (!empty($mailUsername) && !empty($mailPassword)) {
                 config([
                     'mail.mailers.smtp.transport' => 'smtp',
@@ -122,17 +121,14 @@ class HomeController extends Controller
                     'mail.from.address' => $mailUsername,
                     'mail.from.name' => \App\Models\Setting::where('key', 'company_name')->value('value') ?: config('app.name'),
                 ]);
-                
-                // Clear the cached mailer instance so it uses the new config
+
                 app()->forgetInstance('mail.manager');
             }
 
-            // Determine recipient emails
             $adminEmails = [];
             if (!empty($mailReceiveStr)) {
-                // Support multiple emails separated by comma
                 $adminEmails = array_map('trim', explode(',', $mailReceiveStr));
-                $adminEmails = array_filter($adminEmails, function($email) {
+                $adminEmails = array_filter($adminEmails, function ($email) {
                     return filter_var($email, FILTER_VALIDATE_EMAIL);
                 });
             }

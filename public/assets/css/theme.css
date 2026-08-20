@@ -500,27 +500,31 @@
         display: none;
         position: absolute;
         inset: 60px 20px 20px 20px;
-        padding: 10px 0;
+        padding: 0;
         margin: 0;
-        border-radius: 6px;
+        border-radius: 12px;
         overflow-y: auto;
         transition: 0.3s;
         z-index: 9998;
-        box-shadow: 0px 0px 30px rgba(0, 0, 0, 0.1);
-        padding-top: 0;
+        box-shadow: 0px 8px 32px rgba(0, 0, 0, 0.18);
     }
 
     .navmenu a,
     .navmenu a:focus {
-        color: #fff3cd;
-        padding: 10px 20px;
+        color: #fff;
+        padding: 14px 20px;
         font-size: 17px;
         font-weight: 500;
         display: flex;
         align-items: center;
         justify-content: space-between;
         white-space: nowrap;
-        transition: 0.3s;
+        transition: background 0.3s, color 0.3s;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .navmenu a:last-child {
+        border-bottom: none;
     }
 
     .navmenu a i,
@@ -535,24 +539,37 @@
         justify-content: center;
         border-radius: 50%;
         transition: 0.3s;
-        background-color: rgba(0, 0, 0, 0.1);
+        background-color: rgba(255, 255, 255, 0.15);
+        color: #fff;
     }
 
     .navmenu a i:hover,
     .navmenu a:focus i:hover {
-        color: #fff3cd;
+        background-color: rgba(255, 255, 255, 0.3);
+        color: #fff;
     }
 
-    .navmenu a:hover,
+    .navmenu a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
+    }
+
     .navmenu .active,
     .navmenu .active:focus {
-        color: #fff3cd;
+        color: #fff;
+        font-weight: 700;
+        background-color: rgba(255, 255, 255, 0.1);
     }
 
-    .navmenu .active i,
-    .navmenu .active:focus i {
-        color: #fff3cd;
+    .navmenu .dropdown-open {
+        background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    .navmenu .dropdown-open i,
+    .navmenu .dropdown-open:focus i {
+        color: #fff;
         transform: rotate(180deg);
+        background-color: rgba(255, 255, 255, 0.25);
     }
 
     .navmenu .dropdown ul,
@@ -560,22 +577,42 @@
         position: static;
         display: none;
         z-index: 99;
-        padding: 3px 0;
-        margin: 3px 20px;
-        background-color: #fff;
-        transition: all 0.5s ease-in-out;
-        margin-top: -10px;
+        padding: 6px 0;
+        margin: 0 12px 8px 12px;
+        background-color: rgba(0, 0, 0, 0.12);
+        border-radius: 8px;
+        transition: all 0.35s ease-in-out;
+        overflow: hidden;
+    }
+
+    .navmenu .dropdown ul a,
+    .navmenu .megamenu ul a {
+        color: rgba(255, 255, 255, 0.9);
+        padding: 10px 18px;
+        font-size: 15px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .navmenu .dropdown ul a:last-child,
+    .navmenu .megamenu ul a:last-child {
+        border-bottom: none;
+    }
+
+    .navmenu .dropdown ul a:hover,
+    .navmenu .megamenu ul a:hover {
+        background-color: rgba(255, 255, 255, 0.1);
+        color: #fff;
     }
 
     .navmenu .dropdown ul ul,
     .navmenu .megamenu ul ul {
-        background-color: rgba(33, 37, 41, 0.1);
+        background-color: rgba(0, 0, 0, 0.1);
     }
 
     .navmenu .dropdown>.dropdown-active,
     .navmenu .megamenu>.dropdown-active {
         display: block;
-        background-color: rgba(33, 37, 41, 0.03);
+        background-color: rgba(0, 0, 0, 0.06);
     }
 
     .mobile-nav-active {
@@ -590,18 +627,21 @@
         right: 0px;
         margin-right: 0;
         z-index: 9999;
+        text-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
     }
 
     .mobile-nav-active .navmenu {
         position: fixed;
         overflow: hidden;
         inset: 0;
-        background: rgba(0, 0, 0, 0.9);
+        background: #14B6C3;
         transition: 0.3s;
     }
 
     .mobile-nav-active .navmenu>ul {
         display: block;
+        background: transparent;
+        box-shadow: none;
     }
 
     .mobile-nav-active .navmenu>ul>li a {
@@ -613,7 +653,8 @@
     }
 
     .mobile-nav-active .navmenu>ul>li.lang-mb a.active {
-        color: #C05B3A;
+        color: #27397C;
+        font-weight: 700;
     }
 }
 

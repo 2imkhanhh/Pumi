@@ -50,7 +50,6 @@ const form = useForm({
     home_welcome_title: props.settings.home_welcome_title || '',
     home_welcome_subtitle: props.settings.home_welcome_subtitle || '',
     home_welcome_content: props.settings.home_welcome_content || '',
-    home_video: props.settings.home_video || '',
     home_about_title: props.settings.home_about_title || '',
     home_about_subtitle: props.settings.home_about_subtitle || '',
     home_about_content: props.settings.home_about_content || '',
@@ -126,7 +125,8 @@ const form = useForm({
         return initial;
     })(),
 
-    // Image inputs
+    // Image and File inputs
+    home_video: null,
     logo: null,
     footer_logo: null,
     home_middle_banner: null,
@@ -391,8 +391,13 @@ const submit = () => {
 
                 <h3 class="section-title mt-4">Phần Video giới thiệu</h3>
                 <div class="form-group">
-                    <label>Đường dẫn Video</label>
-                    <input type="url" v-model="form.home_video" class="form-control" placeholder="https://..." />
+                    <label>Video Trang chủ (File MP4)</label>
+                    <div class="flex items-center gap-3">
+                        <video v-if="settings.home_video" :src="'/' + settings.home_video" class="thumb-img"
+                            style="max-height: 80px; max-width: 150px; background: #000;" muted controls></video>
+                        <input type="file" @change="handleFileChange($event, 'home_video')" class="form-control"
+                            accept="video/*" />
+                    </div>
                 </div>
 
                 <h3 class="section-title mt-4">Khối giới thiệu thương hiệu</h3>
